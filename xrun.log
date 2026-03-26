@@ -1,0 +1,13 @@
+xrun(64): 24.09-s001: (c) Copyright 1995-2024 Cadence Design Systems, Inc.
+TOOL:	xrun(64)	24.09-s001: Started on Mar 25, 2026 at 20:22:31 EDT
+xrun
+	-f files.f
+		fixed_point_unit_1_1.sv
+		fixed_point_unit_2_1.sv
+		single_precision_unit_1.sv
+Loading snapshot worklib.simple_fixed_1_1:sv .................... Done
+xcelium> source /usr/local/cds/XCELIUM2409/tools/xcelium/files/xmsimrc
+xcelium> run
+xmsim: *W,RNQUIE: Simulation is complete.
+xcelium> exit
+TOOL:	xrun(64)	24.09-s001: Exiting on Mar 25, 2026 at 20:22:32 EDT  (total: 00:00:01)
