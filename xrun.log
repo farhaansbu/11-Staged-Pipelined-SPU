@@ -1,13 +1,41 @@
 xrun(64): 24.09-s001: (c) Copyright 1995-2024 Cadence Design Systems, Inc.
-TOOL:	xrun(64)	24.09-s001: Started on Mar 25, 2026 at 20:22:31 EDT
+TOOL:	xrun(64)	24.09-s001: Started on Mar 25, 2026 at 23:48:41 EDT
 xrun
 	-f files.f
 		fixed_point_unit_1_1.sv
 		fixed_point_unit_2_1.sv
 		single_precision_unit_1.sv
+		local_store_unit.sv
+file: local_store_unit.sv
+	module worklib.local_store_unit:sv
+		errors: 0, warnings: 0
+		Caching library 'worklib' ....... Done
+	Elaborating the design hierarchy:
+	Top level design units:
+		simple_fixed_1_1
+		simple_fixed_2_1
+		fixed_point_1
+		local_store_unit
+	Building instance overlay tables: .................... Done
+	Generating native compiled code:
+		worklib.local_store_unit:sv <0x3424a263>
+			streams:   1, words:  1142
+		worklib.fixed_point_1:sv <0x77d9ab56>
+			streams:  18, words: 29149
+		worklib.simple_fixed_2_1:sv <0x348bc115>
+			streams:  12, words: 30527
+		worklib.simple_fixed_1_1:sv <0x3016cfce>
+			streams:  43, words: 60535
+	Building instance specific data structures.
+	Loading native compiled code:     .................... Done
+	Design hierarchy summary:
+		      Instances  Unique
+		Modules:      4       4
+		Registers:  516     516
+	Writing initial simulation snapshot: worklib.simple_fixed_1_1:sv
 Loading snapshot worklib.simple_fixed_1_1:sv .................... Done
 xcelium> source /usr/local/cds/XCELIUM2409/tools/xcelium/files/xmsimrc
 xcelium> run
 xmsim: *W,RNQUIE: Simulation is complete.
 xcelium> exit
-TOOL:	xrun(64)	24.09-s001: Exiting on Mar 25, 2026 at 20:22:32 EDT  (total: 00:00:01)
+TOOL:	xrun(64)	24.09-s001: Exiting on Mar 25, 2026 at 23:48:42 EDT  (total: 00:00:01)
