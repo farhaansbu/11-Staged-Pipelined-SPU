@@ -5,7 +5,7 @@ module even_pipe_unit (
     input logic [0:127] even_source_a,
     input logic [0:127] even_source_b,
     input logic [0:127] even_source_c,
-    input logic [0:7] even_write_address,
+    input logic [0:6] even_write_address,
     input opcode_t even_opcode,
     input logic[0:2] even_unit_id,
 

@@ -125,6 +125,7 @@ typedef struct packed {
     logic[0:3] ready_stage_number;
     logic reg_write_flag;
     logic present_bit;
+    logic[0:3] current_stage_number;
 } unit_result_packet;
 
 

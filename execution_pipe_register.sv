@@ -1,9 +1,7 @@
 import instruction_pkg::*;
 
 
-module execution_pipe_register #(
-    parameter int CURRENT_STAGE_NUMBER = 2
-) (
+module execution_pipe_register (
     
 
     input logic clk,
