@@ -3,3 +3,5 @@ fixed_point_unit_2_1.sv
 single_precision_unit_1.sv
 local_store_unit.sv
 branch_unit.sv
+permute_unit_1.sv
+byte_unit_1.sv

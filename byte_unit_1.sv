@@ -21,7 +21,7 @@ function automatic logic[0:127] average_bytes (input logic[0:127] ra, input logi
 logic[0:127] rt;
 logic[0:8] sum; //9 bits for overflow 
 
-for (int j = 0; j <= 15; ++i) begin   
+for (int j = 0; j <= 15; ++j) begin   
     sum = {1'b0, ra[j*BYTE_BITS +: BYTE_BITS]} + {1'b0, rb[j*BYTE_BITS +: BYTE_BITS]} + 9'd1;
     rt[j*BYTE_BITS +: BYTE_BITS] = sum[1:8]; // divide by 2
 end

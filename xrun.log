@@ -1,5 +1,5 @@
 xrun(64): 24.09-s001: (c) Copyright 1995-2024 Cadence Design Systems, Inc.
-TOOL:	xrun(64)	24.09-s001: Started on Mar 27, 2026 at 19:04:25 EDT
+TOOL:	xrun(64)	24.09-s001: Started on Mar 27, 2026 at 21:50:36 EDT
 xrun
 	-f files.f
 		fixed_point_unit_1_1.sv
@@ -7,11 +7,10 @@ xrun
 		single_precision_unit_1.sv
 		local_store_unit.sv
 		branch_unit.sv
-Recompiling... reason: file './branch_unit.sv' is newer than expected.
-	expected: Fri Mar 27 19:01:35 2026
-	actual:   Fri Mar 27 19:04:12 2026
-file: branch_unit.sv
-	module worklib.branch_unit:sv
+		permute_unit_1.sv
+		byte_unit_1.sv
+file: byte_unit_1.sv
+	module worklib.byte_unit:sv
 		errors: 0, warnings: 0
 		Caching library 'worklib' ....... Done
 	Elaborating the design hierarchy:
@@ -21,20 +20,34 @@ file: branch_unit.sv
 		fixed_point_1
 		local_store_unit
 		branch_unit
+		permute_unit
+		byte_unit
 	Building instance overlay tables: .................... Done
 	Generating native compiled code:
+		worklib.byte_unit:sv <0x0d4be22a>
+			streams:   4, words: 15396
+		worklib.permute_unit:sv <0x6c44f39a>
+			streams:   7, words: 98607
 		worklib.branch_unit:sv <0x3709efe8>
 			streams:  14, words: 10348
+		worklib.local_store_unit:sv <0x6b9fc51b>
+			streams:   6, words:  5830
+		worklib.fixed_point_1:sv <0x77d9ab56>
+			streams:  18, words: 29149
+		worklib.simple_fixed_2_1:sv <0x348bc115>
+			streams:  12, words: 30527
+		worklib.simple_fixed_1_1:sv <0x3016cfce>
+			streams:  43, words: 60535
 	Building instance specific data structures.
 	Loading native compiled code:     .................... Done
 	Design hierarchy summary:
 		      Instances  Unique
-		Modules:      5       5
-		Registers:  617     617
+		Modules:      7       7
+		Registers:  684     684
 	Writing initial simulation snapshot: worklib.simple_fixed_1_1:sv
 Loading snapshot worklib.simple_fixed_1_1:sv .................... Done
 xcelium> source /usr/local/cds/XCELIUM2409/tools/xcelium/files/xmsimrc
 xcelium> run
 xmsim: *W,RNQUIE: Simulation is complete.
 xcelium> exit
-TOOL:	xrun(64)	24.09-s001: Exiting on Mar 27, 2026 at 19:04:25 EDT  (total: 00:00:00)
+TOOL:	xrun(64)	24.09-s001: Exiting on Mar 27, 2026 at 21:50:37 EDT  (total: 00:00:01)
