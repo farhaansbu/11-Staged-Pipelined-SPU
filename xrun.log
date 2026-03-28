@@ -1,5 +1,5 @@
 xrun(64): 24.09-s001: (c) Copyright 1995-2024 Cadence Design Systems, Inc.
-TOOL:	xrun(64)	24.09-s001: Started on Mar 27, 2026 at 23:26:07 EDT
+TOOL:	xrun(64)	24.09-s001: Started on Mar 28, 2026 at 16:04:09 EDT
 xrun
 	-f files.f
 		instructions.sv
@@ -11,9 +11,69 @@ xrun
 		permute_unit_1.sv
 		byte_unit_1.sv
 		id_rf_reg.sv
+		register_file.sv
+		forwarding_unit.sv
+		execution_pipe_register.sv
+		execution_unit.sv
+		even_pipe_unit.sv
+file: even_pipe_unit.sv
+	module worklib.even_pipe_unit:sv
+		errors: 0, warnings: 0
+		Caching library 'worklib' ....... Done
+	Elaborating the design hierarchy:
+	Top level design units:
+		instruction_pkg
+		$unit_0x266cdd4e
+		simple_fixed_1_1
+		simple_fixed_2_1
+		fixed_point_1
+		local_store_unit
+		branch_unit
+		permute_unit
+		byte_unit
+		id_rf_stage
+		register_file
+		forwarding_unit
+		execution_pipe_register
+		execution_unit
+		even_pipe_unit
+	Building instance overlay tables: .................... Done
+	Generating native compiled code:
+		worklib.even_pipe_unit:sv <0x3dbaa401>
+			streams:   0, words:     0
+		worklib.execution_pipe_register:sv <0x2a431842>
+			streams:   0, words:     0
+		worklib.register_file:sv <0x5860575a>
+			streams:   0, words:     0
+		worklib.id_rf_stage:sv <0x7d5717c6>
+			streams:   0, words:     0
+		worklib.byte_unit:sv <0x0618bb75>
+			streams:   4, words: 15396
+		worklib.permute_unit:sv <0x5f3db75d>
+			streams:   7, words: 98607
+		worklib.branch_unit:sv <0x480c5163>
+			streams:  14, words: 10348
+		worklib.local_store_unit:sv <0x3be9dacd>
+			streams:   6, words:  5830
+		worklib.fixed_point_1:sv <0x29028e41>
+			streams:  18, words: 29149
+		worklib.simple_fixed_2_1:sv <0x35da32cd>
+			streams:  12, words: 30527
+		worklib.simple_fixed_1_1:sv <0x2e43c11b>
+			streams:  43, words: 60535
+	Building instance specific data structures.
+	Loading native compiled code:     .................... Done
+	Design hierarchy summary:
+		              Instances  Unique
+		Modules:             13      13
+		Verilog packages:     1       1
+		Registers:          725     725
+		Always blocks:        5       5
+		Compilation units:    1       1
+	Writing initial simulation snapshot: worklib.simple_fixed_1_1:sv
 Loading snapshot worklib.simple_fixed_1_1:sv .................... Done
 xcelium> source /usr/local/cds/XCELIUM2409/tools/xcelium/files/xmsimrc
 xcelium> run
 xmsim: *W,RNQUIE: Simulation is complete.
 xcelium> exit
-TOOL:	xrun(64)	24.09-s001: Exiting on Mar 27, 2026 at 23:26:07 EDT  (total: 00:00:00)
+TOOL:	xrun(64)	24.09-s001: Exiting on Mar 28, 2026 at 16:04:09 EDT  (total: 00:00:00)

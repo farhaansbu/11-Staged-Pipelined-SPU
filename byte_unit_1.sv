@@ -5,7 +5,14 @@ Package to output: (unit_id, result, dest_reg, ready_stage, RegWr)
 // */
 
 
-module byte_unit;
+module byte_unit (
+
+    //
+
+
+);
+
+
 
 localparam BYTE_BITS = 8;
 localparam WORD_BITS = 32;

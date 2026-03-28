@@ -11,3 +11,8 @@
 /home/home5/fkhan/ese545project/permute_unit_1.sv
 /home/home5/fkhan/ese545project/byte_unit_1.sv
 /home/home5/fkhan/ese545project/id_rf_reg.sv
+/home/home5/fkhan/ese545project/register_file.sv
+/home/home5/fkhan/ese545project/forwarding_unit.sv
+/home/home5/fkhan/ese545project/execution_pipe_register.sv
+/home/home5/fkhan/ese545project/execution_unit.sv
+/home/home5/fkhan/ese545project/even_pipe_unit.sv

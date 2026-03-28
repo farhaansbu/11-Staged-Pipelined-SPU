@@ -7,3 +7,8 @@ branch_unit.sv
 permute_unit_1.sv
 byte_unit_1.sv
 id_rf_reg.sv
+register_file.sv
+forwarding_unit.sv
+execution_pipe_register.sv
+execution_unit.sv
+even_pipe_unit.sv

@@ -118,7 +118,14 @@ typedef enum logic[0:6] {
 } opcode_t;
 
 
-
+typedef struct packed {
+    logic[0:2] unit_id;
+    logic[0:127] result;
+    logic[0:6] reg_write_addr;
+    logic[0:3] ready_stage_number;
+    logic reg_write_flag;
+    logic present_bit;
+} unit_result_packet;
 
 
 
