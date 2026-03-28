@@ -1,4 +1,53 @@
-module simple_fixed_2_1;
+import instruction_pkg::*;
+
+module simple_fixed_2_1(
+    input logic clk,
+
+    input logic [0:127] source_a,
+    input logic [0:127] source_b,
+    input logic [0:127] source_c,
+    input logic [0:6] write_address,
+    input opcode_t opcode,
+    input logic[0:2] even_unit_id,
+
+    output unit_result_packet output_packet
+);
+
+always_ff @(posedge clk) begin
+
+    if (even_unit_id != 2) begin // Unit id doesn't match
+        output_packet.present_bit <= 0;
+    end
+
+    else begin
+        // Record unit id, write addr, other control signals
+        output_packet.unit_id <= even_unit_id;
+        output_packet.reg_write_addr <= write_address;
+        output_packet.reg_write_flag <= 1;
+        output_packet.present_bit <= 1;
+        output_packet.ready_stage_number <= 4;
+        output_packet.current_stage_number <= 2;
+
+        // Calculate result
+        case (opcode)
+
+            OP_SHIFT_LEFT_WORD: output_packet.result <= shift_left_word(source_a, source_b);
+            OP_SHIFT_LEFT_HALFWORD: output_packet.result <= shift_left_halfword(source_a, source_b);
+            OP_SHIFT_LEFT_WORD_IMMEDIATE: output_packet.result <= shift_left_word_immediate(source_a, source_b[0:6]);
+            OP_SHIFT_LEFT_HALFWORD_IMMEDIATE: output_packet.result <= shift_left_halfword_immediate(source_a, source_b[0:6]);
+            OP_ROTATE_WORD: output_packet.result <= rotate_word(source_a, source_b);
+            OP_ROTATE_HALFWORD: output_packet.result <= rotate_halfword(source_a, source_b);
+            OP_ROTATE_WORD_IMMEDIATE: output_packet.result <= rotate_word_immediate(source_a, source_b[0:6]);
+            OP_ROTATE_HALFWORD_IMMEDIATE: output_packet.result <= rotate_halfword_immediate(source_a, source_b[0:6]);
+            OP_ROTATE_AND_MASK_WORD: output_packet.result <= rotate_and_mask_word(source_a, source_b);
+            OP_ROTATE_AND_MASK_HALFWORD: output_packet.result <= rotate_and_mask_halfword(source_a, source_b);
+            OP_ROTATE_AND_MASK_ALGEBRAIC_WORD: output_packet.result <= rotate_and_mask_algebraic_word(source_a, source_b);
+            OP_ROTATE_AND_MASK_ALGEBRAIC_HALFWORD: output_packet.result <= rotate_and_mask_algebraic_halfword(source_a, source_b);
+              
+        endcase
+    end    
+
+end
 
 localparam WORD_BITS = 32;
 localparam HALFWORD_BITS = 16;

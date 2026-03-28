@@ -1,5 +1,5 @@
 xrun(64): 24.09-s001: (c) Copyright 1995-2024 Cadence Design Systems, Inc.
-TOOL:	xrun(64)	24.09-s001: Started on Mar 28, 2026 at 18:01:27 EDT
+TOOL:	xrun(64)	24.09-s001: Started on Mar 28, 2026 at 19:23:21 EDT
 xrun
 	-f files.f
 		instructions.sv
@@ -17,69 +17,46 @@ xrun
 		execution_unit.sv
 		even_pipe_unit.sv
 Recompiling... reason: file './even_pipe_unit.sv' is newer than expected.
-	expected: Sat Mar 28 16:04:10 2026
-	actual:   Sat Mar 28 17:43:56 2026
-file: fixed_point_unit_1.sv
-	module worklib.simple_fixed_1_1:sv
+	expected: Sat Mar 28 19:21:05 2026
+	actual:   Sat Mar 28 19:23:04 2026
+file: even_pipe_unit.sv
+	module worklib.even_pipe_unit:sv
 		errors: 0, warnings: 0
 		Caching library 'worklib' ....... Done
 	Elaborating the design hierarchy:
 	Top level design units:
 		instruction_pkg
 		$unit_0x2d99da75
-		simple_fixed_1_1
-		simple_fixed_2_1
-		fixed_point_1
 		local_store_unit
 		branch_unit
 		permute_unit
-		byte_unit
 		id_rf_stage
 		register_file
 		forwarding_unit
-		execution_pipe_register
 		execution_unit
 		even_pipe_unit
 	Building instance overlay tables: .................... Done
 	Generating native compiled code:
-		worklib.even_pipe_unit:sv <0x5f009da9>
+		worklib.byte_unit:sv <0x6706a19b>
+			streams:   5, words: 16701
+		worklib.even_pipe_unit:sv <0x6a94f41e>
 			streams:   0, words:     0
-		worklib.execution_pipe_register:sv <0x23072d48>
-			streams:   0, words:     0
-		worklib.register_file:sv <0x0eb32cee>
-			streams:   0, words:     0
-		worklib.id_rf_stage:sv <0x16487507>
-			streams:   0, words:     0
-		worklib.byte_unit:sv <0x6f204f45>
-			streams:   4, words: 15396
-		worklib.permute_unit:sv <0x27a67c2c>
-			streams:   7, words: 98607
-		worklib.branch_unit:sv <0x0ce5ff34>
-			streams:  14, words: 10348
-		worklib.local_store_unit:sv <0x4f22c904>
-			streams:   6, words:  5830
-		worklib.fixed_point_1:sv <0x27adefc9>
-			streams:  18, words: 29149
-		worklib.simple_fixed_2_1:sv <0x7e028bdd>
-			streams:  12, words: 30527
-		worklib.simple_fixed_1_1:sv <0x0c812ecf>
-			streams:  44, words: 61219
 	Building instance specific data structures.
 	Loading native compiled code:     .................... Done
 	Design hierarchy summary:
 		              Instances  Unique
-		Modules:             13      13
+		Modules:             23      13
 		Verilog packages:     1       1
-		Registers:          726     726
+		Registers:          754     744
 		Scalar wires:         1       -
-		Vectored wires:       5       -
-		Always blocks:        6       6
+		Vectored wires:      32       -
+		Always blocks:       19       9
 		Compilation units:    1       1
-		Process Clocks:       1       1
-	Writing initial simulation snapshot: worklib.simple_fixed_1_1:sv
-Loading snapshot worklib.simple_fixed_1_1:sv .................... Done
+		Process Clocks:       2       1
+	Writing initial simulation snapshot: worklib.local_store_unit:sv
+Loading snapshot worklib.local_store_unit:sv .................... Done
 xcelium> source /usr/local/cds/XCELIUM2409/tools/xcelium/files/xmsimrc
 xcelium> run
 xmsim: *W,RNQUIE: Simulation is complete.
 xcelium> exit
-TOOL:	xrun(64)	24.09-s001: Exiting on Mar 28, 2026 at 18:01:28 EDT  (total: 00:00:01)
+TOOL:	xrun(64)	24.09-s001: Exiting on Mar 28, 2026 at 19:23:21 EDT  (total: 00:00:00)

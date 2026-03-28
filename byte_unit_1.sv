@@ -3,16 +3,47 @@
 Use the unit id to assign a unit and pipe (Even: FP1, FX1 (SIMPLE FIXED 2), BYTE, FX1 (SIMPLE FIXED 2), LS, BRANCH)
 Package to output: (unit_id, result, dest_reg, ready_stage, RegWr)
 // */
-
+import instruction_pkg::*;
 
 module byte_unit (
+    input logic clk,
 
-    //
+    input logic [0:127] source_a,
+    input logic [0:127] source_b,
+    input logic [0:127] source_c,
+    input logic [0:6] write_address,
+    input opcode_t opcode,
+    input logic[0:2] even_unit_id,
 
+    output unit_result_packet output_packet
 
 );
 
+always_ff @(posedge clk) begin
 
+    if (even_unit_id != 4) begin // Unit id doesn't match
+        output_packet.present_bit <= 0;
+    end
+
+    else begin
+        // Record unit id, write addr, other control signals
+        output_packet.unit_id <= even_unit_id;
+        output_packet.reg_write_addr <= write_address;
+        output_packet.reg_write_flag <= 1;
+        output_packet.present_bit <= 1;
+        output_packet.ready_stage_number <= 4; //ready stage for bytes 
+        output_packet.current_stage_number <= 2;
+
+        // Calculate result
+        case (opcode)
+            OP_AVERAGE_BYTES: output_packet.result <=  average_bytes(source_a, source_b);
+            OP_SUM_BYTES_INTO_HALFWORDS: output_packet.result <= sum_bytes_into_halfwords(source_a, source_b);
+            OP_ABSOLUTE_DIFFERENCES_OF_BYTES: output_packet.result <= absolute_difference_of_bytes(source_a, source_b);
+            OP_COUNT_ONES_IN_BYTES: output_packet.result <= count_ones_in_bytes(source_a);
+        endcase
+    end    
+
+end
 
 localparam BYTE_BITS = 8;
 localparam WORD_BITS = 32;
@@ -106,4 +137,3 @@ return rt;
 endfunction : count_ones_in_bytes
 
 endmodule
-

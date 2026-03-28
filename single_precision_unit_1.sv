@@ -1,4 +1,115 @@
-module fixed_point_1;
+import instruction_pkg::*;
+
+module single_precision_1(
+
+    input logic clk,
+
+    input logic [0:127] source_a,
+    input logic [0:127] source_b,
+    input logic [0:127] source_c,
+    input logic [0:6] write_address,
+    input opcode_t opcode,
+    input logic[0:2] even_unit_id,
+
+    output unit_result_packet output_packet
+
+);
+
+always_ff @(posedge clk) begin
+
+    if (even_unit_id != 3) begin // Unit id doesn't match
+        output_packet.present_bit <= 0;
+    end
+
+    else begin
+        // Record unit id, write addr, other control signals
+        output_packet.unit_id <= even_unit_id;
+        output_packet.reg_write_addr <= write_address;
+        output_packet.reg_write_flag <= 1;
+        output_packet.present_bit <= 1;
+        output_packet.current_stage_number <= 2;
+
+        // Calculate result
+        case (opcode)
+            OP_MULTIPLY: begin
+                output_packet.ready_stage_number <= 8;
+                output_packet.result <= multiply(source_a, source_b);
+            end
+
+            OP_MULTIPLY_UNSIGNED: begin
+                output_packet.ready_stage_number <= 8;
+                output_packet.result <= multiply_unsigned(source_a, source_b);
+            end
+
+            OP_MULTIPLY_IMMEDIATE: begin
+                output_packet.ready_stage_number <= 8;
+                output_packet.result <= multiply_immediate(source_a, source_b[0:9]);
+            end
+
+            OP_MULTIPLY_UNSIGNED_IMMEDIATE: begin
+                output_packet.ready_stage_number <= 8;
+                output_packet.result <= multiply_unsigned_immediate(source_a, source_b[0:9]);
+            end
+
+            OP_MULTIPLY_AND_ADD: begin
+                output_packet.ready_stage_number <= 8;
+                output_packet.result <= multiply_and_add(source_a, source_b, source_c);
+            end
+
+            OP_FLOATING_ADD: begin
+                output_packet.ready_stage_number <= 7;
+                output_packet.result <= floating_add(source_a, source_b);
+            end
+
+            OP_FLOATING_SUBTRACT: begin
+                output_packet.ready_stage_number <= 7;
+                output_packet.result <= floating_subtract(source_a, source_b);
+            end
+
+            OP_FLOATING_MULTIPLY: begin
+                output_packet.ready_stage_number <= 7;
+                output_packet.result <= floating_multiply(source_a, source_b);
+            end
+
+            OP_FLOATING_MULTIPLY_AND_ADD: begin
+                output_packet.ready_stage_number <= 7;
+                output_packet.result <= floating_multiply_and_add(source_a, source_b, source_c);
+            end
+
+            OP_FLOATING_NEGATIVE_MULTIPLY_AND_SUBTRACT: begin
+                output_packet.ready_stage_number <= 7;
+                output_packet.result <= floating_negative_multiply_and_subtract(source_a, source_b, source_c);
+            end
+
+            OP_FLOATING_MULTIPLY_AND_SUBTRACT: begin
+                output_packet.ready_stage_number <= 7;
+                output_packet.result <= floating_multiply_and_subtract(source_a, source_b, source_c);
+            end
+
+            OP_FLOATING_COMPARE_EQUAL: begin
+                output_packet.ready_stage_number <= 7;
+                output_packet.result <= floating_compare_equal(source_a, source_b);
+            end
+
+            OP_FLOATING_COMPARE_MAGNITUDE_EQUAL: begin
+                output_packet.ready_stage_number <= 7;
+                output_packet.result <= floating_compare_magnitude_equal(source_a, source_b);
+            end
+
+            OP_FLOATING_COMPARE_GREATER_THAN: begin
+                output_packet.ready_stage_number <= 7;
+                output_packet.result <= floating_compare_greater_than(source_a, source_b);
+            end
+
+            OP_FLOATING_COMPARE_MAGNITUDE_GREATER_THAN: begin
+                output_packet.ready_stage_number <= 7;
+                output_packet.result <= floating_compare_magnitude_greater_than(source_a, source_b);
+            end
+
+
+        endcase
+    end
+end
 
 localparam WORD_BITS = 32;
 localparam shortreal S_max = 6.8e+38;

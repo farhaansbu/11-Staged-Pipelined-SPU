@@ -36,11 +36,50 @@ always_ff @(posedge clk) begin
 
             OP_ADD_WORD: output_packet.result <= add_word(source_a, source_b);
             OP_ADD_HALFWORD: output_packet.result <= add_halfword(source_a, source_b);
-        
+            OP_ADD_EXTENDED: output_packet.result <= add_extended(source_a, source_b, source_c);
+            OP_SUBTRACT_FROM_WORD: output_packet.result <= subtract_from_word(source_a, source_b);
+            OP_SUBTRACT_FROM_HALFWORD: output_packet.result <= subtract_from_halfword(source_b, source_b);
+            OP_SUBTRACT_FROM_EXTENDED: output_packet.result <= subtract_from_extended(source_a, source_b, source_c);
+            OP_CARRY_GENERATE: output_packet.result <= carry_generate(source_a, source_b);
+            OP_BORROW_GENERATE: output_packet.result <= borrow_generate(source_a, source_b);
+            OP_ADD_WORD_IMMEDIATE: output_packet.result <= add_word_immediate(source_a, source_b[0:9]);
+            OP_ADD_HALFWORD_IMMEDIATE: output_packet.result <= add_halfword_immediate(source_a, source_b[0:9]);
+            OP_SUBTRACT_FROM_WORD_IMMEDIATE: output_packet.result <= subtract_from_word_immediate(source_a, source_b[0:9]);
+            OP_SUBTRACT_FROM_HALFWORD_IMMEDIATE: output_packet.result <= subtract_from_halfword_immediate(source_a, source_b[0:9]);
+            OP_COUNT_LEADING_ZEROS: output_packet.result <= count_leading_zeros(source_a);
+            OP_FORM_SELECT_MASK_FOR_HALFWORDS: output_packet.result <= form_select_mask_for_halfwords(source_a);
+            OP_FORM_SELECT_MASK_FOR_WORDS: output_packet.result <= form_select_mask_for_words(source_a);
+            OP_AND: output_packet.result <= and_op(source_a, source_b);
+            OP_AND_WORD_IMMEDIATE: output_packet.result <= and_word_immediate(source_a, source_b[0:9]);
+            OP_AND_HALFWORD_IMMEDIATE: output_packet.result <= and_halfword_immediate(source_a, source_b[0:9]);
+            OP_OR: output_packet.result <= or_op(source_a, source_b);
+            OP_OR_WORD_IMMEDIATE: output_packet.result <= or_word_immediate(source_a, source_b[0:9]);
+            OP_OR_HALFWORD_IMMEDIATE: output_packet.result <= or_halfword_immediate(source_a, source_b[0:9]);
+            OP_EXCLUSIVE_OR: output_packet.result <= xor_op(source_a, source_b);
+            OP_EXCLUSIVE_OR_WORD_IMMEDIATE: output_packet.result <= xor_word_immediate(source_a, source_b[0:9]);
+            OP_EXCLUSIVE_OR_HALFWORD_IMMEDIATE: output_packet.result <= xor_halfword_immediate(source_a, source_b[0:9]);
+            OP_NAND: output_packet.result <= nand_op(source_a, source_b);
+            OP_NOR: output_packet.result <= nor_op(source_a, source_b);
+            OP_COMPARE_EQUAL_WORD: output_packet.result <= compare_equal_word(source_a, source_b);
+            OP_COMPARE_EQUAL_HALFWORD: output_packet.result <= compare_equal_halfword(source_a, source_b);
+            OP_COMPARE_GREATER_THAN_WORD: output_packet.result <= compare_greater_than_word(source_a, source_b);
+            OP_COMPARE_GREATER_THAN_HALFWORD: output_packet.result <= compare_greater_than_halfword(source_a, source_b);
+            OP_COMPARE_LOGICAL_GREATER_THAN_WORD: output_packet.result <= compare_logical_greater_than_word(source_a, source_b);
+            OP_COMPARE_LOGICAL_GREATER_THAN_HALFWORD: output_packet.result <= compare_logical_greater_than_halfword(source_a, source_b);
+            OP_COMPARE_EQUAL_WORD_IMMEDIATE: output_packet.result <= compare_equal_word_immediate(source_a, source_b[0:9]);
+            OP_COMPARE_EQUAL_HALFWORD_IMMEDIATE: output_packet.result <= compare_equal_halfword_immediate(source_a, source_b[0:9]);
+            OP_COMPARE_GREATER_THAN_WORD_IMMEDIATE: output_packet.result <= compare_greater_than_word_immediate(source_a, source_b[0:9]);
+            OP_COMPARE_GREATER_THAN_HALFWORD_IMMEDIATE: output_packet.result <= compare_greater_than_halfword_immediate(source_a, source_b[0:9]);
+            OP_COMPARE_LOGICAL_GREATER_THAN_WORD_IMMEDIATE: output_packet.result <= compare_logical_greater_than_word_immediate(source_a, source_b[0:9]);
+            OP_COMPARE_LOGICAL_GREATER_THAN_HALFWORD_IMMEDIATE: output_packet.result <= compare_logical_greater_than_halfword_immediate(source_a, source_b[0:9]);
+            OP_IMMEDIATE_LOAD_WORD: output_packet.result <= immediate_load_word(source_a[0:15]);
+            OP_IMMEDIATE_LOAD_HALFWORD: output_packet.result <= immediate_load_halfword(source_a[0:15]);
+            OP_IMMEDIATE_LOAD_ADDRESS: output_packet.result <= immediate_load_address(source_a[0:17]);
+            OP_IMMEDIATE_LOAD_HALFWORD_UPPER: output_packet.result <= immediate_load_halfword_upper(source_a[0:15]);
+            OP_IMMEDIATE_OR_HALFWORD_LOWER: output_packet.result <= immediate_or_halfword_lower(source_a, source_b[0:15]);
+
         endcase
     end
-
-
     
 
 end
