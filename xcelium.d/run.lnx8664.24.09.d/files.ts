@@ -1,7 +1,9 @@
-1774477067 /home/home5/fkhan/ese545project/fixed_point_unit_1_1.sv
+1774666808 /home/home5/fkhan/ese545project/fixed_point_unit_1_1.sv
 1774326498 /home/home5/fkhan/ese545project/fixed_point_unit_2_1.sv
 1774484552 /home/home5/fkhan/ese545project/single_precision_unit_1.sv
 1774588470 /home/home5/fkhan/ese545project/local_store_unit.sv
 1774652652 /home/home5/fkhan/ese545project/branch_unit.sv
 1774662547 /home/home5/fkhan/ese545project/permute_unit_1.sv
 1774662631 /home/home5/fkhan/ese545project/byte_unit_1.sv
+1774668337 /home/home5/fkhan/ese545project/id_rf_reg.sv
+1774668273 /home/home5/fkhan/ese545project/instructions.sv

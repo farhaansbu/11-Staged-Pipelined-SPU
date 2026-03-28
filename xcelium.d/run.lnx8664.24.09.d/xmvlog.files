@@ -2,6 +2,7 @@
 // File created by:  xrun
 // Do not modify this file
 //
+/home/home5/fkhan/ese545project/instructions.sv
 /home/home5/fkhan/ese545project/fixed_point_unit_1_1.sv
 /home/home5/fkhan/ese545project/fixed_point_unit_2_1.sv
 /home/home5/fkhan/ese545project/single_precision_unit_1.sv
@@ -9,3 +10,4 @@
 /home/home5/fkhan/ese545project/branch_unit.sv
 /home/home5/fkhan/ese545project/permute_unit_1.sv
 /home/home5/fkhan/ese545project/byte_unit_1.sv
+/home/home5/fkhan/ese545project/id_rf_reg.sv
