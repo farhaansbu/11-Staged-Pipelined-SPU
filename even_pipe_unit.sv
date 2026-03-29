@@ -1,5 +1,4 @@
 
-
 module even_pipe_unit (
 
     input logic clk,
@@ -11,7 +10,12 @@ module even_pipe_unit (
     input opcode_t even_opcode,
     input logic[0:2] even_unit_id,
 
-    output unit_result_packet even_output_to_write_back
+    output unit_result_packet even_output_to_write_back,
+    output unit_result_packet even_stage_2_forwarded_res, // After second stage, 3rd cycle
+    output unit_result_packet even_stage_3_forwarded_res,
+    output unit_result_packet even_stage_4_forwarded_res,
+    output unit_result_packet even_stage_5_forwarded_res,
+    output unit_result_packet even_stage_6_forwarded_res
 
 );
 
@@ -33,6 +37,16 @@ unit_result_packet sp_7_output;
 unit_result_packet byte_1_output;
 unit_result_packet byte_2_output;
 unit_result_packet byte_3_output;
+
+unit_result_packet fw_even_3_output;
+unit_result_packet fw_even_4_output;
+unit_result_packet fw_even_5_output;
+unit_result_packet fw_even_6_output;
+unit_result_packet fw_even_7_output;
+
+unit_result_packet stage_3_mux_output;
+unit_result_packet stage_6_mux_output;
+unit_result_packet stage_7_mux_output;
 
 // Fixed point 1 unit
 simple_fixed_1_1 fixed_1_1 (
@@ -124,6 +138,8 @@ execution_pipe_register sp_7 (
     .unit_packet_q(sp_7_output)
 );
 
+// Byte unit
+
 byte_unit byte_1(
     .clk(clk),
     .source_a(even_source_a),
@@ -148,19 +164,62 @@ execution_pipe_register byte_3 (
 );
 
 
+// Fowrwarding registers
+
+execution_pipe_register forward_even3 (
+    .clk(clk),
+    .unit_packet(fixed_1_2_output),
+    .unit_packet_q(fw_even_3_output)
+);
+
+execution_pipe_mux #(.NUM_INPUTS(3)) fw_even_4_mux (
+    .input_packets('{fw_even_3_output, byte_3_output, fixed_2_3_output}),
+    .output_packet(stage_3_mux_output)
+);
 
 
+execution_pipe_register forward_even4 (
+    .clk(clk),
+    .unit_packet(stage_3_mux_output),
+    .unit_packet_q(fw_even_4_output)
+);
+
+execution_pipe_register forward_even5 (
+    .clk(clk),
+    .unit_packet(fw_even_4_output),
+    .unit_packet_q(fw_even_5_output)
+);
 
 
+execution_pipe_register forward_even6 (
+    .clk(clk),
+    .unit_packet(fw_even_5_output),
+    .unit_packet_q(fw_even_6_output)
+);
 
+execution_pipe_mux #(.NUM_INPUTS(2)) fw_even_7_mux (
+    .input_packets('{sp_6_output, fw_even_6_output}),
+    .output_packet(stage_6_mux_output)
+);
 
+execution_pipe_register forward_even7 (
+    .clk(clk),
+    .unit_packet(stage_6_mux_output),
+    .unit_packet_q(stage_7_mux_output)
+);
 
-
-
+execution_pipe_mux #(.NUM_INPUTS(2)) fw_even_8_mux (
+    .input_packets('{sp_7_output, stage_7_mux_output}),
+    .output_packet(even_output_to_write_back)
+);
 
 always_comb begin : even_pipe_body
 
-    // Pass inputs to each unit, each unit_first_stage will check for unit_id and then generate a present_bit to pass to next stage
+    even_stage_2_forwarded_res = fixed_1_2_output;
+    even_stage_3_forwarded_res = stage_3_mux_output;
+    even_stage_4_forwarded_res = fw_even_4_output;
+    even_stage_5_forwarded_res = fw_even_5_output;
+    even_stage_6_forwarded_res = stage_6_mux_output;
 
 end
 

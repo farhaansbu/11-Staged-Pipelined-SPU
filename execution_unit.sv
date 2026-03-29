@@ -32,5 +32,23 @@ module execution_unit(
     output unit_result_packet odd_stage_6_forwarded_res
 );
 
+even_pipe_unit even_pipe(
+    .even_source_a(even_source_a),
+    .even_source_b(even_source_b),
+    .even_source_c(even_source_c),
+    .even_write_address(even_write_address),
+    .even_opcode(even_opcode),
+    .even_unit_id(even_unit_id),
+    .even_output_to_write_back(even_output_to_write_back),
+    .even_stage_2_forwarded_res(even_stage_2_forwarded_res),
+    .even_stage_3_forwarded_res(even_stage_3_forwarded_res),
+    .even_stage_4_forwarded_res(even_stage_4_forwarded_res),
+    .even_stage_5_forwarded_res(even_stage_5_forwarded_res),
+    .even_stage_6_forwarded_res(even_stage_6_forwarded_res)
+);
+
+
+
+
 
 endmodule

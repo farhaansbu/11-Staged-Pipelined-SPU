@@ -12,3 +12,5 @@ forwarding_unit.sv
 execution_pipe_register.sv
 execution_unit.sv
 even_pipe_unit.sv
+execution_pipe_mux.sv
+odd_pipe_unit.sv

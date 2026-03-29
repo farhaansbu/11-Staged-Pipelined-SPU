@@ -1,4 +1,14 @@
-module local_store_unit;
+module local_store_unit (
+    input logic clk,
+
+    input logic [0:127] odd_source_a,
+    input logic [0:127] odd_source_b,
+    input logic [0:127] odd_source_c,
+    input logic [0:6] odd_write_address,
+    input opcode_t odd_opcode,
+    input logic[0:2] odd_unit_id
+    
+);
 
 localparam logic[0:32] LSLR = 32'h0000_7FFF;    // max size of memory 32 KB (32768 bytes)
 
