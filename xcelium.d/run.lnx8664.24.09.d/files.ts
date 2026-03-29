@@ -3,9 +3,9 @@
 1774762592 /home/home5/fkhan/ese545project/branch_unit.sv
 1774749783 /home/home5/fkhan/ese545project/permute_unit_1.sv
 1774749667 /home/home5/fkhan/ese545project/byte_unit_1.sv
-1774763828 /home/home5/fkhan/ese545project/id_rf_reg.sv
+1774774264 /home/home5/fkhan/ese545project/id_rf_reg.sv
 1774750784 /home/home5/fkhan/ese545project/instructions.sv
-1774721921 /home/home5/fkhan/ese545project/register_file.sv
+1774774397 /home/home5/fkhan/ese545project/register_file.sv
 1774762410 /home/home5/fkhan/ese545project/forwarding_unit.sv
 1774734675 /home/home5/fkhan/ese545project/execution_pipe_register.sv
 1774749124 /home/home5/fkhan/ese545project/execution_unit.sv
@@ -17,4 +17,4 @@
 1774749095 /home/home5/fkhan/ese545project/write_back_register.sv
 1774758234 /home/home5/fkhan/ese545project/rf_ex_reg.sv
 1774763492 /home/home5/fkhan/ese545project/source_operand.sv
-1774767584 /home/home5/fkhan/ese545project/top_level_unit.sv
+1774774854 /home/home5/fkhan/ese545project/top_level_unit.sv

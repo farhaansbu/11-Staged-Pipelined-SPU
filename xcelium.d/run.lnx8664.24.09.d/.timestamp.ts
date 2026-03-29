@@ -15,10 +15,10 @@
 1774749693 /home/home5/fkhan/ese545project/fixed_point_unit_1.sv
 1774762410 /home/home5/fkhan/ese545project/forwarding_unit.sv
 1774758234 /home/home5/fkhan/ese545project/rf_ex_reg.sv
-1774767584 /home/home5/fkhan/ese545project/top_level_unit.sv
-1774721921 /home/home5/fkhan/ese545project/register_file.sv
+1774774854 /home/home5/fkhan/ese545project/top_level_unit.sv
+1774774397 /home/home5/fkhan/ese545project/register_file.sv
 1774749777 /home/home5/fkhan/ese545project/local_store_unit.sv
-1774763828 /home/home5/fkhan/ese545project/id_rf_reg.sv
+1774774264 /home/home5/fkhan/ese545project/id_rf_reg.sv
 1774749667 /home/home5/fkhan/ese545project/byte_unit_1.sv
 1774759973 /home/home5/fkhan/ese545project/single_precision_unit_1.sv
 1774746779 /home/home5/fkhan/ese545project/even_pipe_unit.sv

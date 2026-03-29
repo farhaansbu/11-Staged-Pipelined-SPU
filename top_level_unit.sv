@@ -6,24 +6,22 @@ module top_level (
     input logic clk,
     input logic reset,
 
-    input logic[0:7] even_ra_addr,
-    input logic[0:7] even_rb_addr,
-    input logic[0:7] even_rc_addr,
-    input logic[0:7] even_rt_addr,
+    input logic[0:6] even_ra_addr,
+    input logic[0:6] even_rb_addr,
+    input logic[0:6] even_rc_addr,
+    input logic[0:6] even_rt_addr,
     input instruction_type even_instruction_type,
     input opcode_t even_opcode,
-    input logic even_register_write,
     input logic[0:2] even_unit_id,
     input logic[0:10] even_program_counter,
     input logic[0:17] even_immediate,
 
-    input logic[0:7] odd_ra_addr,
-    input logic[0:7] odd_rb_addr,
-    input logic[0:7] odd_rc_addr,
-    input logic[0:7] odd_rt_addr,
+    input logic[0:6] odd_ra_addr,
+    input logic[0:6] odd_rb_addr,
+    input logic[0:6] odd_rc_addr,
+    input logic[0:6] odd_rt_addr,
     input instruction_type odd_instruction_type,
     input opcode_t odd_opcode,
-    input logic odd_register_write,
     input logic[0:2] odd_unit_id,
     input logic[0:10] odd_program_counter,
     input logic[0:17] odd_immediate
@@ -31,19 +29,19 @@ module top_level (
 );
 
 // id_if outputs
-logic[0:7] id_rf_reg_output_even_ra_addr_q;
-logic[0:7] id_rf_reg_output_even_rb_addr_q;
-logic[0:7] id_rf_reg_output_even_rc_addr_q;
-logic[0:7] id_rf_reg_output_even_rt_addr_q;
+logic[0:6] id_rf_reg_output_even_ra_addr_q;
+logic[0:6] id_rf_reg_output_even_rb_addr_q;
+logic[0:6] id_rf_reg_output_even_rc_addr_q;
+logic[0:6] id_rf_reg_output_even_rt_addr_q;
 instruction_type id_rf_reg_output_even_instruction_type_q;
 opcode_t id_rf_reg_output_even_opcode_q;
 logic[0:2] id_rf_reg_output_even_unit_id_q;
 logic[0:10] id_rf_reg_output_even_program_counter_q;
 logic[0:17] id_rf_reg_output_even_immediate_q;
-logic[0:7] id_rf_reg_output_odd_ra_addr_q;
-logic[0:7] id_rf_reg_output_odd_rb_addr_q;
-logic[0:7] id_rf_reg_output_odd_rc_addr_q;
-logic[0:7] id_rf_reg_output_odd_rt_addr_q;
+logic[0:6] id_rf_reg_output_odd_ra_addr_q;
+logic[0:6] id_rf_reg_output_odd_rb_addr_q;
+logic[0:6] id_rf_reg_output_odd_rc_addr_q;
+logic[0:6] id_rf_reg_output_odd_rt_addr_q;
 instruction_type id_rf_reg_output_odd_instruction_type_q;
 opcode_t id_rf_reg_output_odd_opcode_q;
 logic[0:2] id_rf_reg_output_odd_unit_id_q;
@@ -83,14 +81,14 @@ logic [0:127] sourcing_unit_out_odd_source_b;
 logic [0:127] sourcing_unit_out_odd_source_c;
 
 // rf_ex_reg outputs
-logic[0:7] rf_ex_out_even_write_addr_q;
+logic[0:6] rf_ex_out_even_write_addr_q;
 logic[0:127] rf_ex_out_even_source_a_q;
 logic[0:127] rf_ex_out_even_source_b_q;
 logic[0:127] rf_ex_out_even_source_c_q;
 opcode_t rf_ex_out_even_opcode_q;
 logic[0:2] rf_ex_out_even_unit_id_q;
 
-logic[0:7] rf_ex_out_odd_write_addr_q;
+logic[0:6] rf_ex_out_odd_write_addr_q;
 logic[0:127] rf_ex_out_odd_source_a_q;
 logic[0:127] rf_ex_out_odd_source_b_q;
 logic[0:127] rf_ex_out_odd_source_c_q;

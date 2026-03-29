@@ -2,17 +2,17 @@ module register_file(
 
    input logic reset,
 
-   input logic[0:7] even_read_addr_1,
-   input logic[0:7] even_read_addr_2,
-   input logic[0:7] even_read_addr_3,
-   input logic[0:7] even_write_addr,
+   input logic[0:6] even_read_addr_1,
+   input logic[0:6] even_read_addr_2,
+   input logic[0:6] even_read_addr_3,
+   input logic[0:6] even_write_addr,
    input logic[0:127] even_write_data,
    input logic even_reg_write,
 
-   input logic[0:7] odd_read_addr_1,
-   input logic[0:7] odd_read_addr_2,
-   input logic[0:7] odd_read_addr_3,
-   input logic[0:7] odd_write_addr,
+   input logic[0:6] odd_read_addr_1,
+   input logic[0:6] odd_read_addr_2,
+   input logic[0:6] odd_read_addr_3,
+   input logic[0:6] odd_write_addr,
    input logic[0:127] odd_write_data,
    input logic odd_reg_write,
 
@@ -28,12 +28,6 @@ module register_file(
 
 //register array (first part is defined with data type)
 logic [0:127] reg_file[0:127];
-
-always_ff @ (posedge reset) begin
-    for (int i = 0; i < 128; i++) begin
-        reg_file[i] <= 128'b0; //non blocking executes in parallel
-    end 
-end
 
 always_comb begin : register_file_body
 
@@ -53,6 +47,12 @@ always_comb begin : register_file_body
 
     if (odd_reg_write) begin
         reg_file[odd_write_addr] = odd_write_data;
+    end
+
+    if (reset == 1) begin
+        for (int i = 0; i < 128; i++) begin
+            reg_file[i] <= 128'b0; //non blocking executes in parallel
+        end 
     end
     
 end
