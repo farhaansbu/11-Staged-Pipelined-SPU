@@ -1,5 +1,5 @@
 xrun(64): 24.09-s001: (c) Copyright 1995-2024 Cadence Design Systems, Inc.
-TOOL:	xrun(64)	24.09-s001: Started on Mar 29, 2026 at 05:30:34 EDT
+TOOL:	xrun(64)	24.09-s001: Started on Mar 29, 2026 at 05:34:14 EDT
 xrun
 	-f files.f
 		instructions.sv
@@ -22,11 +22,11 @@ xrun
 		execution_pipe_mux.sv
 		write_back_register.sv
 		top_level_unit.sv
-Recompiling... reason: file './source_operand.sv' is newer than expected.
-	expected: Sun Mar 29 05:23:56 2026
-	actual:   Sun Mar 29 05:30:33 2026
-file: source_operand.sv
-	module worklib.source_operand_unit:sv
+Recompiling... reason: file './rf_ex_reg.sv' is newer than expected.
+	expected: Sun Mar 29 05:17:29 2026
+	actual:   Sun Mar 29 05:33:38 2026
+file: rf_ex_reg.sv
+	module worklib.rf_ex_reg:sv
 		errors: 0, warnings: 0
 		Caching library 'worklib' ....... Done
 	Elaborating the design hierarchy:
@@ -40,32 +40,18 @@ xmelab: *W,CUVMPW (./top_level_unit.sv,188|45): port sizes differ in port connec
     .odd_reg_data_c(rf_output_odd_read_data_3),
                                             |
 xmelab: *W,CUVMPW (./top_level_unit.sv,255|44): port sizes differ in port connection(1/128) for the instance(top_level) .
-    .even_write_addr(id_rf_reg_output_even_rt_addr_q),
-                                                   |
-xmelab: *W,CUVMPW (./top_level_unit.sv,278|51): port sizes differ in port connection(7/8) for the instance(top_level) .
-    .odd_write_addr(id_rf_reg_output_odd_rt_addr_q),
-                                                 |
-xmelab: *W,CUVMPW (./top_level_unit.sv,285|49): port sizes differ in port connection(7/8) for the instance(top_level) .
-    .even_write_addr_q(rf_ex_out_even_write_addr_q),
-                                                 |
-xmelab: *W,CUVMPW (./top_level_unit.sv,292|49): port sizes differ in port connection(7/8) for the instance(top_level) .
-    .odd_write_addr_q(rf_ex_out_odd_write_addr_q),
-                                               |
-xmelab: *W,CUVMPW (./top_level_unit.sv,299|47): port sizes differ in port connection(7/8) for the instance(top_level) .
     .output_packet(stage_6_mux_output)
                                     |
 xmelab: *W,CUVMPW (./odd_pipe_unit.sv,136|36): port sizes differ in port connection(1/180) for the instance(top_level.exec_unit.odd_pipe) .
     .unit_packet(stage_6_mux_output),
                                   |
 xmelab: *W,CUVMPW (./odd_pipe_unit.sv,141|34): port sizes differ in port connection(1/180) for the instance(top_level.exec_unit.odd_pipe) .
-	Building instance overlay tables: ..
-        even_source_b[7:128] = '0;
-                    |
-xmelab: *W,BNDWRN (./source_operand.sv,78|20): Bit-select or part-select index out of declared bounds.
-.................. Done
+	Building instance overlay tables: .................... Done
 	Generating native compiled code:
-		worklib.source_operand_unit:sv <0x7bd81d17>
-			streams:   1, words: 10717
+		worklib.rf_ex_reg:sv <0x38fb2a1d>
+			streams:   2, words:  2548
+		worklib.top_level:sv <0x5d5e520b>
+			streams: 119, words: 32644
 	Building instance specific data structures.
 	Loading native compiled code:     .................... Done
 	Design hierarchy summary:
@@ -86,4 +72,4 @@ xcelium> source /usr/local/cds/XCELIUM2409/tools/xcelium/files/xmsimrc
 xcelium> run
 xmsim: *W,RNQUIE: Simulation is complete.
 xcelium> exit
-TOOL:	xrun(64)	24.09-s001: Exiting on Mar 29, 2026 at 05:30:35 EDT  (total: 00:00:01)
+TOOL:	xrun(64)	24.09-s001: Exiting on Mar 29, 2026 at 05:34:14 EDT  (total: 00:00:00)

@@ -4,7 +4,7 @@ module rf_ex_reg (
     
     input logic clk,
     
-    input logic[0:7] even_write_addr,
+    input logic[0:6] even_write_addr,
     input logic[0:127] even_source_a,
     input logic[0:127] even_source_b,
     input logic[0:127] even_source_c,
@@ -12,14 +12,14 @@ module rf_ex_reg (
     input logic[0:2] even_unit_id,
 
     
-    input logic[0:7] odd_write_addr,
+    input logic[0:6] odd_write_addr,
     input logic[0:127] odd_source_a,
     input logic[0:127] odd_source_b,
     input logic[0:127] odd_source_c,
     input opcode_t odd_opcode,
     input logic[0:2] odd_unit_id,
 
-    output logic[0:7] even_write_addr_q,
+    output logic[0:6] even_write_addr_q,
     output logic[0:127] even_source_a_q,
     output logic[0:127] even_source_b_q,
     output logic[0:127] even_source_c_q,
@@ -27,7 +27,7 @@ module rf_ex_reg (
     output logic[0:2] even_unit_id_q,
 
     
-    output logic[0:7] odd_write_addr_q,
+    output logic[0:6] odd_write_addr_q,
     output logic[0:127] odd_source_a_q,
     output logic[0:127] odd_source_b_q,
     output logic[0:127] odd_source_c_q,
