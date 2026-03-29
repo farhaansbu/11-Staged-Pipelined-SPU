@@ -48,10 +48,12 @@ always_comb begin : source_operand_unit_body
     // Even sources
     if (even_instruction_type == RI18) begin
         even_source_a[0:17] = even_immediate;
+        even_source_a[18:127] = '0;
     end
 
     else if (even_instruction_type == RI16) begin
-        even_source_a[0:15] = even_immediate[0:15];
+        even_source_a[0:15] = even_immediate[2:17];
+        even_source_a[16:127] = '0;
     end
 
     else if (even_instruction_type == RI10) begin
@@ -61,7 +63,8 @@ always_comb begin : source_operand_unit_body
         else begin
             even_source_a = even_reg_data_a;
         end
-        even_source_b[0:9] = even_immediate[0:9];
+        even_source_b[0:9] = even_immediate[8:17];
+        even_source_b[10:127] = '0;
     end
 
     else if (even_instruction_type == RI7) begin
@@ -71,7 +74,8 @@ always_comb begin : source_operand_unit_body
         else begin
             even_source_a = even_reg_data_a;
         end
-        even_source_b[0:6] = even_immediate[0:6];
+        even_source_b[0:6] = even_immediate[11:17];
+        even_source_b[7:128] = '0;
     end
 
     else if (even_instruction_type == RR) begin
@@ -116,10 +120,12 @@ always_comb begin : source_operand_unit_body
     // Odd sources
     if (odd_instruction_type == RI18) begin
         odd_source_a[0:17] = odd_immediate;
+        odd_source_a[18:127] = '0;
     end
 
     else if (odd_instruction_type == RI16) begin
-        odd_source_a[0:15] = odd_immediate[0:15];
+        odd_source_a[0:15] = odd_immediate[2:17];
+        odd_source_a[16:127] = '0;
     end
 
     else if (odd_instruction_type == RI10) begin
@@ -129,7 +135,8 @@ always_comb begin : source_operand_unit_body
         else begin
             odd_source_a = odd_reg_data_a;
         end
-        odd_source_b[0:9] = odd_immediate[0:9];
+        odd_source_b[0:9] = odd_immediate[8:17];
+        odd_source_b[10:127] = '0;
     end
 
     else if (odd_instruction_type == RI7) begin
@@ -139,7 +146,8 @@ always_comb begin : source_operand_unit_body
         else begin
             odd_source_a = odd_reg_data_a;
         end
-        odd_source_b[0:6] = odd_immediate[0:6];
+        odd_source_b[0:6] = odd_immediate[11:17];
+        odd_source_b[7:127] = '0;
     end
 
     else begin
@@ -160,6 +168,7 @@ always_comb begin : source_operand_unit_body
 
     if (odd_unit_id == 7) begin
         odd_source_c[0:10] = odd_program_counter;
+        odd_source_c[11:127] = '0;
     end
     
 end //comb end 

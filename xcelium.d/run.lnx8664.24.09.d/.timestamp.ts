@@ -4,8 +4,8 @@
 1774734675 /home/home5/fkhan/ese545project/execution_pipe_register.sv
 1774749704 /home/home5/fkhan/ese545project/fixed_point_unit_2.sv
 1774749124 /home/home5/fkhan/ese545project/execution_unit.sv
+1774776633 /home/home5/fkhan/ese545project/source_operand.sv
 1774746786 /home/home5/fkhan/ese545project/execution_pipe_mux.sv
-1774763492 /home/home5/fkhan/ese545project/source_operand.sv
 1774326498 /home/home5/fkhan/ese545project/fixed_point_unit_2_1.sv
 1774749783 /home/home5/fkhan/ese545project/permute_unit_1.sv
 1774748663 /home/home5/fkhan/ese545project/odd_pipe_unit.sv
