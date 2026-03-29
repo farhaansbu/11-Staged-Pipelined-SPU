@@ -14,3 +14,5 @@ execution_unit.sv
 even_pipe_unit.sv
 execution_pipe_mux.sv
 odd_pipe_unit.sv
+write_back_register.sv
+rf_ex_reg.sv

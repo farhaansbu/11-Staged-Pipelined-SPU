@@ -1,3 +1,5 @@
+import instruction_pkg::*;
+
 module execution_pipe_mux #(
     parameter int NUM_INPUTS = 3
 

@@ -77,7 +77,7 @@ always_ff @(posedge clk) begin
             OP_IMMEDIATE_LOAD_ADDRESS: output_packet.result <= immediate_load_address(source_a[0:17]);
             OP_IMMEDIATE_LOAD_HALFWORD_UPPER: output_packet.result <= immediate_load_halfword_upper(source_a[0:15]);
             OP_IMMEDIATE_OR_HALFWORD_LOWER: output_packet.result <= immediate_or_halfword_lower(source_a, source_b[0:15]);
-
+            default: ;
         endcase
     end
     

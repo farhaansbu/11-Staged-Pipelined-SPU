@@ -1,6 +1,9 @@
+import instruction_pkg::*;
 // First 7 stages of execution
 
 module execution_unit(
+    input logic clk,
+
     input logic [0:127] even_source_a,
     input logic [0:127] even_source_b,
     input logic [0:127] even_source_c,
@@ -24,8 +27,7 @@ module execution_unit(
     output unit_result_packet even_stage_5_forwarded_res,
     output unit_result_packet even_stage_6_forwarded_res,
 
-    output unit_result_packet odd_branch_forwarded_res, // After second stage, 3rd cycle
-    output unit_result_packet odd_stage_2_forwarded_res, // After second stage, 3rd cycle
+    output unit_result_packet odd_branch_forwarded_res, 
     output unit_result_packet odd_stage_3_forwarded_res,
     output unit_result_packet odd_stage_4_forwarded_res,
     output unit_result_packet odd_stage_5_forwarded_res,
@@ -33,6 +35,7 @@ module execution_unit(
 );
 
 even_pipe_unit even_pipe(
+    .clk(clk),
     .even_source_a(even_source_a),
     .even_source_b(even_source_b),
     .even_source_c(even_source_c),
@@ -45,6 +48,22 @@ even_pipe_unit even_pipe(
     .even_stage_4_forwarded_res(even_stage_4_forwarded_res),
     .even_stage_5_forwarded_res(even_stage_5_forwarded_res),
     .even_stage_6_forwarded_res(even_stage_6_forwarded_res)
+);
+
+odd_pipe_unit odd_pipe(
+    .clk(clk),
+    .odd_source_a(odd_source_a),
+    .odd_source_b(odd_source_b),
+    .odd_source_c(odd_source_c),
+    .odd_write_address(odd_write_address),
+    .odd_opcode(odd_opcode),
+    .odd_unit_id(odd_unit_id),
+    .odd_output_to_write_back(odd_output_to_write_back),
+    .odd_branch_forwarded_res(odd_branch_forwarded_res),
+    .odd_stage_3_forwarded_res(odd_stage_3_forwarded_res),
+    .odd_stage_4_forwarded_res(odd_stage_4_forwarded_res),
+    .odd_stage_5_forwarded_res(odd_stage_5_forwarded_res),
+    .odd_stage_6_forwarded_res(odd_stage_6_forwarded_res)
 );
 
 

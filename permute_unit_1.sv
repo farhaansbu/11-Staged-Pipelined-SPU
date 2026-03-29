@@ -1,4 +1,52 @@
-module permute_unit;
+import instruction_pkg::*;
+
+module permute_unit(
+    
+    input logic clk,
+
+    input logic [0:127] odd_source_a,
+    input logic [0:127] odd_source_b,
+    input logic [0:127] odd_source_c,
+    input logic [0:6] odd_write_address,
+    input opcode_t odd_opcode,
+    input logic[0:2] odd_unit_id,
+
+    output unit_result_packet output_packet
+);
+
+always_ff @(posedge clk) begin
+
+    if (odd_unit_id != 5) begin // Unit id doesn't match
+        output_packet.present_bit <= 0;
+    end
+
+    else begin
+        // Record unit id, write addr, other control signals
+        output_packet.unit_id <= odd_unit_id;
+        output_packet.reg_write_addr <= odd_write_address;
+        output_packet.reg_write_flag <= 1;
+        output_packet.present_bit <= 1;
+        output_packet.ready_stage_number <= 4;
+        output_packet.current_stage_number <= 2;
+
+        // Calculate result
+        case (odd_opcode)
+
+            //OP_ADD_WORD: output_packet.result <= add_word(source_a, source_b);
+            OP_SHIFT_LEFT_QUADWORD_BY_BYTES: output_packet.result <= shift_left_quadword_by_bytes(odd_source_a, odd_source_b);
+            OP_SHIFT_LEFT_QUADWORD_BY_BYTES_IMMEDIATE: output_packet.result <= shift_left_quadword_by_bytes(odd_source_a, odd_source_b[0:6]);
+            OP_SHIFT_LEFT_QUADWORD_BY_BITS: output_packet.result <= shift_left_quadword_by_bits(odd_source_a, odd_source_b);
+            OP_ROTATE_QUADWORD_BY_BYTES: output_packet.result <= rotate_quadword_by_bytes(odd_source_a, odd_source_b);
+            OP_ROTATE_QUADWORD_BY_BYTES_IMMEDIATE: output_packet.result <= rotate_quadword_by_bytes_immediate(odd_source_a, odd_source_b[0:6]);
+            OP_ROTATE_QUADWORD_BY_BITS: output_packet.result <= rotate_quadword_by_bits(odd_source_a, odd_source_b);
+            OP_ROTATE_AND_MASK_QUADWORD_BY_BYTES: output_packet.result <= rotate_and_mask_quadword_by_bytes(odd_source_a, odd_source_b);
+            default: ;
+            
+        endcase
+    end
+    
+
+end
 
 localparam BITS_BITS = 1;
 localparam BYTE_BITS = 8;
@@ -128,4 +176,3 @@ function automatic logic [0:127] rotate_and_mask_quadword_by_bytes (
 endfunction : rotate_and_mask_quadword_by_bytes
 
 endmodule
-

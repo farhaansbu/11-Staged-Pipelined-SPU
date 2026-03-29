@@ -43,7 +43,7 @@ always_ff @(posedge clk) begin
             OP_ROTATE_AND_MASK_HALFWORD: output_packet.result <= rotate_and_mask_halfword(source_a, source_b);
             OP_ROTATE_AND_MASK_ALGEBRAIC_WORD: output_packet.result <= rotate_and_mask_algebraic_word(source_a, source_b);
             OP_ROTATE_AND_MASK_ALGEBRAIC_HALFWORD: output_packet.result <= rotate_and_mask_algebraic_halfword(source_a, source_b);
-              
+            default: ;
         endcase
     end    
 

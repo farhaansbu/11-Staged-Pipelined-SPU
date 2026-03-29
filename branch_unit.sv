@@ -1,4 +1,116 @@
-module branch_unit;
+import instruction_pkg::*;
+
+module branch_unit(
+    input logic clk,
+
+    input logic [0:127] odd_source_a,
+    input logic [0:127] odd_source_b,
+    input logic [0:127] odd_source_c,
+    input logic [0:6] odd_write_address,
+    input opcode_t odd_opcode,
+    input logic[0:2] odd_unit_id,
+
+    output unit_result_packet output_packet
+);
+
+logic[0:127] rt_for_set_link;
+
+always_ff @(posedge clk) begin
+
+    if (odd_unit_id != 7) begin // Unit id doesn't match
+        output_packet.present_bit <= 0;
+    end
+
+    else begin
+        // Record unit id, write addr, other control signals
+        output_packet.unit_id <= odd_unit_id;
+        output_packet.reg_write_addr <= odd_write_address;
+        output_packet.present_bit <= 1;
+        output_packet.ready_stage_number <= 2;
+        output_packet.current_stage_number <= 2;
+
+        // Calculate result
+        case (odd_opcode)
+
+        OP_BRANCH_RELATIVE: begin
+            output_packet.reg_write_flag <= 0;
+            output_packet.result <= branch_relative(odd_source_a[0:15], odd_source_b[0:10]);
+        end
+
+        OP_BRANCH_ABSOLUTE: begin
+            output_packet.reg_write_flag <= 0;
+            output_packet.result <= branch_absolute(odd_source_a[0:15]);
+        end
+
+        OP_BRANCH_INDIRECT: begin
+            output_packet.reg_write_flag = 0;
+            output_packet.result <= branch_indirect(odd_source_a);
+        end
+
+        OP_BRANCH_RELATIVE_AND_SET_LINK: begin
+            output_packet.reg_write_flag = 1;
+            output_packet.branch_addr <= branch_relative_and_set_link(rt_for_set_link, odd_source_a[0:15], odd_source_b[0:10]);
+            output_packet.result <= rt_for_set_link;
+        end
+
+        OP_BRANCH_ABSOLUTE_AND_SET_LINK: begin
+            output_packet.reg_write_flag = 1;
+            output_packet.branch_addr <= branch_absolute_and_set_link(rt_for_set_link, odd_source_a[0:15], odd_source_b[0:10]);
+            output_packet.result <= rt_for_set_link;
+        end
+
+        OP_BRANCH_INDIRECT_AND_SET_LINK: begin
+            output_packet.reg_write_flag = 1;
+            output_packet.branch_addr <= branch_indirect_and_set_link(rt_for_set_link, odd_source_a, odd_source_b[0:10]);
+            output_packet.result <= rt_for_set_link;
+        end
+
+        OP_BRANCH_IF_ZERO_WORD: begin
+            output_packet.reg_write_flag = 0;
+            output_packet.result <= branch_if_zero_word(odd_source_a, odd_source_b[0:15], odd_source_c[0:10]);
+        end
+
+        OP_BRANCH_IF_ZERO_HALFWORD: begin
+            output_packet.reg_write_flag = 0;
+            output_packet.result <= branch_if_zero_halfword(odd_source_a, odd_source_b[0:15], odd_source_c[0:10]);
+        end
+
+        OP_BRANCH_IF_NOT_ZERO_WORD: begin
+            output_packet.reg_write_flag = 0;
+            output_packet.result <= branch_if_not_zero_word(odd_source_a, odd_source_b[0:15], odd_source_c[0:10]);
+        end
+
+        OP_BRANCH_IF_NOT_ZERO_HALFWORD: begin
+            output_packet.reg_write_flag = 0;
+            output_packet.result <= branch_if_not_zero_halfword(odd_source_a, odd_source_b[0:15], odd_source_c[0:10]);
+        end
+
+        OP_BRANCH_INDIRECT_IF_ZERO: begin
+            output_packet.reg_write_flag = 0;
+            output_packet.result <= branch_indirect_if_zero(odd_source_a, odd_source_b, odd_source_c[0:10]);
+        end
+
+        OP_BRANCH_INDIRECT_IF_ZERO_HALFWORD: begin
+            output_packet.reg_write_flag = 0;
+            output_packet.result <= branch_indirect_if_zero_halfword(odd_source_a, odd_source_b, odd_source_c[0:10]);
+        end
+
+        OP_BRANCH_INDIRECT_IF_NOT_ZERO: begin
+            output_packet.reg_write_flag = 0;
+            output_packet.result <= branch_indirect_if_not_zero(odd_source_a, odd_source_b, odd_source_c[0:10]);
+        end
+
+        OP_BRANCH_INDIRECT_IF_NOT_ZERO_HALFWORD: begin
+            output_packet.reg_write_flag = 0;
+            output_packet.result <= branch_indirect_if_not_zero_halfword(odd_source_a, odd_source_b, odd_source_c[0:10]);
+        end
+
+        default: ;
+
+        endcase
+
+    end
+end
 
 localparam logic[0:32] LSLR = 32'h0000_7FFF;    // max size of memory 32 KB (32768 bytes)
 

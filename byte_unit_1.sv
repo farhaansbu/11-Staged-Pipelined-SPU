@@ -40,6 +40,7 @@ always_ff @(posedge clk) begin
             OP_SUM_BYTES_INTO_HALFWORDS: output_packet.result <= sum_bytes_into_halfwords(source_a, source_b);
             OP_ABSOLUTE_DIFFERENCES_OF_BYTES: output_packet.result <= absolute_difference_of_bytes(source_a, source_b);
             OP_COUNT_ONES_IN_BYTES: output_packet.result <= count_ones_in_bytes(source_a);
+            default: ;
         endcase
     end    
 

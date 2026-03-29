@@ -1,3 +1,4 @@
+import instruction_pkg::*;
 
 module even_pipe_unit (
 

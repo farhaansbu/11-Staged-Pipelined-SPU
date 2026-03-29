@@ -106,7 +106,8 @@ always_ff @(posedge clk) begin
                 output_packet.result <= floating_compare_magnitude_greater_than(source_a, source_b);
             end
 
-
+            default: ;
+            
         endcase
     end
 end

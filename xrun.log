@@ -1,5 +1,5 @@
 xrun(64): 24.09-s001: (c) Copyright 1995-2024 Cadence Design Systems, Inc.
-TOOL:	xrun(64)	24.09-s001: Started on Mar 28, 2026 at 20:56:53 EDT
+TOOL:	xrun(64)	24.09-s001: Started on Mar 28, 2026 at 22:33:55 EDT
 xrun
 	-f files.f
 		instructions.sv
@@ -18,73 +18,45 @@ xrun
 		even_pipe_unit.sv
 		execution_pipe_mux.sv
 		odd_pipe_unit.sv
-file: local_store_unit.sv
-	module worklib.local_store_unit:sv
-		errors: 0, warnings: 0
+		write_back_register.sv
+		rf_ex_reg.sv
+Recompiling... reason: file './rf_ex_reg.sv' is newer than expected.
+	expected: Sat Mar 28 22:33:39 2026
+	actual:   Sat Mar 28 22:33:51 2026
 		Caching library 'worklib' ....... Done
 	Elaborating the design hierarchy:
-even_pipe_unit even_pipe(
-                       |
-xmelab: *W,CUVWSI (./execution_unit.sv,35|23): 1 input port was not connected:
-xmelab: (./even_pipe_unit.sv,4): clk
-
 	Top level design units:
 		instruction_pkg
-		$unit_0x349a0228
-		local_store_unit
-		branch_unit
-		permute_unit
-		id_rf_stage
+		$unit_0x70889595
+		id_rf_reg
 		register_file
 		forwarding_unit
 		execution_unit
-		odd_pipe_unit
+		wb_register
+		rf_ex_reg
+    .output_packet(stage_6_mux_output)
+                                    |
+xmelab: *W,CUVMPW (./odd_pipe_unit.sv,136|36): port sizes differ in port connection(1/180) for the instance(execution_unit.odd_pipe) .
+    .unit_packet(stage_6_mux_output),
+                                  |
+xmelab: *W,CUVMPW (./odd_pipe_unit.sv,141|34): port sizes differ in port connection(1/180) for the instance(execution_unit.odd_pipe) .
 	Building instance overlay tables: .................... Done
-	Generating native compiled code:
-		worklib.execution_pipe_mux:sv <0x6d83e801>
-			streams:   0, words:     0
-		worklib.execution_pipe_mux:sv <0x5a492113>
-			streams:   0, words:     0
-		worklib.byte_unit:sv <0x6cb61212>
-			streams:   5, words: 16701
-		worklib.single_precision_1:sv <0x62bb4e4c>
-			streams:  19, words: 34584
-		worklib.simple_fixed_2_1:sv <0x3cd8436f>
-			streams:  13, words: 34119
-		worklib.execution_pipe_register:sv <0x1fe9043f>
-			streams:   0, words:     0
-		worklib.simple_fixed_1_1:sv <0x674073fb>
-			streams:  44, words: 70056
-		worklib.even_pipe_unit:sv <0x17178a50>
-			streams:   0, words:     0
-		worklib.execution_unit:sv <0x606ff94a>
-			streams:   0, words:     0
-		worklib.register_file:sv <0x2e73d518>
-			streams:   0, words:     0
-		worklib.id_rf_stage:sv <0x49b90806>
-			streams:   0, words:     0
-		worklib.permute_unit:sv <0x15c8939f>
-			streams:   7, words: 98607
-		worklib.branch_unit:sv <0x295eea84>
-			streams:  14, words: 10348
-		worklib.local_store_unit:sv <0x0e07747c>
-			streams:   6, words:  5830
 	Building instance specific data structures.
 	Loading native compiled code:     .................... Done
 	Design hierarchy summary:
 		              Instances  Unique
-		Modules:             32      15
+		Modules:             46      17
 		Verilog packages:     1       1
-		Registers:          784     765
+		Registers:          814     782
 		Scalar wires:         1       -
-		Vectored wires:      54       -
-		Always blocks:       27      10
+		Vectored wires:      91       -
+		Always blocks:       44      15
 		Compilation units:    1       1
-		Process Clocks:       2       1
-	Writing initial simulation snapshot: worklib.local_store_unit:sv
-Loading snapshot worklib.local_store_unit:sv .................... Done
+		Process Clocks:       4       1
+	Writing initial simulation snapshot: worklib.id_rf_reg:sv
+Loading snapshot worklib.id_rf_reg:sv .................... Done
 xcelium> source /usr/local/cds/XCELIUM2409/tools/xcelium/files/xmsimrc
 xcelium> run
 xmsim: *W,RNQUIE: Simulation is complete.
 xcelium> exit
-TOOL:	xrun(64)	24.09-s001: Exiting on Mar 28, 2026 at 20:56:55 EDT  (total: 00:00:02)
+TOOL:	xrun(64)	24.09-s001: Exiting on Mar 28, 2026 at 22:33:55 EDT  (total: 00:00:00)

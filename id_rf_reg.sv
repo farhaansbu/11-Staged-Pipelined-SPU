@@ -1,6 +1,6 @@
 import instruction_pkg::*;
 
-module id_rf_stage(
+module id_rf_reg(
 
     // Inputs
     input logic clk,

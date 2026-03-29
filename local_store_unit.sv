@@ -1,3 +1,5 @@
+import instruction_pkg::*;
+
 module local_store_unit (
     input logic clk,
 
@@ -6,9 +8,65 @@ module local_store_unit (
     input logic [0:127] odd_source_c,
     input logic [0:6] odd_write_address,
     input opcode_t odd_opcode,
-    input logic[0:2] odd_unit_id
-    
+    input logic[0:2] odd_unit_id,
+
+    output unit_result_packet output_packet
+
 );
+
+always_ff @(posedge clk) begin
+
+    if (odd_unit_id != 6) begin // Unit id doesn't match
+        output_packet.present_bit <= 0;
+    end
+
+    else begin
+        // Record unit id, write addr, other control signals
+        output_packet.unit_id <= odd_unit_id;
+        output_packet.reg_write_addr <= odd_write_address;
+        output_packet.present_bit <= 1;
+        output_packet.ready_stage_number <= 7;
+        output_packet.current_stage_number <= 2;
+
+        // Calculate result
+        case (odd_opcode)
+
+            OP_LOAD_QUADWORD_X: begin
+                output_packet.reg_write_flag <= 1;
+                output_packet.result <= load_quadword_x(odd_source_a, odd_source_b);
+            end
+
+            OP_LOAD_QUADWORD_D: begin
+                output_packet.reg_write_flag <= 1;
+                output_packet.result <= load_quadword_d(odd_source_a, odd_source_b[0:9]);
+            end
+
+            OP_LOAD_QUADWORD_A: begin
+                output_packet.reg_write_flag <= 1;
+                output_packet.result <= load_quadword_a(odd_source_a[0:15]);
+            end
+
+            OP_STORE_QUADWORD_X: begin
+                output_packet.reg_write_flag <= 0;
+                output_packet.result <= store_quadword_x(odd_source_a, odd_source_b);
+            end
+
+            OP_STORE_QUADWORD_D: begin
+                output_packet.reg_write_flag <= 0;
+                output_packet.result <= store_quadword_d(odd_source_a, odd_source_b[0:9]);
+            end
+            
+            OP_STORE_QUADWORD_A: begin
+                output_packet.reg_write_flag <= 0;
+                output_packet.result <= store_quadword_a(odd_source_a[0:15]);
+            end
+
+            default: ;
+
+        endcase
+    end
+end
+
 
 localparam logic[0:32] LSLR = 32'h0000_7FFF;    // max size of memory 32 KB (32768 bytes)
 
