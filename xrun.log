@@ -1,62 +1,142 @@
 xrun(64): 24.09-s001: (c) Copyright 1995-2024 Cadence Design Systems, Inc.
-TOOL:	xrun(64)	24.09-s001: Started on Mar 28, 2026 at 22:33:55 EDT
+TOOL:	xrun(64)	24.09-s001: Started on Mar 29, 2026 at 03:01:41 EDT
 xrun
 	-f files.f
 		instructions.sv
-		fixed_point_unit_1.sv
-		fixed_point_unit_2.sv
-		single_precision_unit_1.sv
-		local_store_unit.sv
-		branch_unit.sv
-		permute_unit_1.sv
-		byte_unit_1.sv
 		id_rf_reg.sv
 		register_file.sv
 		forwarding_unit.sv
-		execution_pipe_register.sv
+		source_operand.sv
+		rf_ex_reg.sv
 		execution_unit.sv
 		even_pipe_unit.sv
-		execution_pipe_mux.sv
+		fixed_point_unit_1.sv
+		fixed_point_unit_2.sv
+		single_precision_unit_1.sv
+		byte_unit_1.sv
 		odd_pipe_unit.sv
+		permute_unit_1.sv
+		local_store_unit.sv
+		branch_unit.sv
+		execution_pipe_register.sv
+		execution_pipe_mux.sv
 		write_back_register.sv
-		rf_ex_reg.sv
-Recompiling... reason: file './rf_ex_reg.sv' is newer than expected.
-	expected: Sat Mar 28 22:33:39 2026
-	actual:   Sat Mar 28 22:33:51 2026
+		top_level_unit.sv
+file: top_level_unit.sv
+	module worklib.top_level:sv
+		errors: 0, warnings: 0
 		Caching library 'worklib' ....... Done
 	Elaborating the design hierarchy:
 	Top level design units:
 		instruction_pkg
-		$unit_0x70889595
-		id_rf_reg
-		register_file
-		forwarding_unit
-		execution_unit
-		wb_register
-		rf_ex_reg
+		$unit_0x43b7d8c9
+		top_level
+    .even_write_addr(even_write_back_packet.reg_write_addr),
+                                                         |
+xmelab: *W,CUVMPW (./top_level_unit.sv,174|57): port sizes differ in port connection(7/8) for the instance(top_level) .
+    .odd_write_addr(odd_write_back_packet.reg_write_addr),
+                                                       |
+xmelab: *W,CUVMPW (./top_level_unit.sv,181|55): port sizes differ in port connection(7/8) for the instance(top_level) .
+    .odd_read_data_3(rf_output_odd_read_data_3)
+                                             |
+xmelab: *W,CUVMPW (./top_level_unit.sv,190|45): port sizes differ in port connection(1/128) for the instance(top_level) .
+    .even_read_addr_a(id_rf_reg_output_even_ra_addr_q),
+                                                    |
+xmelab: *W,CUVMPW (./top_level_unit.sv,195|52): port sizes differ in port connection(8/7) for the instance(top_level) .
+    .even_read_addr_b(id_rf_reg_output_even_rb_addr_q),
+                                                    |
+xmelab: *W,CUVMPW (./top_level_unit.sv,196|52): port sizes differ in port connection(8/7) for the instance(top_level) .
+    .even_read_addr_c(id_rf_reg_output_even_rc_addr_q),
+                                                    |
+xmelab: *W,CUVMPW (./top_level_unit.sv,197|52): port sizes differ in port connection(8/7) for the instance(top_level) .
+    .odd_read_addr_a(id_rf_reg_output_odd_ra_addr_q),
+                                                  |
+xmelab: *W,CUVMPW (./top_level_unit.sv,207|50): port sizes differ in port connection(8/7) for the instance(top_level) .
+    .odd_read_addr_b(id_rf_reg_output_odd_rb_addr_q),
+                                                  |
+xmelab: *W,CUVMPW (./top_level_unit.sv,208|50): port sizes differ in port connection(8/7) for the instance(top_level) .
+    .odd_read_addr_c(id_rf_reg_output_odd_rc_addr_q),
+                                                  |
+xmelab: *W,CUVMPW (./top_level_unit.sv,209|50): port sizes differ in port connection(8/7) for the instance(top_level) .
+    .odd_reg_data_c(rf_output_odd_read_data_3),
+                                            |
+xmelab: *W,CUVMPW (./top_level_unit.sv,257|44): port sizes differ in port connection(1/128) for the instance(top_level) .
+    .even_write_address(rf_ex_out_even_write_addr_q),
+                                                  |
+xmelab: *W,CUVMPW (./top_level_unit.sv,316|50): port sizes differ in port connection(8/7) for the instance(top_level) .
+    .odd_write_address(rf_ex_out_odd_write_addr_q),
+                                                |
+xmelab: *W,CUVMPW (./top_level_unit.sv,323|48): port sizes differ in port connection(8/7) for the instance(top_level) .
     .output_packet(stage_6_mux_output)
                                     |
-xmelab: *W,CUVMPW (./odd_pipe_unit.sv,136|36): port sizes differ in port connection(1/180) for the instance(execution_unit.odd_pipe) .
+xmelab: *W,CUVMPW (./odd_pipe_unit.sv,136|36): port sizes differ in port connection(1/180) for the instance(top_level.exec_unit.odd_pipe) .
     .unit_packet(stage_6_mux_output),
                                   |
-xmelab: *W,CUVMPW (./odd_pipe_unit.sv,141|34): port sizes differ in port connection(1/180) for the instance(execution_unit.odd_pipe) .
+xmelab: *W,CUVMPW (./odd_pipe_unit.sv,141|34): port sizes differ in port connection(1/180) for the instance(top_level.exec_unit.odd_pipe) .
 	Building instance overlay tables: .................... Done
+	Generating native compiled code:
+		worklib.wb_register:sv <0x7c5793ec>
+			streams:   2, words:   542
+		worklib.execution_pipe_register:sv <0x099790d9>
+			streams:   2, words:   754
+		worklib.execution_pipe_mux:sv <0x533afe32>
+			streams:   1, words:  1275
+		worklib.local_store_unit:sv <0x462334b3>
+			streams:  25, words: 18329
+		worklib.permute_unit:sv <0x7b4efbcb>
+			streams:  22, words: 110065
+		worklib.branch_unit:sv <0x56a2dcfb>
+			streams:  29, words: 23886
+		worklib.odd_pipe_unit:sv <0x06be03ce>
+			streams:  25, words:  9670
+		worklib.execution_pipe_mux:sv <0x528f032f>
+			streams:   1, words:   975
+		worklib.execution_pipe_mux:sv <0x6545ca3d>
+			streams:   1, words:   975
+		worklib.byte_unit:sv <0x54fa556d>
+			streams:  16, words: 23454
+		worklib.single_precision_1:sv <0x6a54c156>
+			streams:  55, words: 57378
+		worklib.simple_fixed_2_1:sv <0x2fd8ed62>
+			streams:  32, words: 47160
+		worklib.execution_pipe_register:sv <0x3aaf276c>
+			streams:   2, words:   542
+		worklib.simple_fixed_1_1:sv <0x30861861>
+			streams:  94, words: 107534
+		worklib.even_pipe_unit:sv <0x10c4c07c>
+			streams:  43, words: 16784
+		worklib.execution_unit:sv <0x5a29e1ed>
+			streams:  11, words:  6468
+		worklib.rf_ex_reg:sv <0x206b401d>
+			streams:   2, words:  2575
+		worklib.source_operand_unit:sv <0x116377ee>
+			streams:   1, words:  8072
+		worklib.forwarding_unit:sv <0x324d02ad>
+			streams:   6, words:  8105
+		worklib.register_file:sv <0x3698b06e>
+			streams:   3, words: 76868
+		worklib.id_rf_reg:sv <0x6ee21fbe>
+			streams:   2, words:  2278
+		worklib.top_level:sv <0x145bda85>
+			streams: 117, words: 32711
 	Building instance specific data structures.
 	Loading native compiled code:     .................... Done
 	Design hierarchy summary:
-		              Instances  Unique
-		Modules:             46      17
-		Verilog packages:     1       1
-		Registers:          814     782
-		Scalar wires:         1       -
-		Vectored wires:      91       -
-		Always blocks:       44      15
-		Compilation units:    1       1
-		Process Clocks:       4       1
-	Writing initial simulation snapshot: worklib.id_rf_reg:sv
-Loading snapshot worklib.id_rf_reg:sv .................... Done
+		               Instances  Unique
+		Modules:              49      19
+		Verilog packages:      1       1
+		Registers:           920     887
+		Scalar wires:         20       -
+		Expanded wires:      180       1
+		Vectored wires:      328       -
+		Always blocks:        48      18
+		Pseudo assignments:  194       -
+		Compilation units:     1       1
+		Process Clocks:       36       1
+	Writing initial simulation snapshot: worklib.top_level:sv
+Loading snapshot worklib.top_level:sv .................... Done
 xcelium> source /usr/local/cds/XCELIUM2409/tools/xcelium/files/xmsimrc
 xcelium> run
 xmsim: *W,RNQUIE: Simulation is complete.
 xcelium> exit
-TOOL:	xrun(64)	24.09-s001: Exiting on Mar 28, 2026 at 22:33:55 EDT  (total: 00:00:00)
+TOOL:	xrun(64)	24.09-s001: Exiting on Mar 29, 2026 at 03:01:42 EDT  (total: 00:00:01)

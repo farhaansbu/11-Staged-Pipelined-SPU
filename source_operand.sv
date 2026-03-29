@@ -1,71 +1,167 @@
-typedef logic [0:6] addr; //by defualt logic is already unsigned
-typedef logic [0:127] data;
+import instruction_pkg::*;
 
-//should output - srcA, srcB, srcC   (actual values)
-/*//forward metadata
-- destination register (rd)
-- unit_id
-- control signals
-*/
+module source_operand_unit (
 
-module sourceOperand(
-    //inputs
-    input logic register_write1, register_write2,
+    input logic even_forwarding_signal_a,
+    input logic even_forwarding_signal_b,
+    input logic even_forwarding_signal_c,
 
-    /*  Only need this for register file */
-    //input addr read_addr1_1, read_addr1_2, read_addr1_3,
-    //input addr read_addr2_1, read_addr2_2,  read_addr2_3,
+    input logic[0:127] even_reg_data_a,
+    input logic[0:127] even_reg_data_b,
+    input logic[0:127] even_reg_data_c,
+    input logic[0:127] even_forwarded_data_a,
+    input logic[0:127] even_forwarded_data_b,
+    input logic[0:127] even_forwarded_data_c,
 
-    //control signals
-    input logic immFlag1, immFlag2, 
-    input logic thirdReg_operand1, thirdReg_operand2, 
-    //sign extension/zero extension is handled in decode unit 
+    input logic[0:17] even_immediate,
+    input instruction_type even_instruction_type,
 
-    //Chat says its not necessary for now: input logic isLoad_Store2, //local store only has 1 unit so it has only 1 instruction at a time (at the odd pipe)
-    input logic [2:0] unit_id1, unit_id2,
 
-    input logic use_srcA1, use_srcB1, use_srcC1,
-    input logic use_srcA2, use_srcB2, use_srcC2,
-    
-    //immediate values
-    input data imm1, imm2, //IMPORTANT: might have to change this since immediates have different lengths depending on inst. type
-    input data read_data1_1, read_data1_2, read_data1_3,
-    input data read_data2_1, read_data2_2, read_data2_3,
+    input logic odd_forwarding_signal_a,
+    input logic odd_forwarding_signal_b,
+    input logic odd_forwarding_signal_c,
 
-    // Metadata (pass-through) 
-    input addr write_addr1, write_addr2, //values we're changing
-    //input data write_data1, write_data2, (this is changed in execute unit so doesn't matter
+    input logic[0:127] odd_reg_data_a,
+    input logic[0:127] odd_reg_data_b,
+    input logic[0:127] odd_reg_data_c,
+    input logic[0:127] odd_forwarded_data_a,
+    input logic[0:127] odd_forwarded_data_b,
+    input logic[0:127] odd_forwarded_data_c,
 
-    // Outputs
-    output data srcA1, srcB1, srcC1,
-    output data srcA2, srcB2, srcC2,
+    input logic[0:17] odd_immediate,
+    input instruction_type odd_instruction_type,
+    input logic[0:2] odd_unit_id,
+    input logic[0:10] odd_program_counter,
 
-    output logic register_write1_out, register_write2_out,
-    output logic [2:0] unit_id1_out, unit_id2_out,
-    output addr dest_reg1_out, dest_reg2_out
+    output logic [0:127] even_source_a,
+    output logic [0:127] even_source_b,
+    output logic [0:127] even_source_c,
+
+    output logic [0:127] odd_source_a,
+    output logic [0:127] odd_source_b,
+    output logic [0:127] odd_source_c
+
 );
 
-always_comb begin
-    //first instruction operands 
-    srcA1 = (use_srcA1) ? read_data1_1 : 128'b0;
-    srcB1 = (use_srcB1) ? ((immFlag1) ? imm1 : read_data1_2) : 128'b0;
-    srcC1 = (use_srcC1) ? read_data1_3 : 128'b0;
+always_comb begin : source_operand_unit_body
 
-    //second instruction operands 
-    srcA2 = (use_srcA2) ? read_data2_1 : 128'b0;
-    srcB2 = (use_srcB2) ? ((immFlag2) ? imm2 : read_data2_2) : 128'b0;
-    srcC2 = (use_srcC2) ? read_data2_3 : 128'b0;
+    // Even sources
+    if (even_instruction_type == RI18) begin
+        even_source_a[0:17] = even_immediate;
+    end
 
-    //bypass through
-    unit_id1_out = unit_id1;
-    unit_id2_out = unit_id2;
+    else if (even_instruction_type == RI16) begin
+        even_source_a[0:15] = even_immediate[0:15];
+    end
 
-    dest_reg1_out = write_addr1;
-    dest_reg2_out = write_addr2;
+    else if (even_instruction_type == RI10) begin
+        if (even_forwarding_signal_a == 1) begin
+            even_source_a = even_forwarded_data_a;
+        end
+        else begin
+            even_source_a = even_reg_data_a;
+        end
+        even_source_b[0:9] = even_immediate[0:9];
+    end
 
-    register_write1_out = register_write1;
-    register_write2_out = register_write2;
+    else if (even_instruction_type == RI7) begin
+        if (even_forwarding_signal_a == 1) begin
+            even_source_a = even_forwarded_data_a;
+        end
+        else begin
+            even_source_a = even_reg_data_a;
+        end
+        even_source_b[0:6] = even_immediate[0:6];
+    end
 
+    else if (even_instruction_type == RR) begin
+        if (even_forwarding_signal_a == 1) begin
+            even_source_a = even_forwarded_data_a;
+        end
+        else begin
+            even_source_a = even_reg_data_a;
+        end
+
+        if (even_forwarding_signal_b == 1) begin
+            even_source_b = even_forwarded_data_b;
+        end
+        else begin
+            even_source_b = even_reg_data_b;
+        end
+    end
+    
+    else begin
+        if (even_forwarding_signal_a == 1) begin
+            even_source_a = even_forwarded_data_a;
+        end
+        else begin
+            even_source_a = even_reg_data_a;
+        end
+
+        if (even_forwarding_signal_b == 1) begin
+            even_source_b = even_forwarded_data_b;
+        end
+        else begin
+            even_source_b = even_reg_data_b;
+        end
+
+        if (even_forwarding_signal_c == 1) begin
+            even_source_c = even_forwarded_data_c;
+        end
+        else begin
+            even_source_c = even_reg_data_c;
+        end
+    end
+
+    // Odd sources
+    if (odd_instruction_type == RI18) begin
+        odd_source_a[0:17] = odd_immediate;
+    end
+
+    else if (odd_instruction_type == RI16) begin
+        odd_source_a[0:15] = odd_immediate[0:15];
+    end
+
+    else if (odd_instruction_type == RI10) begin
+        if (odd_forwarding_signal_a == 1) begin
+            odd_source_a = odd_forwarded_data_a;
+        end
+        else begin
+            odd_source_a = odd_reg_data_a;
+        end
+        odd_source_b[0:9] = odd_immediate[0:9];
+    end
+
+    else if (odd_instruction_type == RI7) begin
+        if (odd_forwarding_signal_a == 1) begin
+            odd_source_a = odd_forwarded_data_a;
+        end
+        else begin
+            odd_source_a = odd_reg_data_a;
+        end
+        odd_source_b[0:6] = odd_immediate[0:6];
+    end
+
+    else begin
+        if (odd_forwarding_signal_a == 1) begin
+            odd_source_a = odd_forwarded_data_a;
+        end
+        else begin
+            odd_source_a = odd_reg_data_a;
+        end
+
+        if (odd_forwarding_signal_b == 1) begin
+            odd_source_b = odd_forwarded_data_b;
+        end
+        else begin
+            odd_source_b = odd_reg_data_b;
+        end
+    end
+
+    if (odd_unit_id == 7) begin
+        odd_source_c[0:10] = odd_program_counter;
+    end
+    
 end //comb end 
 
 endmodule

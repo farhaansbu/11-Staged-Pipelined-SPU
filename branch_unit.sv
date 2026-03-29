@@ -34,7 +34,7 @@ always_ff @(posedge clk) begin
 
         OP_BRANCH_RELATIVE: begin
             output_packet.reg_write_flag <= 0;
-            output_packet.result <= branch_relative(odd_source_a[0:15], odd_source_b[0:10]);
+            output_packet.result <= branch_relative(odd_source_a[0:15], odd_source_c[0:10]);
         end
 
         OP_BRANCH_ABSOLUTE: begin
@@ -49,19 +49,19 @@ always_ff @(posedge clk) begin
 
         OP_BRANCH_RELATIVE_AND_SET_LINK: begin
             output_packet.reg_write_flag = 1;
-            output_packet.branch_addr <= branch_relative_and_set_link(rt_for_set_link, odd_source_a[0:15], odd_source_b[0:10]);
+            output_packet.branch_addr <= branch_relative_and_set_link(rt_for_set_link, odd_source_a[0:15], odd_source_c[0:10]);
             output_packet.result <= rt_for_set_link;
         end
 
         OP_BRANCH_ABSOLUTE_AND_SET_LINK: begin
             output_packet.reg_write_flag = 1;
-            output_packet.branch_addr <= branch_absolute_and_set_link(rt_for_set_link, odd_source_a[0:15], odd_source_b[0:10]);
+            output_packet.branch_addr <= branch_absolute_and_set_link(rt_for_set_link, odd_source_a[0:15], odd_source_c[0:10]);
             output_packet.result <= rt_for_set_link;
         end
 
         OP_BRANCH_INDIRECT_AND_SET_LINK: begin
             output_packet.reg_write_flag = 1;
-            output_packet.branch_addr <= branch_indirect_and_set_link(rt_for_set_link, odd_source_a, odd_source_b[0:10]);
+            output_packet.branch_addr <= branch_indirect_and_set_link(rt_for_set_link, odd_source_a, odd_source_c[0:10]);
             output_packet.result <= rt_for_set_link;
         end
 
