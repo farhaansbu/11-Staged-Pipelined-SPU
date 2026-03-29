@@ -42,7 +42,7 @@ always_ff @(posedge clk) begin
     even_source_a_q <= even_source_a;
     even_source_b_q <= even_source_b;
     even_source_c_q <= even_source_c;
-    even_opcode_q <= even_opcode_q;
+    even_opcode_q <= even_opcode;
     even_unit_id_q <= even_unit_id;
 
     odd_write_addr_q <= odd_write_addr;
