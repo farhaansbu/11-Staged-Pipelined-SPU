@@ -133,12 +133,12 @@ execution_pipe_register ls_6 (
 
 execution_pipe_mux #(.NUM_INPUTS(2)) fw_odd_7_mux (
     .input_packets('{ls_6_output, fw_odd_6_output}),
-    .output_packet(stage_6_mux_output)
+    .output_packet(odd_stage_6_mux_output)
 );
 
 execution_pipe_register forward_odd7 (
     .clk(clk),
-    .unit_packet(stage_6_mux_output),
+    .unit_packet(odd_stage_6_mux_output),
     .unit_packet_q(odd_output_to_write_back)
 );
 
@@ -149,7 +149,7 @@ always_comb begin : odd_pipe_body
     odd_stage_3_forwarded_res = perm_3_output;
     odd_stage_4_forwarded_res = fw_odd_4_output;
     odd_stage_5_forwarded_res = fw_odd_5_output;
-    odd_stage_6_forwarded_res = stage_6_mux_output;
+    odd_stage_6_forwarded_res = odd_stage_6_mux_output;
 
 end
 
