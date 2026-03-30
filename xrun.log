@@ -1,5 +1,5 @@
 xrun(64): 24.09-s001: (c) Copyright 1995-2024 Cadence Design Systems, Inc.
-TOOL:	xrun(64)	24.09-s001: Started on Mar 29, 2026 at 21:23:57 EDT
+TOOL:	xrun(64)	24.09-s001: Started on Mar 29, 2026 at 22:00:58 EDT
 xrun
 	-f files.f
 		instructions.sv
@@ -27,4 +27,4 @@ xcelium> source /usr/local/cds/XCELIUM2409/tools/xcelium/files/xmsimrc
 xcelium> run
 xmsim: *W,RNQUIE: Simulation is complete.
 xcelium> exit
-TOOL:	xrun(64)	24.09-s001: Exiting on Mar 29, 2026 at 21:23:57 EDT  (total: 00:00:00)
+TOOL:	xrun(64)	24.09-s001: Exiting on Mar 29, 2026 at 22:00:58 EDT  (total: 00:00:00)

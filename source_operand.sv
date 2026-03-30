@@ -15,6 +15,7 @@ module source_operand_unit (
 
     input logic[0:17] even_immediate,
     input instruction_type even_instruction_type,
+    input opcode_t even_opcode,
 
 
     input logic odd_forwarding_signal_a,
@@ -32,6 +33,7 @@ module source_operand_unit (
     input instruction_type odd_instruction_type,
     input logic[0:2] odd_unit_id,
     input logic[0:10] odd_program_counter,
+    input opcode_t odd_opcode,
 
     output logic [0:127] even_source_a,
     output logic [0:127] even_source_b,
@@ -126,6 +128,14 @@ always_comb begin : source_operand_unit_body
     else if (odd_instruction_type == RI16) begin
         odd_source_a[0:15] = odd_immediate[2:17];
         odd_source_a[16:127] = '0;
+        if (odd_opcode == OP_STORE_QUADWORD_A) begin
+            if (odd_forwarding_signal_c == 1) begin
+                odd_source_c = odd_forwarded_data_c;
+            end
+            else begin
+                odd_source_c = odd_reg_data_c;
+            end
+        end
     end
 
     else if (odd_instruction_type == RI10) begin
@@ -137,6 +147,14 @@ always_comb begin : source_operand_unit_body
         end
         odd_source_b[0:9] = odd_immediate[8:17];
         odd_source_b[10:127] = '0;
+        if (odd_opcode == OP_STORE_QUADWORD_D) begin
+            if (odd_forwarding_signal_c == 1) begin
+                odd_source_c = odd_forwarded_data_c;
+            end
+            else begin
+                odd_source_c = odd_reg_data_c;
+            end
+        end
     end
 
     else if (odd_instruction_type == RI7) begin
@@ -163,6 +181,15 @@ always_comb begin : source_operand_unit_body
         end
         else begin
             odd_source_b = odd_reg_data_b;
+        end
+
+        if (odd_opcode == OP_STORE_QUADWORD_X) begin
+            if (odd_forwarding_signal_c == 1) begin
+                odd_source_c = odd_forwarded_data_c;
+            end
+            else begin
+                odd_source_c = odd_reg_data_c;
+            end
         end
     end
 

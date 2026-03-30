@@ -245,6 +245,7 @@ source_operand_unit source_op_unit (
 
     .even_immediate(id_rf_reg_output_even_immediate_q),
     .even_instruction_type(id_rf_reg_output_even_instruction_type_q),
+    .even_opcode(id_rf_reg_output_even_opcode_q),
 
     .odd_forwarding_signal_a(fu_out_odd_forwarding_signal_a),
     .odd_forwarding_signal_b(fu_out_odd_forwarding_signal_b),
@@ -259,6 +260,7 @@ source_operand_unit source_op_unit (
 
     .odd_immediate(id_rf_reg_output_odd_immediate_q),
     .odd_instruction_type(id_rf_reg_output_odd_instruction_type_q),
+    .odd_opcode(id_rf_reg_output_odd_opcode_q),
     .odd_unit_id(id_rf_reg_output_odd_unit_id_q),
     .odd_program_counter(id_rf_reg_output_odd_program_counter_q),
 

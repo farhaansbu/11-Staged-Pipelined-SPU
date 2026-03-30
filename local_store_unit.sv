@@ -48,17 +48,17 @@ always_ff @(posedge clk) begin
 
             OP_STORE_QUADWORD_X: begin
                 output_packet.reg_write_flag <= 0;
-                output_packet.result <= store_quadword_x(odd_source_a, odd_source_b);
+                store_quadword_x(odd_source_a, odd_source_b, odd_source_c);
             end
 
             OP_STORE_QUADWORD_D: begin
                 output_packet.reg_write_flag <= 0;
-                output_packet.result <= store_quadword_d(odd_source_a, odd_source_b[0:9]);
+                store_quadword_d(odd_source_a, odd_source_b[0:9], odd_source_c);
             end
             
             OP_STORE_QUADWORD_A: begin
                 output_packet.reg_write_flag <= 0;
-                output_packet.result <= store_quadword_a(odd_source_a[0:15]);
+                store_quadword_a(odd_source_a[0:15], odd_source_c);
             end
 
             default: ;
@@ -104,37 +104,36 @@ function automatic logic[0:127] load_quadword_a (input logic[0:15] i16);
     return loaded_data;
 endfunction : load_quadword_a
 
-function automatic logic[0:127] store_quadword_d (input logic[0:127] ra, input logic[0:9] i10);
-    logic[0:127] loaded_data;
+function automatic void store_quadword_d (input logic[0:127] ra, input logic[0:127] rt, input logic[0:9] i10);
+
     logic[0:31] imm32 = {{18{i10[0]}}, i10, 4'b0};
     logic[0:31] addr = (imm32 + ra[0:31]) & LSLR & 32'hFFFF_FFF0;
 
     for (int i = 0; i < 16; i++) begin
-        local_store[addr + i] = loaded_data[i * 8 +: 8]; 
+        local_store[addr + i] = rt[i * 8 +: 8]; 
     end
-    return loaded_data;
 endfunction : store_quadword_d
 
 
-function automatic logic[0:127] store_quadword_x (input logic[0:127] ra, input logic[0:127] rb);
-    logic[0:127] loaded_data;
+function automatic void store_quadword_x (input logic[0:127] ra, input logic[0:127] rb, input logic[0:127] rt);
+
     logic[0:31] addr = (rb[0:31] + ra[0:31]) & LSLR & 32'hFFFF_FFF0;
 
     for (int i = 0; i < 16; i++) begin
-        local_store[addr + i] = loaded_data[i * 8 +: 8];
+        local_store[addr + i] = rt[i * 8 +: 8]; 
     end
-    return loaded_data;
+    
 endfunction : store_quadword_x
 
-function automatic logic[0:127] store_quadword_a (input logic[0:15] i16);
-    logic[0:127] loaded_data;
+function automatic void store_quadword_a (input logic[0:15] i16, input logic[0:127] rt);
+
     logic[0:31] imm32 = {{12{i16[0]}}, i16, 4'b0};
     logic[0:31] addr = imm32 & LSLR & 32'hFFFF_FFF0;
 
     for (int i = 0; i < 16; i++) begin
-        local_store[addr + i] = loaded_data[i * 8 +: 8];
+        local_store[addr + i] = rt[i * 8 +: 8]; 
     end
-    return loaded_data;
+   
 endfunction : store_quadword_a
 
 endmodule
