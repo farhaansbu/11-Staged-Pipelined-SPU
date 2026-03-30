@@ -56,16 +56,19 @@ localparam HALFWORD_BITS = 16;
 - there are 16 bytes in 128 bit register 
 - handled overflow since ISA said without loss of precision
 */
-function automatic logic[0:127] average_bytes (input logic[0:127] ra, input logic[0:127] rb);
-logic[0:127] rt;
-logic[0:8] sum; //9 bits for overflow 
+function automatic logic [0:127] average_bytes (input logic [0:127] ra, input logic [0:127] rb);
+    logic [0:127] rt;
+    logic [8:0] sum; // standard declaration, bit 8 = MSB (overflow)
+    logic [7:0] a_byte, b_byte;
 
-for (int j = 0; j <= 15; ++j) begin   
-    sum = {1'b0, ra[j*BYTE_BITS +: BYTE_BITS]} + {1'b0, rb[j*BYTE_BITS +: BYTE_BITS]} + 9'd1;
-    rt[j*BYTE_BITS +: BYTE_BITS] = sum[1:8]; // divide by 2
-end
-return rt;
-endfunction : average_bytes  
+    for (int j = 0; j <= 15; ++j) begin
+        a_byte = ra[j*BYTE_BITS +: BYTE_BITS];
+        b_byte = rb[j*BYTE_BITS +: BYTE_BITS];
+        sum = {1'b0, a_byte} + {1'b0, b_byte} + 9'd1;
+        rt[j*BYTE_BITS +: BYTE_BITS] = sum[8:1]; // drop LSB (>> 1)
+    end
+    return rt;
+endfunction : average_bytes
 
 
 /* Sum Bytes into Halfwords */
