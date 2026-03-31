@@ -1,5 +1,5 @@
 xrun(64): 24.09-s001: (c) Copyright 1995-2024 Cadence Design Systems, Inc.
-TOOL:	xrun(64)	24.09-s001: Started on Mar 29, 2026 at 22:00:58 EDT
+TOOL:	xrun(64)	24.09-s001: Started on Mar 31, 2026 at 16:51:08 EDT
 xrun
 	-f files.f
 		instructions.sv
@@ -22,9 +22,47 @@ xrun
 		execution_pipe_mux.sv
 		write_back_register.sv
 		top_level_unit.sv
-Loading snapshot worklib.top_level:sv .................... Done
+		top_level_tb.sv
+	-top tbench
+Recompiling... reason: file './forwarding_unit.sv' is newer than expected.
+	expected: Tue Mar 31 16:48:47 2026
+	actual:   Tue Mar 31 16:51:04 2026
+file: forwarding_unit.sv
+	module worklib.forwarding_unit:sv
+		errors: 0, warnings: 0
+	Elaborating the design hierarchy:
+		Caching library 'worklib' ....... Done
+	Top level design units:
+		instruction_pkg
+		$unit_0x70277c67
+		tbench
+	Building instance overlay tables: .................... Done
+	Generating native compiled code:
+		worklib.forwarding_unit:sv <0x4b225f3c>
+			streams:   1, words:  8339
+	Building instance specific data structures.
+	Loading native compiled code:     .................... Done
+	Design hierarchy summary:
+		               Instances  Unique
+		Modules:              50      20
+		Verilog packages:      1       1
+		Registers:           942     909
+		Scalar wires:         22       -
+		Vectored wires:      338       -
+		Always blocks:        48      18
+		Initial blocks:        2       2
+		Pseudo assignments:  210       -
+		Compilation units:     1       1
+		Process Clocks:       35       1
+	Writing initial simulation snapshot: worklib.tbench:sv
+Loading snapshot worklib.tbench:sv .................... Done
 xcelium> source /usr/local/cds/XCELIUM2409/tools/xcelium/files/xmsimrc
 xcelium> run
-xmsim: *W,RNQUIE: Simulation is complete.
+                   0 | EvenRA=x EvenRB=x | EvenRC=x EvenRT=x | EvenOpcode=x 
+                  20 | EvenRA=1 EvenRB=x | EvenRC=x EvenRT=2 | EvenOpcode=38 
+                  30 | EvenRA=3 EvenRB=x | EvenRC=x EvenRT=4 | EvenOpcode=38 
+                  60 | EvenRA=2 EvenRB=4 | EvenRC=x EvenRT=5 | EvenOpcode=21 
+Simulation complete via $finish(1) at time 255 NS + 0
+./top_level_tb.sv:151     $finish;
 xcelium> exit
-TOOL:	xrun(64)	24.09-s001: Exiting on Mar 29, 2026 at 22:00:58 EDT  (total: 00:00:00)
+TOOL:	xrun(64)	24.09-s001: Exiting on Mar 31, 2026 at 16:51:08 EDT  (total: 00:00:00)

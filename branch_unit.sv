@@ -116,7 +116,7 @@ localparam logic[0:32] LSLR = 32'h0000_7FFF;    // max size of memory 32 KB (327
 
 
 function automatic logic[0:31] branch_relative (input logic[0:15] i16, input logic signed[0:10] program_counter);
-    logic signed[0:31] imm32 = {{14{i16[0]}}, i16, 2'b0};
+    logic signed[0:31] imm32 = {{14{i16[0]}}, i16, 2'b0};   
     logic signed[0:31] branch_addr = (program_counter + imm32) & LSLR;
     return branch_addr;
 endfunction : branch_relative

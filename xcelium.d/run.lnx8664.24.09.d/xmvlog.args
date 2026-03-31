@@ -25,6 +25,7 @@ execution_pipe_register.sv
 execution_pipe_mux.sv
 write_back_register.sv
 top_level_unit.sv
+top_level_tb.sv
 -CDSLIB
 ./xcelium.d/run.lnx8664.24.09.d/cdsrun.lib
 -HDLVAR
@@ -35,3 +36,4 @@ top_level_unit.sv
 -XLLIBSTORE
 ./xcelium.d/run.lnx8664.24.09.d/xllibs
 -ALLOWUNBOUND
+-hastop

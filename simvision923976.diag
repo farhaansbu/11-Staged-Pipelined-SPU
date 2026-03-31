@@ -1,0 +1,82 @@
+*** Message Type: info ***
+When: Mon Mar 30 07:12:53 PM EDT 2026
+SimVision started.
+Version: TOOL:  simvision(64)   24.09-s001
+User: fkhan
+Host: lab01.ece.stonybrook.edu
+Platform: Linux/x86_64/4.18.0-553.34.1.el8_10.x86_64
+Started: Mon Mar 30 07:12:53 PM EDT 2026
+Command: /usr/local/cds/XCELIUM2409/tools.lnx86/simvision/bin/64bit/simvision.exe -connect dc:lab01.ece.stonybrook.edu:52901 -64BIT -nocopyright
+Work Directory: /home/home5/fkhan/ese545project
+ 
+*** Message Type: info ***
+When: Mon Mar 30 07:12:54 PM EDT 2026
+Create browser window: "Design Browser 1"
+ 
+*** Message Type: info ***
+When: Mon Mar 30 07:13:02 PM EDT 2026
+Create console window: "Console"
+ 
+*** Message Type: info ***
+When: Mon Mar 30 07:13:06 PM EDT 2026
+Connect to Simulator
+      Design: worklib.tbench:sv
+   Languages: verilog
+   Simulator: XM-Sim
+     Version: TOOL:  xmsim(64)       24.09-s001
+        User: fkhan
+        Host: lab01.ece.stonybrook.edu
+Time Started: Mon Mar 30 07:12:50 PM EDT 2026
+  Process ID: 923952
+   Directory: /home/home5/fkhan/ese545project
+     Command: xrun -f files.f -top tbench -gui -access +rwc -input restore.tcl
+
+ 
+*** Message Type: info ***
+When: Mon Mar 30 07:13:06 PM EDT 2026
+Create utility window: "Properties"
+ 
+*** Message Type: info ***
+When: Mon Mar 30 07:13:08 PM EDT 2026
+Create waveform window: "Waveform 1"
+ 
+*** Message Type: info ***
+When: Mon Mar 30 07:14:41 PM EDT 2026
+Create watchwindow window: "Watch Window 1"
+ 
+*** Message Type: info ***
+When: Mon Mar 30 07:14:43 PM EDT 2026
+Delete watchwindow window: "Watch Window 1"
+ 
+*** Message Type: error ***
+When: Mon Mar 30 07:14:45 PM EDT 2026
+invalid command name ".watchWindow0"
+    while executing
+"$window addSelected"
+    (object "::windows" method "::Windows::sendToWindow" body line 63)
+    invoked from within
+"::windows sendToWindow $type $name $sourcecursor"
+    (object "::.waveWindow0" method "::SVToolWindow::_doSendToWindow" body line 31)
+    invoked from within
+"::.waveWindow0 _doSendToWindow watchwindow target"
+    (in namespace inscope "::WaveWindow" script line 1)
+    invoked from within
+"namespace inscope ::WaveWindow {::.waveWindow0 _doSendToWindow watchwindow target}"
+    invoked from within
+".waveWindow0.work.user.waveset.popup invoke active"
+    ("uplevel" body line 1)
+    invoked from within
+"uplevel #0 [list $w invoke active]"
+    (procedure "tk::MenuInvoke" line 50)
+    invoked from within
+"tk::MenuInvoke .waveWindow0.work.user.waveset.popup 1"
+    (command bound to event)
+ 
+*** Message Type: info ***
+When: Mon Mar 30 07:16:58 PM EDT 2026
+Delete browser window: "Design Browser 1"
+ 
+*** Message Type: info ***
+When: Mon Mar 30 07:17:04 PM EDT 2026
+Delete waveform window: "Waveform 1"
+ 

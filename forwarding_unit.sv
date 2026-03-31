@@ -34,6 +34,7 @@ module forwarding_unit (
 );
 
 logic[0:6] temp_write_addr;
+logic temp_present_bit;
 logic temp_reg_write;
 logic[0:127] temp_result;
 
@@ -54,9 +55,11 @@ always_comb begin : forwarding_unit_body
         for (int i = 0; i < 6; ++i) begin
             // Extract informaiton about forwarded instruction
             temp_reg_write = even_pipe_forwarded_results[i].reg_write_flag;
-            if (temp_reg_write == 0) begin
+            temp_present_bit = even_pipe_forwarded_results[i].present_bit;
+            if (temp_reg_write == 0 || temp_present_bit == 0) begin
                 continue;
             end
+
             temp_write_addr = even_pipe_forwarded_results[i].reg_write_addr;
             temp_result = even_pipe_forwarded_results[i].result;
 
@@ -68,14 +71,14 @@ always_comb begin : forwarding_unit_body
             // All instruction types have at least reg_A as source
             if (even_read_addr_a == temp_write_addr) begin
                 even_forwarding_signal_a = 1;
-                even_forwarded_data_a <= temp_result;
+                even_forwarded_data_a = temp_result;
             end
         
             // Two source registers
             if (even_instruction_type == RR) begin
                 if (even_read_addr_b == temp_write_addr) begin
                     even_forwarding_signal_b = 1;
-                    even_forwarded_data_b <= temp_result;
+                    even_forwarded_data_b = temp_result;
                 end
             end
 
@@ -83,12 +86,12 @@ always_comb begin : forwarding_unit_body
             else if (even_instruction_type == RRR) begin
                 if (even_read_addr_b == temp_write_addr) begin
                     even_forwarding_signal_b = 1;
-                    even_forwarded_data_b <= temp_result;
+                    even_forwarded_data_b = temp_result;
                 end
 
                 if (even_read_addr_c == temp_write_addr) begin
                     even_forwarding_signal_c = 1;
-                    even_forwarded_data_c <= temp_result;
+                    even_forwarded_data_c = temp_result;
                 end
 
             end
@@ -98,7 +101,8 @@ always_comb begin : forwarding_unit_body
         for (int i = 0; i < 5; ++i) begin
             // Extract informaiton about forwarded instruction
             temp_reg_write = odd_pipe_forwarded_results[i].reg_write_flag;
-            if (temp_reg_write == 0) begin
+            temp_present_bit = odd_pipe_forwarded_results[i].present_bit;
+            if (temp_reg_write == 0 || temp_present_bit == 0) begin
                 continue;
             end
             temp_write_addr = odd_pipe_forwarded_results[i].reg_write_addr;
@@ -112,14 +116,14 @@ always_comb begin : forwarding_unit_body
             // All instruction types have at least reg_A as source
             if (even_read_addr_a == temp_write_addr) begin
                 even_forwarding_signal_a = 1;
-                even_forwarded_data_a <= temp_result;
+                even_forwarded_data_a = temp_result;
             end
             
             // Two source registers
             if (even_instruction_type == RR) begin
                 if (even_read_addr_b == temp_write_addr) begin
                     even_forwarding_signal_b = 1;
-                    even_forwarded_data_b <= temp_result;
+                    even_forwarded_data_b = temp_result;
                 end
             end
 
@@ -127,12 +131,12 @@ always_comb begin : forwarding_unit_body
             else if (even_instruction_type == RRR) begin
                 if (even_read_addr_b == temp_write_addr) begin
                     even_forwarding_signal_b = 1;
-                    even_forwarded_data_b <= temp_result;
+                    even_forwarded_data_b = temp_result;
                 end
 
                 if (even_read_addr_c == temp_write_addr) begin
                     even_forwarding_signal_c = 1;
-                    even_forwarded_data_c <= temp_result;
+                    even_forwarded_data_c = temp_result;
                 end
 
             end
@@ -146,7 +150,8 @@ always_comb begin : forwarding_unit_body
 
             // Extract informaiton about forwarded instruction
             temp_reg_write = even_pipe_forwarded_results[i].reg_write_flag;
-            if (temp_reg_write == 0) begin
+            temp_present_bit = even_pipe_forwarded_results[i].present_bit;
+            if (temp_reg_write == 0 || temp_present_bit == 0) begin
                 continue;
             end
             temp_write_addr = even_pipe_forwarded_results[i].reg_write_addr;
@@ -160,14 +165,14 @@ always_comb begin : forwarding_unit_body
             // All instruction types have at least reg_A as source
             if (odd_read_addr_a == temp_write_addr) begin
                 odd_forwarding_signal_a = 1;
-                odd_forwarded_data_a <= temp_result;
+                odd_forwarded_data_a = temp_result;
             end
             
             // All other instruction types for odd pipe have at most a second source register
             if (odd_instruction_type == RR) begin
                 if (odd_read_addr_b == temp_write_addr) begin
                     odd_forwarding_signal_b = 1;
-                    odd_forwarded_data_b <= temp_result;
+                    odd_forwarded_data_b = temp_result;
                 end
             end
         end
@@ -176,7 +181,8 @@ always_comb begin : forwarding_unit_body
         for (int i = 0; i < 5; ++i) begin
             // Extract informaiton about forwarded instruction
             temp_reg_write = odd_pipe_forwarded_results[i].reg_write_flag;
-            if (temp_reg_write == 0) begin
+            temp_present_bit = odd_pipe_forwarded_results[i].present_bit;
+            if (temp_reg_write == 0 || temp_present_bit == 0) begin
                 continue;
             end
             temp_write_addr = odd_pipe_forwarded_results[i].reg_write_addr;
@@ -190,14 +196,14 @@ always_comb begin : forwarding_unit_body
             // All instruction types have at least reg_A as source
             if (odd_read_addr_a == temp_write_addr) begin
                 odd_forwarding_signal_a = 1;
-                odd_forwarded_data_a <= temp_result;
+                odd_forwarded_data_a = temp_result;
             end
             
             // All other instruction types for odd pipe have at most a second source register
             if (odd_instruction_type == RR) begin
                 if (odd_read_addr_b == temp_write_addr) begin
                     odd_forwarding_signal_b = 1;
-                    odd_forwarded_data_b <= temp_result;
+                    odd_forwarded_data_b = temp_result;
                 end
             end
 

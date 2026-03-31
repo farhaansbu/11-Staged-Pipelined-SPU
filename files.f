@@ -18,3 +18,4 @@ execution_pipe_register.sv
 execution_pipe_mux.sv
 write_back_register.sv
 top_level_unit.sv
+top_level_tb.sv

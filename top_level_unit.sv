@@ -54,7 +54,7 @@ logic[0:127] rf_output_even_read_data_2;
 logic[0:127] rf_output_even_read_data_3;
 logic[0:127] rf_output_odd_read_data_1;
 logic[0:127] rf_output_odd_read_data_2;
-logic[0:127] rf_output_odd_read_data_;
+logic[0:127] rf_output_odd_read_data_3;
 
 // forwarding unit outputs
 logic fu_out_even_forwarding_signal_a;
@@ -200,7 +200,7 @@ forwarding_unit fw_unit (
                                    exec_output_even_stage_4_forwarded_res,
                                    exec_output_even_stage_5_forwarded_res,
                                    exec_output_even_stage_6_forwarded_res,
-                                   even_write_back_packet}),
+                                   exec_output_even_to_write_back}),
 
     .odd_read_addr_a(id_rf_reg_output_odd_ra_addr_q),
     .odd_read_addr_b(id_rf_reg_output_odd_rb_addr_q),
@@ -211,7 +211,7 @@ forwarding_unit fw_unit (
                                   exec_output_odd_stage_4_forwarded_res,
                                   exec_output_odd_stage_5_forwarded_res,
                                   exec_output_odd_stage_6_forwarded_res,
-                                  odd_write_back_packet}),
+                                  exec_output_odd_to_write_back}),
     .odd_opcode(id_rf_reg_output_odd_opcode_q),
 
     .even_forwarding_signal_a(fu_out_even_forwarding_signal_a),

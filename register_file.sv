@@ -31,15 +31,6 @@ logic [0:127] reg_file[0:127];
 
 always_comb begin : register_file_body
 
-    // Read register data
-    even_read_data_1 = reg_file[even_read_addr_1];
-    even_read_data_2 = reg_file[even_read_addr_2];
-    even_read_data_3 = reg_file[even_read_addr_3];
-
-    odd_read_data_1 = reg_file[odd_read_addr_1];
-    odd_read_data_2 = reg_file[odd_read_addr_2];
-    odd_read_data_3 = reg_file[odd_read_addr_3];
-
     // Write to registers
     if (even_reg_write) begin
         reg_file[even_write_addr] = even_write_data;
@@ -49,11 +40,21 @@ always_comb begin : register_file_body
         reg_file[odd_write_addr] = odd_write_data;
     end
 
+    // Read register data
+    even_read_data_1 = reg_file[even_read_addr_1];
+    even_read_data_2 = reg_file[even_read_addr_2];
+    even_read_data_3 = reg_file[even_read_addr_3];
+
+    odd_read_data_1 = reg_file[odd_read_addr_1];
+    odd_read_data_2 = reg_file[odd_read_addr_2];
+    odd_read_data_3 = reg_file[odd_read_addr_3];
+
     if (reset == 1) begin
         for (int i = 0; i < 128; i++) begin
             reg_file[i] <= 128'b0; //non blocking executes in parallel
         end 
     end
+    
     
 end
 
