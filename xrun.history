@@ -994,3 +994,9 @@ s496(31Mar2026:17:23:02):  xrun -f files.f -top tbench -gui -access +rwc -input 
 s497(02Apr2026:12:20:18):  xrun -f files.f -top tbench -gui -access +rwc -input restore.tcl 
 #e498(02Apr2026:12:22:57): source ./xcelium.d/env.d/env.history.02Apr2026_12_22_57
 s498(02Apr2026:12:22:57):  xrun -f files.f 
+#e499(02Apr2026:12:28:04): source ./xcelium.d/env.d/env.history.02Apr2026_12_28_04
+s499(02Apr2026:12:28:04):  xrun -f files.f 
+#e500(02Apr2026:12:28:10): source ./xcelium.d/env.d/env.history.02Apr2026_12_28_10
+s500(02Apr2026:12:28:10):  xrun -f files.f -top tbench -gui -access +rwc -input restore.tcl 
+#e501(02Apr2026:12:30:03): source ./xcelium.d/env.d/env.history.02Apr2026_12_30_03
+s501(02Apr2026:12:30:03):  xrun -f files.f 

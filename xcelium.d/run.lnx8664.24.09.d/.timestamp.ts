@@ -1,12 +1,12 @@
 1774666808 /home/home5/fkhan/ese545project/fixed_point_unit_1_1.sv
 1774831705 /home/home5/fkhan/ese545project/write_back_register.sv
-1774992140 /home/home5/fkhan/ese545project/top_level_tb.sv
-1774724502 /home/home5/fkhan/ese545project/execution_unit_register.sv
+1775147400 /home/home5/fkhan/ese545project/top_level_tb.sv
 1774734675 /home/home5/fkhan/ese545project/execution_pipe_register.sv
-1774749704 /home/home5/fkhan/ese545project/fixed_point_unit_2.sv
+1774724502 /home/home5/fkhan/ese545project/execution_unit_register.sv
 1774749124 /home/home5/fkhan/ese545project/execution_unit.sv
-1774746786 /home/home5/fkhan/ese545project/execution_pipe_mux.sv
+1774749704 /home/home5/fkhan/ese545project/fixed_point_unit_2.sv
 1774835757 /home/home5/fkhan/ese545project/source_operand.sv
+1774746786 /home/home5/fkhan/ese545project/execution_pipe_mux.sv
 1774326498 /home/home5/fkhan/ese545project/fixed_point_unit_2_1.sv
 1774749783 /home/home5/fkhan/ese545project/permute_unit_1.sv
 1774833909 /home/home5/fkhan/ese545project/odd_pipe_unit.sv
@@ -18,7 +18,7 @@
 1774776818 /home/home5/fkhan/ese545project/rf_ex_reg.sv
 1774921311 /home/home5/fkhan/ese545project/top_level_unit.sv
 1774918301 /home/home5/fkhan/ese545project/register_file.sv
-1774836100 /home/home5/fkhan/ese545project/local_store_unit.sv
+1775147400 /home/home5/fkhan/ese545project/local_store_unit.sv
 1774774264 /home/home5/fkhan/ese545project/id_rf_reg.sv
 1774827822 /home/home5/fkhan/ese545project/byte_unit_1.sv
 1774759973 /home/home5/fkhan/ese545project/single_precision_unit_1.sv

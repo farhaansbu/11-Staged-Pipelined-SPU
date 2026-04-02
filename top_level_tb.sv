@@ -82,7 +82,7 @@ initial begin
     even_rt_addr = 2;
     even_opcode = OP_IMMEDIATE_LOAD_WORD;
     even_unit_id = 1;
-    even_immediate = -248;
+    even_immediate = 5;
 
     even_instruction_type = RI16;
    
@@ -100,7 +100,7 @@ initial begin
     even_rt_addr = 4;
     even_opcode = OP_IMMEDIATE_LOAD_WORD;
     even_unit_id = 1;
-    even_immediate = 247;
+    even_immediate = 8;
 
     even_instruction_type = RI16;
 
@@ -109,15 +109,26 @@ initial begin
     // Add the two values
    /*Simple Fixed 1 Instructions */
 
-    even_ra_addr = 2; 
-    even_rb_addr = 4; //2
-    //even_rc_addr = 7;
-    even_rt_addr = 5;
-    even_opcode = OP_COMPARE_LOGICAL_GREATER_THAN_WORD;
-    even_unit_id = 1;
-    //even_immediate = 247;
+    // even_ra_addr = 7; 
+    // //even_rb_addr = 4; //2
+    // even_rc_addr = 4;
+    // //even_rt_addr = 5;
+    // even_opcode = OP_STORE_QUADWORD_D;
+    // even_unit_id = 1;
+    // even_immediate = 0;
 
-    even_instruction_type = RR;
+    // even_instruction_type = RR;
+
+ /*Local Store Instructions */
+    odd_ra_addr = 7; 
+    //even_rb_addr = 4; //2
+    odd_rc_addr = 4;
+    //even_rt_addr = 5;
+    odd_opcode = OP_STORE_QUADWORD_D;
+    odd_unit_id = 6;
+    odd_immediate = 0;
+
+    odd_instruction_type = RI10;
 
     repeat (20) @(posedge clk);
     
