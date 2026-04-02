@@ -1000,3 +1000,13 @@ s499(02Apr2026:12:28:04):  xrun -f files.f
 s500(02Apr2026:12:28:10):  xrun -f files.f -top tbench -gui -access +rwc -input restore.tcl 
 #e501(02Apr2026:12:30:03): source ./xcelium.d/env.d/env.history.02Apr2026_12_30_03
 s501(02Apr2026:12:30:03):  xrun -f files.f 
+#e502(02Apr2026:12:32:13): source ./xcelium.d/env.d/env.history.02Apr2026_12_32_13
+s502(02Apr2026:12:32:13):  xrun -f files.f -top tbench -gui -access +rwc -input restore.tcl 
+#e503(02Apr2026:12:47:56): source ./xcelium.d/env.d/env.history.02Apr2026_12_47_56
+s503(02Apr2026:12:47:56):  xrun -f files.f 
+#e504(02Apr2026:12:48:44): source ./xcelium.d/env.d/env.history.02Apr2026_12_48_44
+s504(02Apr2026:12:48:44):  xrun -f files.f 
+#e505(02Apr2026:12:48:55): source ./xcelium.d/env.d/env.history.02Apr2026_12_48_55
+s505(02Apr2026:12:48:55):  xrun -f files.f 
+#e506(02Apr2026:12:49:11): source ./xcelium.d/env.d/env.history.02Apr2026_12_49_11
+s506(02Apr2026:12:49:11):  xrun -f files.f -top tbench -gui -access +rwc -input restore-store.tcl 

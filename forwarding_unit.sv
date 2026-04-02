@@ -158,7 +158,7 @@ always_comb begin : forwarding_unit_body
             temp_result = even_pipe_forwarded_results[i].result;
 
             // Analyze current instruction thats about to be executed
-            if (odd_instruction_type == RI18 || odd_instruction_type == RI16) begin
+            if (odd_instruction_type == RI18 || (odd_instruction_type == RI16 && odd_opcode != OP_STORE_QUADWORD_A)) begin
                 continue;
             end
 
@@ -174,6 +174,14 @@ always_comb begin : forwarding_unit_body
                     odd_forwarding_signal_b = 1;
                     odd_forwarded_data_b = temp_result;
                 end
+            end
+
+            // Add checks for store operations, edgecase
+            if (odd_opcode == OP_STORE_QUADWORD_D || odd_opcode == OP_STORE_QUADWORD_A || odd_opcode == OP_STORE_QUADWORD_X) begin
+                    if (odd_read_addr_c == temp_write_addr) begin
+                        odd_forwarding_signal_c = 1;
+                        odd_forwarded_data_c = temp_result;
+                    end
             end
         end
 
@@ -189,7 +197,7 @@ always_comb begin : forwarding_unit_body
             temp_result = odd_pipe_forwarded_results[i].result;
 
             // Analyze current instruction thats about to be executed
-            if (odd_instruction_type == RI18 || odd_instruction_type == RI16) begin
+            if (odd_instruction_type == RI18 || (odd_instruction_type == RI16 && odd_opcode != OP_STORE_QUADWORD_A)) begin
                 continue;
             end
 
@@ -205,6 +213,14 @@ always_comb begin : forwarding_unit_body
                     odd_forwarding_signal_b = 1;
                     odd_forwarded_data_b = temp_result;
                 end
+            end
+            
+            // Add checks for store operations, edgecase
+            if (odd_opcode == OP_STORE_QUADWORD_D || odd_opcode == OP_STORE_QUADWORD_A || odd_opcode == OP_STORE_QUADWORD_X) begin
+                    if (odd_read_addr_c == temp_write_addr) begin
+                        odd_forwarding_signal_c = 1;
+                        odd_forwarded_data_c = temp_result;
+                    end
             end
 
         end

@@ -6,7 +6,7 @@
 1774774264 /home/home5/fkhan/ese545project/id_rf_reg.sv
 1774826163 /home/home5/fkhan/ese545project/instructions.sv
 1774918301 /home/home5/fkhan/ese545project/register_file.sv
-1774990264 /home/home5/fkhan/ese545project/forwarding_unit.sv
+1775148468 /home/home5/fkhan/ese545project/forwarding_unit.sv
 1774734675 /home/home5/fkhan/ese545project/execution_pipe_register.sv
 1774749124 /home/home5/fkhan/ese545project/execution_unit.sv
 1774746779 /home/home5/fkhan/ese545project/even_pipe_unit.sv
@@ -18,4 +18,4 @@
 1774776818 /home/home5/fkhan/ese545project/rf_ex_reg.sv
 1774835757 /home/home5/fkhan/ese545project/source_operand.sv
 1774921311 /home/home5/fkhan/ese545project/top_level_unit.sv
-1774992140 /home/home5/fkhan/ese545project/top_level_tb.sv
+1775148533 /home/home5/fkhan/ese545project/top_level_tb.sv
