@@ -36,4 +36,3 @@ top_level_tb.sv
 -XLLIBSTORE
 ./xcelium.d/run.lnx8664.24.09.d/xllibs
 -ALLOWUNBOUND
--hastop

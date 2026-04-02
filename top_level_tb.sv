@@ -82,13 +82,16 @@ initial begin
     even_rt_addr = 2;
     even_opcode = OP_IMMEDIATE_LOAD_WORD;
     even_unit_id = 1;
-    even_immediate = 14;
+    even_immediate = -248;
 
     even_instruction_type = RI16;
    
    
     @(negedge clk);
     
+
+
+
     // Load some value into r4
   
     even_ra_addr = 3;
@@ -110,7 +113,7 @@ initial begin
     even_rb_addr = 4; //2
     //even_rc_addr = 7;
     even_rt_addr = 5;
-    even_opcode = OP_EXCLUSIVE_OR;
+    even_opcode = OP_COMPARE_LOGICAL_GREATER_THAN_WORD;
     even_unit_id = 1;
     //even_immediate = 247;
 

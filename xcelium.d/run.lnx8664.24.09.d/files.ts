@@ -18,4 +18,4 @@
 1774776818 /home/home5/fkhan/ese545project/rf_ex_reg.sv
 1774835757 /home/home5/fkhan/ese545project/source_operand.sv
 1774921311 /home/home5/fkhan/ese545project/top_level_unit.sv
-1774989811 /home/home5/fkhan/ese545project/top_level_tb.sv
+1774992140 /home/home5/fkhan/ese545project/top_level_tb.sv
