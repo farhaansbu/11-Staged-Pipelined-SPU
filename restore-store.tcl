@@ -5,7 +5,7 @@
 #
 # You can restore this configuration with:
 #
-#      xrun -f files.f -top tbench -access +rwc -input restore.tcl -input restore-store.tcl
+#      xrun -f files.f -top tbench -access +rwc -input restore-store.tcl
 #
 
 set tcl_prompt1 {puts -nonewline "xcelium> "}
@@ -63,5 +63,7 @@ probe -create -database waves tbench.dut.fw_unit.even_forwarding_signal_a tbench
 probe -create -database waves tbench.dut.fw_unit.even_pipe_forwarded_results tbench.dut.fw_unit.even_read_addr_a tbench.dut.fw_unit.even_read_addr_b
 probe -create -database waves tbench.dut.odd_immediate tbench.dut.odd_opcode tbench.dut.odd_instruction_type tbench.dut.odd_ra_addr tbench.dut.odd_rc_addr tbench.dut.odd_unit_id
 probe -create -database waves tbench.dut.exec_unit.odd_opcode tbench.dut.exec_unit.odd_source_a tbench.dut.exec_unit.odd_source_b tbench.dut.exec_unit.odd_source_c tbench.dut.exec_unit.odd_unit_id
+probe -create -database waves tbench.dut.exec_unit.odd_pipe.local_store_1.odd_opcode tbench.dut.exec_unit.odd_pipe.local_store_1.odd_source_a tbench.dut.exec_unit.odd_pipe.local_store_1.odd_source_b tbench.dut.exec_unit.odd_pipe.local_store_1.odd_source_c tbench.dut.exec_unit.odd_pipe.local_store_1.odd_unit_id tbench.dut.exec_unit.odd_pipe.local_store_1.odd_write_address
+probe -create -database waves tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[0] tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[1] tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[2] tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[3] tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[4] tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[5] tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[6] tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[7] tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[8] tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[9] tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[10] tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[11] tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[12] tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[13] tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[14] tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[15] tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[16] tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[17] tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[18] tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[19] tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[20] tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[21] tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[22] tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[23]
 
 simvision -input restore-store.tcl.svcf

@@ -76,7 +76,7 @@ always_ff @(posedge clk) begin
             OP_IMMEDIATE_LOAD_HALFWORD: output_packet.result <= immediate_load_halfword(source_a[0:15]);
             OP_IMMEDIATE_LOAD_ADDRESS: output_packet.result <= immediate_load_address(source_a[0:17]);
             OP_IMMEDIATE_LOAD_HALFWORD_UPPER: output_packet.result <= immediate_load_halfword_upper(source_a[0:15]);
-            OP_IMMEDIATE_OR_HALFWORD_LOWER: output_packet.result <= immediate_or_halfword_lower(source_a, source_b[0:15]);
+            OP_IMMEDIATE_OR_HALFWORD_LOWER: output_packet.result <= immediate_or_halfword_lower(source_a[0:15], source_b);
             default: ;
         endcase
     end
@@ -585,14 +585,16 @@ end
 return rt;
 endfunction : immediate_load_halfword_upper
 
-function automatic logic [0:127] immediate_or_halfword_lower(input logic[0:127] rt, input logic[0:15] i16);
-logic[0:31] imm32 = {16'b0, i16};
+function automatic logic [0:127] immediate_or_halfword_lower(input logic[0:15] i16, input logic[0:127] rt_in);
+logic[0:127] rt_out;
+logic[0:31] imm32;
 
 for (int i = 0; i < 4; ++i) begin
     int index = i * WORD_BITS;
-    rt[index +: WORD_BITS] |= imm32;
+    imm32 = {rt_in[index +: HALFWORD_BITS], i16};
+    rt_out[index +: WORD_BITS] = imm32;
 end
-return rt;
+return rt_out;
 endfunction : immediate_or_halfword_lower
 
 

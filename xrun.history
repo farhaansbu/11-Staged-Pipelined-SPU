@@ -1010,3 +1010,191 @@ s504(02Apr2026:12:48:44):  xrun -f files.f
 s505(02Apr2026:12:48:55):  xrun -f files.f 
 #e506(02Apr2026:12:49:11): source ./xcelium.d/env.d/env.history.02Apr2026_12_49_11
 s506(02Apr2026:12:49:11):  xrun -f files.f -top tbench -gui -access +rwc -input restore-store.tcl 
+#e507(02Apr2026:13:04:53): source ./xcelium.d/env.d/env.history.02Apr2026_13_04_53
+s507(02Apr2026:13:04:53):  xrun -f files.f 
+#e508(02Apr2026:13:04:59): source ./xcelium.d/env.d/env.history.02Apr2026_13_04_59
+s508(02Apr2026:13:04:59):  xrun -f files.f -top tbench -gui -access +rwc -input restore-store.tcl 
+#e509(02Apr2026:17:08:17): source ./xcelium.d/env.d/env.history.02Apr2026_17_08_17
+s509(02Apr2026:17:08:17):  xrun -f files.f -top tbench -gui -access +rwc -input restore-store.tcl 
+#e510(02Apr2026:17:13:39): source ./xcelium.d/env.d/env.history.02Apr2026_17_13_39
+s510(02Apr2026:17:13:39):  xrun -f files.f 
+#e511(02Apr2026:17:15:11): source ./xcelium.d/env.d/env.history.02Apr2026_17_15_11
+s511(02Apr2026:17:15:11):  xrun -f files.f 
+#e512(02Apr2026:17:16:41): source ./xcelium.d/env.d/env.history.02Apr2026_17_16_41
+s512(02Apr2026:17:16:41):  xrun -f files.f 
+#e513(02Apr2026:17:26:53): source ./xcelium.d/env.d/env.history.02Apr2026_17_26_53
+s513(02Apr2026:17:26:53):  xrun -f files.f 
+#e514(02Apr2026:17:27:04): source ./xcelium.d/env.d/env.history.02Apr2026_17_27_04
+s514(02Apr2026:17:27:04):  xrun -f files.f 
+#e515(02Apr2026:17:28:43): source ./xcelium.d/env.d/env.history.02Apr2026_17_28_43
+s515(02Apr2026:17:28:43):  xrun -f files.f 
+#e516(02Apr2026:17:30:24): source ./xcelium.d/env.d/env.history.02Apr2026_17_30_24
+s516(02Apr2026:17:30:24):  xrun -f files.f 
+#e517(02Apr2026:17:32:58): source ./xcelium.d/env.d/env.history.02Apr2026_17_32_58
+s517(02Apr2026:17:32:58):  xrun -f files.f 
+#e518(02Apr2026:17:35:34): source ./xcelium.d/env.d/env.history.02Apr2026_17_35_34
+s518(02Apr2026:17:35:34):  xrun -f files.f 
+#e519(02Apr2026:17:35:55): source ./xcelium.d/env.d/env.history.02Apr2026_17_35_55
+s519(02Apr2026:17:35:55):  xrun -f files.f -top tbench -gui -access +rwc -input restore.tcl 
+#e520(02Apr2026:17:41:35): source ./xcelium.d/env.d/env.history.02Apr2026_17_41_35
+s520(02Apr2026:17:41:35):  xrun -f files.f -top tbench -gui -access +rwc -input restore.tcl 
+#e521(02Apr2026:17:43:44): source ./xcelium.d/env.d/env.history.02Apr2026_17_43_44
+s521(02Apr2026:17:43:44):  xrun -f files.f -top tbench -gui -access +rwc -input restore.tcl 
+#e522(02Apr2026:17:52:30): source ./xcelium.d/env.d/env.history.02Apr2026_17_52_30
+s522(02Apr2026:17:52:30):  xrun -f files.f 
+#e523(02Apr2026:17:52:48): source ./xcelium.d/env.d/env.history.02Apr2026_17_52_48
+s523(02Apr2026:17:52:48):  xrun -f files.f 
+#e524(02Apr2026:17:52:56): source ./xcelium.d/env.d/env.history.02Apr2026_17_52_56
+s524(02Apr2026:17:52:56):  xrun -f files.f -top tbench -gui -access +rwc -input restore.tcl 
+#e525(02Apr2026:17:55:02): source ./xcelium.d/env.d/env.history.02Apr2026_17_55_02
+s525(02Apr2026:17:55:02):  xrun -f files.f 
+#e526(02Apr2026:18:00:40): source ./xcelium.d/env.d/env.history.02Apr2026_18_00_40
+s526(02Apr2026:18:00:40):  xrun -f files.f -top tbench -gui -access +rwc -input restore.tcl 
+#e527(02Apr2026:18:47:41): source ./xcelium.d/env.d/env.history.02Apr2026_18_47_41
+s527(02Apr2026:18:47:41):  xrun -f files.f 
+#e528(02Apr2026:18:48:01): source ./xcelium.d/env.d/env.history.02Apr2026_18_48_01
+s528(02Apr2026:18:48:01):  xrun -f files.f -top tbench -gui -access +rwc -input restore.tcl 
+#e529(02Apr2026:18:50:55): source ./xcelium.d/env.d/env.history.02Apr2026_18_50_55
+s529(02Apr2026:18:50:55):  xrun -f files.f 
+#e530(02Apr2026:18:51:05): source ./xcelium.d/env.d/env.history.02Apr2026_18_51_05
+s530(02Apr2026:18:51:05):  xrun -f files.f -top tbench -gui -access +rwc -input restore.tcl 
+#e531(24Apr2026:22:32:39): source ./xcelium.d/env.d/env.history.24Apr2026_22_32_39
+s531(24Apr2026:22:32:39):  xrun -f files.f -top tbench -gui -access +rwc -input restore.tcl 
+#e532(24Apr2026:22:36:36): source ./xcelium.d/env.d/env.history.24Apr2026_22_36_36
+s532(24Apr2026:22:36:36):  xrun -f files.f -top tbench -gui -access +rwc -input restore.tcl 
+#e533(24Apr2026:22:39:29): source ./xcelium.d/env.d/env.history.24Apr2026_22_39_29
+s533(24Apr2026:22:39:29):  xrun -f files.f -top tbench -gui -access +rwc -input restore.tcl 
+#e534(24Apr2026:22:47:57): source ./xcelium.d/env.d/env.history.24Apr2026_22_47_57
+s534(24Apr2026:22:47:57):  xrun -f files.f -top tbench -gui -access +rwc -input restore.tcl 
+#e535(24Apr2026:22:58:44): source ./xcelium.d/env.d/env.history.24Apr2026_22_58_44
+s535(24Apr2026:22:58:44):  xrun -f files.f -top tbench -gui -access +rwc -input restore.tcl 
+#e536(24Apr2026:23:06:11): source ./xcelium.d/env.d/env.history.24Apr2026_23_06_11
+s536(24Apr2026:23:06:11):  xrun -f files.f -top tbench -gui -access +rwc -input restore.tcl 
+#e537(24Apr2026:23:08:50): source ./xcelium.d/env.d/env.history.24Apr2026_23_08_50
+s537(24Apr2026:23:08:50):  xrun -f files.f -top tbench -gui -access +rwc -input restore.tcl 
+#e538(24Apr2026:23:12:23): source ./xcelium.d/env.d/env.history.24Apr2026_23_12_23
+s538(24Apr2026:23:12:23):  xrun -f files.f -top tbench -gui -access +rwc -input restore.tcl 
+#e539(24Apr2026:23:17:04): source ./xcelium.d/env.d/env.history.24Apr2026_23_17_04
+s539(24Apr2026:23:17:04):  xrun -f files.f -top tbench -gui -access +rwc -input restore.tcl 
+#e540(24Apr2026:23:19:10): source ./xcelium.d/env.d/env.history.24Apr2026_23_19_10
+s540(24Apr2026:23:19:10):  xrun -f files.f -top tbench -gui -access +rwc -input restore.tcl 
+#e541(24Apr2026:23:20:33): source ./xcelium.d/env.d/env.history.24Apr2026_23_20_33
+s541(24Apr2026:23:20:33):  xrun -f files.f -top tbench -gui -access +rwc -input restore.tcl 
+#e542(24Apr2026:23:22:57): source ./xcelium.d/env.d/env.history.24Apr2026_23_22_57
+s542(24Apr2026:23:22:57):  xrun -f files.f -top tbench -gui -access +rwc -input restore.tcl 
+#e543(24Apr2026:23:25:40): source ./xcelium.d/env.d/env.history.24Apr2026_23_25_40
+s543(24Apr2026:23:25:40):  xrun -f files.f -top tbench -gui -access +rwc -input restore.tcl 
+#e544(24Apr2026:23:30:24): source ./xcelium.d/env.d/env.history.24Apr2026_23_30_24
+s544(24Apr2026:23:30:24):  xrun -f files.f -top tbench -gui -access +rwc -input restore.tcl 
+#e545(24Apr2026:23:31:49): source ./xcelium.d/env.d/env.history.24Apr2026_23_31_49
+s545(24Apr2026:23:31:49):  xrun -f files.f -top tbench -gui -access +rwc -input restore.tcl 
+#e546(24Apr2026:23:41:53): source ./xcelium.d/env.d/env.history.24Apr2026_23_41_53
+s546(24Apr2026:23:41:53):  xrun -f files.f -top tbench -gui -access +rwc -input restore.tcl 
+#e547(24Apr2026:23:45:50): source ./xcelium.d/env.d/env.history.24Apr2026_23_45_50
+s547(24Apr2026:23:45:50):  xrun -f files.f -top tbench -gui -access +rwc -input restore.tcl 
+#e548(24Apr2026:23:49:26): source ./xcelium.d/env.d/env.history.24Apr2026_23_49_26
+s548(24Apr2026:23:49:26):  xrun -f files.f -top tbench -gui -access +rwc -input restore.tcl 
+#e549(25Apr2026:17:40:15): source ./xcelium.d/env.d/env.history.25Apr2026_17_40_15
+s549(25Apr2026:17:40:15):  xrun -f files.f -top tbench -gui -access +rwc -input restore.tcl 
+#e550(25Apr2026:17:42:20): source ./xcelium.d/env.d/env.history.25Apr2026_17_42_20
+s550(25Apr2026:17:42:20):  xrun -f files.f -top tbench -gui -access +rwc -input restore.tcl 
+#e551(25Apr2026:17:44:01): source ./xcelium.d/env.d/env.history.25Apr2026_17_44_01
+s551(25Apr2026:17:44:01):  xrun -f files.f -top tbench -gui -access +rwc -input restore.tcl 
+#e552(25Apr2026:17:49:00): source ./xcelium.d/env.d/env.history.25Apr2026_17_49_00
+s552(25Apr2026:17:49:00):  xrun -f files.f -top tbench -gui -access +rwc -input restore.tcl 
+#e553(25Apr2026:18:01:56): source ./xcelium.d/env.d/env.history.25Apr2026_18_01_56
+s553(25Apr2026:18:01:56):  xrun -f files.f -top tbench -gui -access +rwc -input restore.tcl 
+#e554(25Apr2026:18:34:04): source ./xcelium.d/env.d/env.history.25Apr2026_18_34_04
+s554(25Apr2026:18:34:04):  xrun -f files.f -top tbench -gui -access +rwc -input restore.tcl 
+#e555(25Apr2026:20:10:31): source ./xcelium.d/env.d/env.history.25Apr2026_20_10_31
+s555(25Apr2026:20:10:31):  xrun -f files.f -top tbench -gui -access +rwc -input restore.tcl 
+#e556(25Apr2026:20:26:36): source ./xcelium.d/env.d/env.history.25Apr2026_20_26_36
+s556(25Apr2026:20:26:36):  xrun -f files.f -top tbench -gui -access +rwc -input restore.tcl 
+#e557(25Apr2026:20:30:07): source ./xcelium.d/env.d/env.history.25Apr2026_20_30_07
+s557(25Apr2026:20:30:07):  xrun -f files.f -top tbench -gui -access +rwc -input restore.tcl 
+#e558(25Apr2026:20:43:01): source ./xcelium.d/env.d/env.history.25Apr2026_20_43_01
+s558(25Apr2026:20:43:01):  xrun -f files.f -top tbench -gui -access +rwc -input restore.tcl 
+#e559(25Apr2026:20:58:21): source ./xcelium.d/env.d/env.history.25Apr2026_20_58_21
+s559(25Apr2026:20:58:21):  xrun -f files.f -top tbench -gui -access +rwc -input restore.tcl 
+#e560(25Apr2026:21:00:37): source ./xcelium.d/env.d/env.history.25Apr2026_21_00_37
+s560(25Apr2026:21:00:37):  xrun -f files.f -top tbench -gui -access +rwc -input restore.tcl 
+#e561(25Apr2026:22:35:34): source ./xcelium.d/env.d/env.history.25Apr2026_22_35_34
+s561(25Apr2026:22:35:34):  xrun -f files.f -top tbench -gui -access +rwc -input restore.tcl 
+#e562(25Apr2026:22:37:08): source ./xcelium.d/env.d/env.history.25Apr2026_22_37_08
+s562(25Apr2026:22:37:08):  xrun -f files.f -top tbench -gui -access +rwc -input restore.tcl 
+#e563(25Apr2026:22:42:16): source ./xcelium.d/env.d/env.history.25Apr2026_22_42_16
+s563(25Apr2026:22:42:16):  xrun -f files.f -top tbench -gui -access +rwc -input restore.tcl 
+#e564(25Apr2026:22:45:22): source ./xcelium.d/env.d/env.history.25Apr2026_22_45_22
+s564(25Apr2026:22:45:22):  xrun -f files.f -top tbench -gui -access +rwc -input restore.tcl 
+#e565(25Apr2026:22:58:00): source ./xcelium.d/env.d/env.history.25Apr2026_22_58_00
+s565(25Apr2026:22:58:00):  xrun -f files.f -top tbench -gui -access +rwc -input restore.tcl 
+#e566(25Apr2026:23:13:21): source ./xcelium.d/env.d/env.history.25Apr2026_23_13_21
+s566(25Apr2026:23:13:21):  xrun -f files.f -top tbench -gui -access +rwc -input restore.tcl 
+#e567(25Apr2026:23:15:57): source ./xcelium.d/env.d/env.history.25Apr2026_23_15_57
+s567(25Apr2026:23:15:57):  xrun -f files.f -top tbench -gui -access +rwc -input restore.tcl 
+#e568(25Apr2026:23:22:01): source ./xcelium.d/env.d/env.history.25Apr2026_23_22_01
+s568(25Apr2026:23:22:01):  xrun -f files.f -top tbench -gui -access +rwc -input restore.tcl 
+#e569(25Apr2026:23:23:59): source ./xcelium.d/env.d/env.history.25Apr2026_23_23_59
+s569(25Apr2026:23:23:59):  xrun -f files.f -top tbench -gui -access +rwc -input restore.tcl 
+#e570(26Apr2026:00:04:57): source ./xcelium.d/env.d/env.history.26Apr2026_00_04_57
+s570(26Apr2026:00:04:57):  xrun -f files.f -top tbench -gui -access +rwc -input restore-store.tcl 
+#e571(26Apr2026:00:09:03): source ./xcelium.d/env.d/env.history.26Apr2026_00_09_03
+s571(26Apr2026:00:09:03):  xrun -f files.f -top tbench -gui -access +rwc -input restore-store.tcl 
+#e572(26Apr2026:00:13:19): source ./xcelium.d/env.d/env.history.26Apr2026_00_13_19
+s572(26Apr2026:00:13:19):  xrun -f files.f -top tbench -gui -access +rwc -input restore-store.tcl 
+#e573(26Apr2026:00:15:32): source ./xcelium.d/env.d/env.history.26Apr2026_00_15_32
+s573(26Apr2026:00:15:32):  xrun -f files.f -top tbench -gui -access +rwc -input restore-store.tcl 
+#e574(26Apr2026:00:22:42): source ./xcelium.d/env.d/env.history.26Apr2026_00_22_42
+s574(26Apr2026:00:22:42):  xrun -f files.f -top tbench -gui -access +rwc -input restore-store.tcl 
+#e575(26Apr2026:00:29:16): source ./xcelium.d/env.d/env.history.26Apr2026_00_29_16
+s575(26Apr2026:00:29:16):  xrun -f files.f -top tbench -gui -access +rwc -input restore-store.tcl 
+#e576(26Apr2026:00:40:10): source ./xcelium.d/env.d/env.history.26Apr2026_00_40_10
+s576(26Apr2026:00:40:10):  xrun -f files.f -top tbench -gui -access +rwc -input restore-store.tcl 
+#e577(26Apr2026:00:46:31): source ./xcelium.d/env.d/env.history.26Apr2026_00_46_31
+s577(26Apr2026:00:46:31):  xrun -f files.f -top tbench -gui -access +rwc -input restore-store.tcl 
+#e578(26Apr2026:00:55:25): source ./xcelium.d/env.d/env.history.26Apr2026_00_55_25
+s578(26Apr2026:00:55:25):  xrun -f files.f -top tbench -gui -access +rwc -input restore-store.tcl 
+#e579(26Apr2026:16:50:08): source ./xcelium.d/env.d/env.history.26Apr2026_16_50_08
+s579(26Apr2026:16:50:08):  xrun -f files.f -top tbench -gui -access +rwc -input restore.tcl 
+#e580(26Apr2026:16:53:22): source ./xcelium.d/env.d/env.history.26Apr2026_16_53_22
+s580(26Apr2026:16:53:22):  xrun -f files.f -top tbench -gui -access +rwc -input restore.tcl 
+#e581(26Apr2026:16:56:46): source ./xcelium.d/env.d/env.history.26Apr2026_16_56_46
+s581(26Apr2026:16:56:46):  xrun -f files.f -top tbench -gui -access +rwc -input restore.tcl 
+#e582(26Apr2026:17:02:49): source ./xcelium.d/env.d/env.history.26Apr2026_17_02_49
+s582(26Apr2026:17:02:49):  xrun -f files.f -top tbench -gui -access +rwc -input restore.tcl 
+#e583(26Apr2026:17:03:38): source ./xcelium.d/env.d/env.history.26Apr2026_17_03_38
+s583(26Apr2026:17:03:38):  xrun -f files.f -top tbench -gui -access +rwc -input restore.tcl 
+#e584(26Apr2026:17:24:46): source ./xcelium.d/env.d/env.history.26Apr2026_17_24_46
+s584(26Apr2026:17:24:46):  xrun -f files.f 
+#e585(26Apr2026:17:25:21): source ./xcelium.d/env.d/env.history.26Apr2026_17_25_21
+s585(26Apr2026:17:25:21):  xrun -f files.f 
+#e586(26Apr2026:17:31:34): source ./xcelium.d/env.d/env.history.26Apr2026_17_31_34
+s586(26Apr2026:17:31:34):  xrun -f files.f 
+#e587(26Apr2026:17:31:45): source ./xcelium.d/env.d/env.history.26Apr2026_17_31_45
+s587(26Apr2026:17:31:45):  xrun -f files.f 
+#e588(26Apr2026:17:32:48): source ./xcelium.d/env.d/env.history.26Apr2026_17_32_48
+s588(26Apr2026:17:32:48):  xrun -f files.f 
+#e589(26Apr2026:17:37:15): source ./xcelium.d/env.d/env.history.26Apr2026_17_37_15
+s589(26Apr2026:17:37:15):  xrun -f files2.f -top tb_instruction_buffer -gui -access +rwc 
+#e590(26Apr2026:17:37:55): source ./xcelium.d/env.d/env.history.26Apr2026_17_37_55
+s590(26Apr2026:17:37:55):  xrun -f files2.f -top tb_instruction_buffer -gui -access +rwc 
+#e591(26Apr2026:17:39:26): source ./xcelium.d/env.d/env.history.26Apr2026_17_39_26
+s591(26Apr2026:17:39:26):  xrun -f files2.f -top tb_instruction_buffer -gui -access +rwc 
+#e592(26Apr2026:17:42:01): source ./xcelium.d/env.d/env.history.26Apr2026_17_42_01
+s592(26Apr2026:17:42:01):  xrun -f files2.f -top tb_instruction_buffer -gui -access +rwc 
+#e593(26Apr2026:17:50:58): source ./xcelium.d/env.d/env.history.26Apr2026_17_50_58
+s593(26Apr2026:17:50:58):  xrun -f files2.f -top tb_instruction_buffer -gui -access +rwc 
+#e594(26Apr2026:17:53:49): source ./xcelium.d/env.d/env.history.26Apr2026_17_53_49
+s594(26Apr2026:17:53:49):  xrun -f files2.f -top tb_instruction_buffer -gui -access +rwc 
+#e595(26Apr2026:17:55:59): source ./xcelium.d/env.d/env.history.26Apr2026_17_55_59
+s595(26Apr2026:17:55:59):  xrun -f files2.f -top tb_instruction_buffer -gui -access +rwc 
+#e596(27Apr2026:19:48:04): source ./xcelium.d/env.d/env.history.27Apr2026_19_48_04
+s596(27Apr2026:19:48:04):  xrun -f files.f 
+#e597(27Apr2026:19:48:27): source ./xcelium.d/env.d/env.history.27Apr2026_19_48_27
+s597(27Apr2026:19:48:27):  xrun -f files.f 
+#e598(27Apr2026:19:48:49): source ./xcelium.d/env.d/env.history.27Apr2026_19_48_49
+s598(27Apr2026:19:48:49):  xrun -f files.f 
+#e599(27Apr2026:19:48:52): source ./xcelium.d/env.d/env.history.27Apr2026_19_48_52
+s599(27Apr2026:19:48:52):  xrun -f files.f 
+#e600(27Apr2026:21:05:49): source ./xcelium.d/env.d/env.history.27Apr2026_21_05_49
+s600(27Apr2026:21:05:49):  xrun -f files.f 

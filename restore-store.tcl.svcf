@@ -1,10 +1,10 @@
-# SimVision Command Script (Thu Apr 02 12:48:22 PM EDT 2026)
+# SimVision Command Script (Thu Apr 02 01:04:31 PM EDT 2026)
 #
 # Version 24.09.s001
 #
 # You can restore this configuration with:
 #
-#      xrun -f files.f -top tbench -access +rwc -input restore.tcl -input restore-store.tcl
+#      xrun -f files.f -top tbench -access +rwc -input restore-store.tcl
 #
 
 
@@ -20,7 +20,7 @@ preferences set plugin-enable-waveformfrequencyplot 0
 # Simulator
 #
 database require simulator -hints {
-	simulator "xrun -f files.f -top tbench -gui -access +rwc -input restore.tcl -input restore-store.tcl"
+	simulator "xrun -f files.f -top tbench -gui -access +rwc -input restore-store.tcl -input restore-store.tcl"
 }
 
 #
@@ -41,10 +41,10 @@ if {[catch {window new WatchList -name "Design Browser 1" -geometry 1707x996+8+3
 }
 window target "Design Browser 1" on
 browser using {Design Browser 1}
-browser set -scope [subst  {simulator::[format {tbench.dut.exec_unit}]} ]
+browser set -scope [subst  {simulator::[format {tbench.dut.exec_unit.odd_pipe.local_store_1}]} ]
 browser set \
     -signalsort name
-browser yview see [subst  {simulator::[format {tbench.dut.exec_unit}]} ]
+browser yview see [subst  {simulator::[format {tbench.dut.exec_unit.odd_pipe.local_store_1}]} ]
 browser timecontrol set -lock 0
 
 #
@@ -55,7 +55,7 @@ if {[catch {window new WaveWindow -name "Waveform 1" -geometry 2560x1377+0+23}] 
 }
 window target "Waveform 1" on
 waveform using {Waveform 1}
-waveform sidebar visibility partial
+waveform sidebar select designbrowser
 waveform set \
     -primarycursor TimeA \
     -signalnames name \
@@ -167,9 +167,99 @@ set id [waveform add -signals [subst  {
 	{simulator::[format {tbench.dut.exec_unit.odd_unit_id[0:2]}]}
 	} ]]
 set id [waveform add -signals [subst  {
+	{simulator::[format {tbench.dut.exec_unit.odd_pipe.local_store_1.odd_opcode[0:6]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{simulator::[format {tbench.dut.exec_unit.odd_pipe.local_store_1.odd_source_a[0:127]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{simulator::[format {tbench.dut.exec_unit.odd_pipe.local_store_1.odd_source_b[0:127]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{simulator::[format {tbench.dut.exec_unit.odd_pipe.local_store_1.odd_source_c[0:127]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{simulator::[format {tbench.dut.exec_unit.odd_pipe.local_store_1.odd_unit_id[0:2]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{simulator::[format {tbench.dut.exec_unit.odd_pipe.local_store_1.odd_write_address[0:6]}]}
+	} ]]
+set id [waveform add -signals [subst  {
 	{simulator::[format {tbench.dut.rf.reg_file[0:127]}]}
 	} ]]
 waveform hierarchy collapse $id
+set id [waveform add -signals [subst  {
+	{simulator::[format {tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{simulator::[format {tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[1]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{simulator::[format {tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[2]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{simulator::[format {tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[3]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{simulator::[format {tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[4]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{simulator::[format {tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[5]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{simulator::[format {tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[6]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{simulator::[format {tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[7]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{simulator::[format {tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[8]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{simulator::[format {tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[9]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{simulator::[format {tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[10]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{simulator::[format {tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[11]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{simulator::[format {tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[12]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{simulator::[format {tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[13]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{simulator::[format {tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[14]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{simulator::[format {tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[15]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{simulator::[format {tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[16]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{simulator::[format {tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[17]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{simulator::[format {tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[18]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{simulator::[format {tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[19]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{simulator::[format {tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[20]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{simulator::[format {tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[21]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{simulator::[format {tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[22]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{simulator::[format {tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[23]}]}
+	} ]]
 
 waveform xview limits 0 255ns
 
@@ -181,7 +271,7 @@ waveform xview limits 0 255ns
 # Console windows
 #
 console set -windowname Console
-window geometry Console 730x250+8+31
+window geometry Console 2560x1377+0+23
 
 #
 # Layout selection

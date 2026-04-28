@@ -217,8 +217,8 @@ function automatic logic[0:127] floating_add (input logic[0:127] ra, input logic
         int index = i * WORD_BITS;
         shortreal a_flt = $bitstoshortreal(ra[index +: WORD_BITS]);
         shortreal b_flt = $bitstoshortreal(rb[index +: WORD_BITS]);
-        real result = a_flt + b_flt;
-        rt[index +: WORD_BITS] = $shortrealtobits(saturate_real(result));
+        shortreal result = a_flt + b_flt;
+        rt[index +: WORD_BITS] = $shortrealtobits((result));
     end
     return rt;
 endfunction : floating_add

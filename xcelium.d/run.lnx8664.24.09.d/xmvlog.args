@@ -6,6 +6,9 @@
 ./xcelium.d/run.lnx8664.24.09.d
 -RUNMODE
 instructions.sv
+instruction_buffer.sv
+if_id_reg.sv
+decoder.sv
 id_rf_reg.sv
 register_file.sv
 forwarding_unit.sv
@@ -36,4 +39,3 @@ top_level_tb.sv
 -XLLIBSTORE
 ./xcelium.d/run.lnx8664.24.09.d/xllibs
 -ALLOWUNBOUND
--hastop

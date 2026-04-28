@@ -4,10 +4,3 @@
 //
 -f
 files.f
--top
-tbench
--gui
--access
-+rwc
--input
-restore-store.tcl

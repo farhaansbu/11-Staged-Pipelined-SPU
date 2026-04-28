@@ -56,6 +56,14 @@ always_comb begin : source_operand_unit_body
     else if (even_instruction_type == RI16) begin
         even_source_a[0:15] = even_immediate[2:17];
         even_source_a[16:127] = '0;
+        if (even_opcode == OP_IMMEDIATE_OR_HALFWORD_LOWER) begin
+            if (even_forwarding_signal_b == 1) begin
+                even_source_b = even_forwarded_data_b;
+            end
+            else begin
+                even_source_b = even_reg_data_b;
+            end
+        end
     end
 
     else if (even_instruction_type == RI10) begin
@@ -77,7 +85,7 @@ always_comb begin : source_operand_unit_body
             even_source_a = even_reg_data_a;
         end
         even_source_b[0:6] = even_immediate[11:17];
-        even_source_b[7:128] = '0;
+        even_source_b[7:127] = '0;
     end
 
     else if (even_instruction_type == RR) begin
@@ -94,6 +102,7 @@ always_comb begin : source_operand_unit_body
         else begin
             even_source_b = even_reg_data_b;
         end
+
     end
     
     else begin

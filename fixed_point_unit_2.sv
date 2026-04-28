@@ -119,7 +119,7 @@ for (int i = 0; i < 4; ++i) begin
     int index = i * WORD_BITS;
     integer rotate_count = rb[index+27 +: 5];
     
-    rt[index +: WORD_BITS] = {ra[index +: WORD_BITS], ra[index +: WORD_BITS]}[0 + rotate_count +: WORD_BITS];
+    rt[index +: WORD_BITS] = {ra[index +: WORD_BITS], ra[index +: WORD_BITS]}[WORD_BITS - rotate_count +: WORD_BITS];
 end
 return rt;
 endfunction : rotate_word
@@ -131,7 +131,7 @@ for (int i = 0; i < 8; ++i) begin
     int index = i * HALFWORD_BITS;
     integer rotate_count = rb[index+12 +: 4];
     
-    rt[index +: HALFWORD_BITS] = {ra[index +: HALFWORD_BITS], ra[index +: HALFWORD_BITS]}[0 + rotate_count +: HALFWORD_BITS];
+    rt[index +: HALFWORD_BITS] = {ra[index +: HALFWORD_BITS], ra[index +: HALFWORD_BITS]}[HALFWORD_BITS - rotate_count +: HALFWORD_BITS];
 end
 return rt;
 endfunction : rotate_halfword
@@ -142,7 +142,7 @@ integer rotate_count = i7[2:6];
 
 for (int i = 0; i < 4; ++i) begin
     int index = i * WORD_BITS;
-    rt[index +: WORD_BITS] = {ra[index +: WORD_BITS], ra[index +: WORD_BITS]}[0 + rotate_count +: WORD_BITS];
+    rt[index +: WORD_BITS] = {ra[index +: WORD_BITS], ra[index +: WORD_BITS]}[WORD_BITS - rotate_count +: WORD_BITS];
 end
 return rt;
 endfunction : rotate_word_immediate
@@ -153,7 +153,7 @@ integer rotate_count = i7[3:6];
 
 for (int i = 0; i < 8; ++i) begin
     int index = i * HALFWORD_BITS; 
-    rt[index +: HALFWORD_BITS] = {ra[index +: HALFWORD_BITS], ra[index +: HALFWORD_BITS]}[0 + rotate_count +: HALFWORD_BITS];
+    rt[index +: HALFWORD_BITS] = {ra[index +: HALFWORD_BITS], ra[index +: HALFWORD_BITS]}[HALFWORD_BITS - rotate_count +: HALFWORD_BITS];
 end
 return rt;
 endfunction : rotate_halfword_immediate
@@ -163,7 +163,7 @@ logic[0:127] rt;
 
 for (int i = 0; i < 4; ++i) begin
     int index = i * WORD_BITS;
-    integer shift_count = (0 - rb) % 64;
+    integer shift_count = (0 - rb[index +: WORD_BITS]) % 64;
     if (shift_count > 31) begin
         rt[index +: WORD_BITS] = '0;
     end else begin
@@ -178,7 +178,7 @@ logic[0:127] rt;
 
 for (int i = 0; i < 8; ++i) begin
     int index = i * HALFWORD_BITS;
-    integer shift_count = (0 - rb) % 32;
+    integer shift_count = (0 - rb[index +: HALFWORD_BITS]) % 32;
     if (shift_count > 15) begin
         rt[index +: HALFWORD_BITS] = '0;
     end else begin
@@ -193,11 +193,11 @@ logic[0:127] rt;
 
 for (int i = 0; i < 4; ++i) begin
     int index = i * WORD_BITS;
-    integer shift_count = (0 - rb) % 64;
+    integer shift_count = (0 - rb[index +: WORD_BITS]) % 64;
     if (shift_count > 31) begin
         rt[index +: WORD_BITS] = {WORD_BITS{ra[index]}};
     end else begin
-        rt[index +: WORD_BITS] = ra[index +: WORD_BITS] >>> shift_count;
+        rt[index +: WORD_BITS] = $signed(ra[index +: WORD_BITS]) >>> shift_count;
     end
 end
 return rt;
@@ -208,11 +208,11 @@ logic[0:127] rt;
 
 for (int i = 0; i < 8; ++i) begin
     int index = i * HALFWORD_BITS;
-    integer shift_count = (0 - rb) % 32;
+    integer shift_count = (0 - rb[index +: HALFWORD_BITS]) % 32;
     if (shift_count > 15) begin
         rt[index +: HALFWORD_BITS] = {HALFWORD_BITS{ra[index]}};
     end else begin
-        rt[index +: WORD_BITS] = ra[index +: HALFWORD_BITS] >>> shift_count;
+        rt[index +: HALFWORD_BITS] = $signed(ra[index +: HALFWORD_BITS]) >>> shift_count;
     end
 end
 return rt;

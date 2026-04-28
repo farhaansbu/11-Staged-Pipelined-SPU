@@ -1,8 +1,11 @@
 xrun(64): 24.09-s001: (c) Copyright 1995-2024 Cadence Design Systems, Inc.
-TOOL:	xrun(64)	24.09-s001: Started on Apr 02, 2026 at 12:49:11 EDT
+TOOL:	xrun(64)	24.09-s001: Started on Apr 27, 2026 at 21:05:49 EDT
 xrun
 	-f files.f
 		instructions.sv
+		instruction_buffer.sv
+		if_id_reg.sv
+		decoder.sv
 		id_rf_reg.sv
 		register_file.sv
 		forwarding_unit.sv
@@ -23,254 +26,99 @@ xrun
 		write_back_register.sv
 		top_level_unit.sv
 		top_level_tb.sv
-	-top tbench
-	-gui
-	-access +rwc
-	-input restore-store.tcl
-	Elaborating the design hierarchy:
+Recompiling... reason: file './decoder.sv' is newer than expected.
+	expected: Mon Apr 27 19:48:48 2026
+	actual:   Mon Apr 27 21:05:37 2026
+file: decoder.sv
+endfunction : deecode_instruction
+                                |
+xmvlog: *W,LBLMAT (decoder.sv,494|32): Label/name mismatch: decode_instruction - deecode_instruction.
+	module worklib.decoder:sv
+		errors: 0, warnings: 1
 		Caching library 'worklib' ....... Done
+	Elaborating the design hierarchy:
 	Top level design units:
 		instruction_pkg
-		$unit_0x70277c67
+		$unit_0x3c157b47
+		instruction_buffer
+		if_id_reg
+		decoder
 		tbench
-	Building instance overlay tables: ...
-        even_source_b[7:128] = '0;
-                    |
-xmelab: *W,BNDWRN (./source_operand.sv,80|20): Bit-select or part-select index out of declared bounds.
-................. Done
+	Building instance overlay tables: .................... Done
 	Generating native compiled code:
-		worklib.wb_register:sv <0x31cbd3df>
-			streams:   2, words:   577
-		worklib.local_store_unit:sv <0x4760bf49>
-			streams:  22, words: 16580
-		worklib.permute_unit:sv <0x0b02dc1f>
-			streams:  22, words: 22301
-		worklib.branch_unit:sv <0x7a1e419c>
-			streams:  31, words: 40369
-		worklib.odd_pipe_unit:sv <0x17481670>
-			streams:  28, words: 11566
-		worklib.execution_pipe_mux:sv <0x05ed4ddc>
-			streams:   1, words:  1045
-		worklib.execution_pipe_mux:sv <0x322784ce>
-			streams:   1, words:  1045
-		worklib.byte_unit:sv <0x37b6787e>
-			streams:  16, words: 14741
-		worklib.single_precision_1:sv <0x1775f42a>
-			streams:  55, words: 59897
-		worklib.simple_fixed_2_1:sv <0x546d0cd9>
-			streams:  32, words: 38048
-		worklib.execution_pipe_register:sv <0x2b5a153b>
-			streams:   2, words:   577
-		worklib.simple_fixed_1_1:sv <0x3a95e578>
-			streams:  94, words: 97644
-		worklib.even_pipe_unit:sv <0x5fe0d674>
-			streams:  43, words: 17764
-		worklib.execution_unit:sv <0x3122f0c7>
-			streams:  12, words:  7476
-		worklib.rf_ex_reg:sv <0x46bd912e>
-			streams:   2, words:  3010
-		worklib.source_operand_unit:sv <0x16e6f891>
-			streams:   1, words: 14216
-		worklib.forwarding_unit:sv <0x701401cf>
-			streams:   1, words: 11801
-		worklib.register_file:sv <0x60f2d6c4>
-			streams:   2, words: 85773
-		worklib.id_rf_reg:sv <0x111fccaf>
-			streams:   2, words:  3241
-		worklib.top_level:sv <0x3834539f>
-			streams: 127, words: 38486
-		worklib.tbench:sv <0x20d46492>
-			streams:  24, words: 14576
+		worklib.wb_register:sv <0x6ddb20d4>
+			streams:   2, words:   542
+		worklib.local_store_unit:sv <0x37f1b33d>
+			streams:  22, words: 15581
+		worklib.permute_unit:sv <0x05ad7833>
+			streams:  22, words: 110065
+		worklib.branch_unit:sv <0x54dd5525>
+			streams:  29, words: 23886
+		worklib.odd_pipe_unit:sv <0x7bd11ec7>
+			streams:  27, words: 10301
+		worklib.execution_pipe_mux:sv <0x45013985>
+			streams:   1, words:   975
+		worklib.execution_pipe_mux:sv <0x72cbf097>
+			streams:   1, words:   975
+		worklib.byte_unit:sv <0x5b803a80>
+			streams:  16, words: 23942
+		worklib.single_precision_1:sv <0x676109c1>
+			streams:  55, words: 56217
+		worklib.simple_fixed_2_1:sv <0x5fcf22ec>
+			streams:  32, words: 46742
+		worklib.execution_pipe_register:sv <0x2fbe30c1>
+			streams:   2, words:   542
+		worklib.simple_fixed_1_1:sv <0x4bc6c6f1>
+			streams:  94, words: 107650
+		worklib.even_pipe_unit:sv <0x1e8a23e4>
+			streams:  43, words: 16784
+		worklib.execution_unit:sv <0x070f53dd>
+			streams:  11, words:  6468
+		worklib.rf_ex_reg:sv <0x423dcb31>
+			streams:   2, words:  2548
+		worklib.source_operand_unit:sv <0x5373a7d8>
+			streams:   1, words: 13087
+		worklib.forwarding_unit:sv <0x13a772f5>
+			streams:   1, words: 10267
+		worklib.register_file:sv <0x70dd0905>
+			streams:   2, words: 76855
+		worklib.id_rf_reg:sv <0x30c5cb05>
+			streams:   2, words:  2380
+		worklib.top_level:sv <0x453a4a56>
+			streams: 125, words: 34112
+		worklib.tbench:sv <0x36efa0cb>
+			streams:  10, words: 12979
+		worklib.decoder:sv <0x78181a72>
+			streams:   2, words: 37760
+		worklib.if_id_reg:sv <0x7ad7ca39>
+			streams:   0, words:     0
+		worklib.instruction_buffer:sv <0x75ba20a2>
+			streams:   1, words:   306
 	Building instance specific data structures.
 	Loading native compiled code:     .................... Done
 	Design hierarchy summary:
-		               Instances  Unique
-		Modules:              50      20
-		Verilog packages:      1       1
-		Registers:           942     909
-		Scalar wires:         22       -
-		Vectored wires:      342       -
-		Always blocks:        48      18
-		Initial blocks:        2       2
-		Pseudo assignments:  228       -
-		Compilation units:     1       1
-		Process Clocks:       35       1
-	Writing initial simulation snapshot: worklib.tbench:sv
-xmsim: *W,NOMTDGUI: Multi-Threaded Dumping is disabled for interactive debug mode.
-
--------------------------------------
-Relinquished control to SimVision...
-xcelium> 
+		                 Instances  Unique
+		Modules:                53      23
+		Verilog packages:        1       1
+		Registers:             979     946
+		Scalar wires:           22       -
+		Vectored wires:        343       -
+		Always blocks:          51      21
+		Initial blocks:          3       3
+		Pseudo assignments:    210       -
+		Compilation units:       1       1
+		Process Clocks:         35       1
+		Simulation timescale:  1ps
+	Writing initial simulation snapshot: worklib.instruction_buffer:sv
+Loading snapshot worklib.instruction_buffer:sv .................... Done
 xcelium> source /usr/local/cds/XCELIUM2409/tools/xcelium/files/xmsimrc
-xcelium> 
-xcelium> # XM-Sim Command File
-xcelium> # TOOL:	xmsim(64)	24.09-s001
-xcelium> #
-xcelium> #
-xcelium> # You can restore this configuration with:
-xcelium> #
-xcelium> #      xrun -f files.f -top tbench -access +rwc -input restore.tcl -input restore-store.tcl
-xcelium> #
-xcelium> 
-xcelium> set tcl_prompt1 {puts -nonewline "xcelium> "}
-puts -nonewline "xcelium> "
-xcelium> set tcl_prompt2 {puts -nonewline "> "}
-puts -nonewline "> "
-xcelium> set vlog_format %h
-%h
-xcelium> set vhdl_format %v
-%v
-xcelium> set real_precision 6
-6
-xcelium> set display_unit auto
-auto
-xcelium> set time_unit module
-module
-xcelium> set heap_garbage_size -200
--200
-xcelium> set heap_garbage_time 0
-0
-xcelium> set assert_report_level note
-note
-xcelium> set assert_stop_level error
-error
-xcelium> set autoscope yes
-yes
-xcelium> set assert_1164_warnings yes
-yes
-xcelium> set pack_assert_off {}
-xcelium> set severity_pack_assert_off {note warning}
-note warning
-xcelium> set assert_output_stop_level failed
-failed
-xcelium> set tcl_debug_level 0
-0
-xcelium> set relax_path_name 1
-1
-xcelium> set vhdl_vcdmap XX01ZX01X
-XX01ZX01X
-xcelium> set intovf_severity_level ERROR
-ERROR
-xcelium> set probe_screen_format 0
-0
-xcelium> set rangecnst_severity_level ERROR
-ERROR
-xcelium> set textio_severity_level ERROR
-ERROR
-xcelium> set vital_timing_checks_on 1
-1
-xcelium> set vlog_code_show_force 0
-0
-xcelium> set assert_count_attempts 1
-1
-xcelium> set tcl_all64 false
-false
-xcelium> set tcl_runerror_exit false
-false
-xcelium> set assert_report_incompletes 0
-0
-xcelium> set show_force 1
-1
-xcelium> set force_reset_by_reinvoke 0
-0
-xcelium> set tcl_relaxed_literal 0
-0
-xcelium> set probe_exclude_patterns {}
-xcelium> set probe_packed_limit 4k
-4k
-xcelium> set probe_unpacked_limit 16k
-16k
-xcelium> set assert_internal_msg no
-no
-xcelium> set svseed 1
-1
-xcelium> set assert_reporting_mode 0
-0
-xcelium> set vcd_compact_mode 0
-0
-xcelium> set vhdl_forgen_loopindex_enum_pos 0
-0
-xcelium> set xmreplay_dc_debug 0
-0
-xcelium> set tcl_runcmd_interrupt next_command
-next_command
-xcelium> set tcl_sigval_prefix {#}
-#
-xcelium> alias . run
-xcelium> alias indago verisium
-xcelium> alias quit exit
-xcelium> database -open -shm -into waves.shm waves -default
-Created default SHM database waves
-xcelium> probe -create -database waves tbench.clk tbench.even_immediate tbench.even_instruction_type tbench.even_opcode tbench.even_ra_addr tbench.even_rb_addr tbench.even_rc_addr tbench.even_rt_addr tbench.even_unit_id tbench.dut.dec_rf_reg.even_immediate_q tbench.dut.dec_rf_reg.even_instruction_type_q tbench.dut.dec_rf_reg.even_opcode_q tbench.dut.dec_rf_reg.even_ra_addr_q tbench.dut.dec_rf_reg.even_rb_addr_q tbench.dut.dec_rf_reg.even_rc_addr_q tbench.dut.dec_rf_reg.even_rt_addr_q tbench.dut.dec_rf_reg.even_unit_id_q
-Created probe 1
-xcelium> probe -create -database waves tbench.dut.rf_exec_reg.even_opcode_q tbench.dut.rf_exec_reg.even_source_a_q tbench.dut.rf_exec_reg.even_source_b_q tbench.dut.rf_exec_reg.even_source_c_q tbench.dut.rf_exec_reg.even_unit_id_q tbench.dut.rf_exec_reg.even_write_addr_q
-Created probe 2
-xcelium> probe -create -database waves tbench.dut.rf.reg_file
-Created probe 3
-xcelium> probe -create -database waves tbench.dut.source_op_unit.even_forwarded_data_a tbench.dut.source_op_unit.even_forwarded_data_b tbench.dut.source_op_unit.even_forwarding_signal_a tbench.dut.source_op_unit.even_forwarding_signal_b
-Created probe 4
-xcelium> probe -create -database waves tbench.dut.fw_unit.even_forwarding_signal_a tbench.dut.fw_unit.even_forwarding_signal_b
-Created probe 5
-xcelium> probe -create -database waves tbench.dut.fw_unit.even_pipe_forwarded_results tbench.dut.fw_unit.even_read_addr_a tbench.dut.fw_unit.even_read_addr_b
-Created probe 6
-xcelium> probe -create -database waves tbench.dut.odd_immediate tbench.dut.odd_opcode tbench.dut.odd_instruction_type tbench.dut.odd_ra_addr tbench.dut.odd_rc_addr tbench.dut.odd_unit_id
-Created probe 7
-xcelium> probe -create -database waves tbench.dut.exec_unit.odd_opcode tbench.dut.exec_unit.odd_source_a tbench.dut.exec_unit.odd_source_b tbench.dut.exec_unit.odd_source_c tbench.dut.exec_unit.odd_unit_id
-Created probe 8
-xcelium> 
-xcelium> simvision -input restore-store.tcl.svcf
 xcelium> run
                    0 | EvenRA=x EvenRB=x | EvenRC=x EvenRT=x | EvenOpcode=x 
-                  20 | EvenRA=1 EvenRB=x | EvenRC=x EvenRT=2 | EvenOpcode=38 
-                  30 | EvenRA=3 EvenRB=x | EvenRC=x EvenRT=4 | EvenOpcode=38 
-Simulation complete via $finish(1) at time 255 NS + 0
-./top_level_tb.sv:165     $finish;
-xcelium> probe -create -shm tbench.dut.exec_unit.odd_pipe.local_store_1.odd_opcode tbench.dut.exec_unit.odd_pipe.local_store_1.odd_source_a tbench.dut.exec_unit.odd_pipe.local_store_1.odd_source_b tbench.dut.exec_unit.odd_pipe.local_store_1.odd_source_c tbench.dut.exec_unit.odd_pipe.local_store_1.odd_unit_id tbench.dut.exec_unit.odd_pipe.local_store_1.odd_write_address
-Created probe 9
-xcelium> reset
-Loaded snapshot worklib.tbench:sv
-xcelium> run
-                   0 | EvenRA=x EvenRB=x | EvenRC=x EvenRT=x | EvenOpcode=x 
-                  20 | EvenRA=1 EvenRB=x | EvenRC=x EvenRT=2 | EvenOpcode=38 
-                  30 | EvenRA=3 EvenRB=x | EvenRC=x EvenRT=4 | EvenOpcode=38 
-Simulation complete via $finish(1) at time 255 NS + 0
-./top_level_tb.sv:165     $finish;
-xcelium> probe -create -shm tbench.dut.exec_unit.odd_pipe.local_store_1.local_store
-xmsim: *W,LMTMSG: unpacked array at "tbench.dut.exec_unit.odd_pipe.local_store_1.local_store" of 32769 elements exceeds limit of 16384 - not probed
- Use 'probe -create -unpacked 32769' to adjust limit.
-xmsim: *SE,DBOBBD: Cannot create SHM probe for tbench.dut.exec_unit.odd_pipe.local_store_1.local_store.
-xmsim: *SE,PRBFAIL: No probes were created due to a probe command failure.
-xcelium> reset
-Loaded snapshot worklib.tbench:sv
-xcelium> run
-                   0 | EvenRA=x EvenRB=x | EvenRC=x EvenRT=x | EvenOpcode=x 
-                  20 | EvenRA=1 EvenRB=x | EvenRC=x EvenRT=2 | EvenOpcode=38 
-                  30 | EvenRA=3 EvenRB=x | EvenRC=x EvenRT=4 | EvenOpcode=38 
-Simulation complete via $finish(1) at time 255 NS + 0
-./top_level_tb.sv:165     $finish;
-xcelium> reset
-Loaded snapshot worklib.tbench:sv
-xcelium> run
-                   0 | EvenRA=x EvenRB=x | EvenRC=x EvenRT=x | EvenOpcode=x 
-                  20 | EvenRA=1 EvenRB=x | EvenRC=x EvenRT=2 | EvenOpcode=38 
-                  30 | EvenRA=3 EvenRB=x | EvenRC=x EvenRT=4 | EvenOpcode=38 
-Simulation complete via $finish(1) at time 255 NS + 0
-./top_level_tb.sv:165     $finish;
-xcelium> probe -create -shm tbench.dut.exec_unit.odd_pipe.local_store_1.local_store
-xmsim: *W,LMTMSG: unpacked array at "tbench.dut.exec_unit.odd_pipe.local_store_1.local_store" of 32769 elements exceeds limit of 16384 - not probed
- Use 'probe -create -unpacked 32769' to adjust limit.
-xmsim: *SE,DBOBBD: Cannot create SHM probe for tbench.dut.exec_unit.odd_pipe.local_store_1.local_store.
-xmsim: *SE,PRBFAIL: No probes were created due to a probe command failure.
-xcelium> probe -create -shm tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[0] tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[1] tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[2] tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[3] tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[4] tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[5] tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[6] tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[7] tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[8] tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[9] tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[10] tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[11] tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[12] tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[13] tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[14] tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[15] tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[16] tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[17] tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[18] tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[19] tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[20] tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[21] tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[22] tbench.dut.exec_unit.odd_pipe.local_store_1.local_store[23]
-Created probe 10
-xcelium> run
-xmsim: *E,RNFNSH: Cannot continue simulation due to a previous $finish.
-xcelium> reset
-Loaded snapshot worklib.tbench:sv
-xcelium> run
-                   0 | EvenRA=x EvenRB=x | EvenRC=x EvenRT=x | EvenOpcode=x 
-                  20 | EvenRA=1 EvenRB=x | EvenRC=x EvenRT=2 | EvenOpcode=38 
-                  30 | EvenRA=3 EvenRB=x | EvenRC=x EvenRT=4 | EvenOpcode=38 
-Simulation complete via $finish(1) at time 255 NS + 0
-./top_level_tb.sv:165     $finish;
-xcelium> 
+                  25 | EvenRA=3 EvenRB=x | EvenRC=x EvenRT=1 | EvenOpcode=38 
+                  35 | EvenRA=4 EvenRB=x | EvenRC=x EvenRT=2 | EvenOpcode=38 
+                  45 | EvenRA=4 EvenRB=x | EvenRC=x EvenRT=3 | EvenOpcode=38 
+                  55 | EvenRA=2 EvenRB=1 | EvenRC=3 EvenRT=4 | EvenOpcode=5 
+Simulation complete via $finish(1) at time 455 NS + 0
+./top_level_tb.sv:375     $finish;
+xcelium> exit
+TOOL:	xrun(64)	24.09-s001: Exiting on Apr 27, 2026 at 21:05:50 EDT  (total: 00:00:01)

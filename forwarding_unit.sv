@@ -6,6 +6,7 @@ module forwarding_unit (
     input logic[0:6] even_read_addr_b,
     input logic[0:6] even_read_addr_c,
     input logic[0:2] even_unit_id,
+    input opcode_t even_opcode,
     input instruction_type even_instruction_type,
     input unit_result_packet[0:5] even_pipe_forwarded_results,
 
@@ -65,6 +66,12 @@ always_comb begin : forwarding_unit_body
 
             // Analyze current instruction thats about to be executed
             if (even_instruction_type == RI18 || even_instruction_type == RI16) begin
+                if (even_opcode == OP_IMMEDIATE_OR_HALFWORD_LOWER) begin
+                    if (even_read_addr_b == temp_write_addr) begin
+                        even_forwarding_signal_b = 1;
+                        even_forwarded_data_b = temp_result;
+                    end
+                end
                 continue;
             end
 
@@ -110,6 +117,12 @@ always_comb begin : forwarding_unit_body
 
             // Analyze current instruction thats about to be executed
             if (even_instruction_type == RI18 || even_instruction_type == RI16) begin
+                if (even_opcode == OP_IMMEDIATE_OR_HALFWORD_LOWER) begin
+                    if (even_read_addr_b == temp_write_addr) begin
+                        even_forwarding_signal_b = 1;
+                        even_forwarded_data_b = temp_result;
+                    end
+                end
                 continue;
             end
 

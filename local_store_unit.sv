@@ -95,7 +95,7 @@ endfunction : load_quadword_d
 
 function automatic logic[0:127] load_quadword_a (input logic[0:15] i16);
     logic[0:127] loaded_data;
-    logic[0:31] imm32 = {{12{i16[0]}}, i16, 4'b0};
+    logic[0:31] imm32 = {{14{i16[0]}}, i16, 2'b0};
     logic[0:31] addr = imm32 & LSLR & 32'hFFFF_FFF0;
 
     for (int i = 0; i < 16; i++) begin
@@ -127,7 +127,7 @@ endfunction : store_quadword_x
 
 function automatic void store_quadword_a (input logic[0:15] i16, input logic[0:127] rt);
 
-    logic[0:31] imm32 = {{12{i16[0]}}, i16, 4'b0};
+    logic[0:31] imm32 = {{14{i16[0]}}, i16, 2'b0};
     logic[0:31] addr = imm32 & LSLR & 32'hFFFF_FFF0;
 
     for (int i = 0; i < 16; i++) begin

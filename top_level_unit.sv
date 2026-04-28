@@ -201,6 +201,7 @@ forwarding_unit fw_unit (
                                    exec_output_even_stage_5_forwarded_res,
                                    exec_output_even_stage_6_forwarded_res,
                                    exec_output_even_to_write_back}),
+    .even_opcode(id_rf_reg_output_even_opcode_q),
 
     .odd_read_addr_a(id_rf_reg_output_odd_ra_addr_q),
     .odd_read_addr_b(id_rf_reg_output_odd_rb_addr_q),

@@ -1,0 +1,139 @@
+
+#
+# Preferences
+#
+preferences set plugin-enable-svdatabrowser-new 1
+preferences set plugin-enable-groupscope 0
+preferences set plugin-enable-interleaveandcompare 0
+preferences set plugin-enable-waveformfrequencyplot 0
+
+#
+# Mnemonic Maps
+#
+mmap new  -reuse -name {Boolean as Logic} -radix %b -contents {{%c=FALSE -edgepriority 1 -shape low}
+{%c=TRUE -edgepriority 1 -shape high}}
+mmap new  -reuse -name {Example Map} -radix %x -contents {{%b=11???? -bgcolor orange -label REG:%x -linecolor yellow -shape bus}
+{%x=1F -bgcolor red -label ERROR -linecolor white -shape EVENT}
+{%x=2C -bgcolor red -label ERROR -linecolor white -shape EVENT}
+{%x=* -label %x -linecolor gray -shape bus}}
+
+#
+# Design Browser windows
+#
+if {[catch {window new WatchList -name "Design Browser 1" -geometry 1707x996+224+519}] != ""} {
+    window geometry "Design Browser 1" 1707x996+224+519
+}
+window target "Design Browser 1" on
+browser using {Design Browser 1}
+browser set -scope  simulator::tbench.dut.fw_unit 
+browser set \
+    -signalsort name
+browser yview see  simulator::tbench.dut.fw_unit 
+browser timecontrol set -lock 0
+
+#
+# Waveform windows
+#
+if {[catch {window new WaveWindow -name "Waveform 1" -geometry 3840x2096+-1+26}] != ""} {
+    window geometry "Waveform 1" 3840x2096+-1+26
+}
+window target "Waveform 1" on
+waveform using {Waveform 1}
+waveform sidebar visibility partial
+waveform set \
+    -primarycursor TimeA \
+    -signalnames name \
+    -signalwidth 175 \
+    -units ns \
+    -valuewidth 75
+waveform baseline set -time 0
+
+set id [waveform add -signals  {
+	simulator::tbench.clk
+	} ]
+set id [waveform add -signals  {
+	{simulator::tbench.even_immediate[0:17]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::tbench.even_instruction_type[0:2]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::tbench.even_opcode[0:6]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::tbench.even_ra_addr[0:6]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::tbench.even_rb_addr[0:6]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::tbench.even_rc_addr[0:6]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::tbench.even_rt_addr[0:6]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::tbench.even_unit_id[0:2]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::tbench.dut.dec_rf_reg.even_immediate_q[0:17]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::tbench.dut.dec_rf_reg.even_instruction_type_q[0:2]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::tbench.dut.dec_rf_reg.even_opcode_q[0:6]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::tbench.dut.dec_rf_reg.even_ra_addr_q[0:6]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::tbench.dut.dec_rf_reg.even_rb_addr_q[0:6]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::tbench.dut.dec_rf_reg.even_rc_addr_q[0:6]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::tbench.dut.dec_rf_reg.even_rt_addr_q[0:6]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::tbench.dut.dec_rf_reg.even_unit_id_q[0:2]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::tbench.dut.rf_exec_reg.even_opcode_q[0:6]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::tbench.dut.rf_exec_reg.even_source_a_q[0:127]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::tbench.dut.rf_exec_reg.even_source_b_q[0:127]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::tbench.dut.rf_exec_reg.even_source_c_q[0:127]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::tbench.dut.rf_exec_reg.even_unit_id_q[0:2]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::tbench.dut.rf_exec_reg.even_write_addr_q[0:6]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::tbench.dut.rf.reg_file[0:127]}
+	} ]
+waveform hierarchy expand $id
+
+waveform xview limits 20ns 255ns
+
+#
+# Waveform Window Links
+#
+
+#
+# Console windows
+#
+console set -windowname Console
+window geometry Console 730x250+0+0
+
+#
+# Layout selection
+#
