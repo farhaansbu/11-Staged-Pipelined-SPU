@@ -9,6 +9,7 @@ module local_store_unit (
     input logic [0:6] odd_write_address,
     input opcode_t odd_opcode,
     input logic[0:2] odd_unit_id,
+    input logic reg_write,
 
     output unit_result_packet output_packet
 
@@ -24,6 +25,7 @@ always_ff @(posedge clk) begin
         // Record unit id, write addr, other control signals
         output_packet.unit_id <= odd_unit_id;
         output_packet.reg_write_addr <= odd_write_address;
+        output_packet.reg_write_flag <= reg_write;
         output_packet.present_bit <= 1;
         output_packet.ready_stage_number <= 7;
         output_packet.current_stage_number <= 2;
@@ -32,32 +34,26 @@ always_ff @(posedge clk) begin
         case (odd_opcode)
 
             OP_LOAD_QUADWORD_X: begin
-                output_packet.reg_write_flag <= 1;
                 output_packet.result <= load_quadword_x(odd_source_a, odd_source_b);
             end
 
             OP_LOAD_QUADWORD_D: begin
-                output_packet.reg_write_flag <= 1;
                 output_packet.result <= load_quadword_d(odd_source_a, odd_source_b[0:9]);
             end
 
             OP_LOAD_QUADWORD_A: begin
-                output_packet.reg_write_flag <= 1;
                 output_packet.result <= load_quadword_a(odd_source_a[0:15]);
             end
 
             OP_STORE_QUADWORD_X: begin
-                output_packet.reg_write_flag <= 0;
                 store_quadword_x(odd_source_a, odd_source_b, odd_source_c);
             end
 
             OP_STORE_QUADWORD_D: begin
-                output_packet.reg_write_flag <= 0;
                 store_quadword_d(odd_source_a, odd_source_b[0:9], odd_source_c);
             end
             
             OP_STORE_QUADWORD_A: begin
-                output_packet.reg_write_flag <= 0;
                 store_quadword_a(odd_source_a[0:15], odd_source_c);
             end
 

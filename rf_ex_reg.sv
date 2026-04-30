@@ -10,6 +10,7 @@ module rf_ex_reg (
     input logic[0:127] even_source_c,
     input opcode_t even_opcode,
     input logic[0:2] even_unit_id,
+    input logic even_reg_write,
 
     
     input logic[0:6] odd_write_addr,
@@ -18,6 +19,7 @@ module rf_ex_reg (
     input logic[0:127] odd_source_c,
     input opcode_t odd_opcode,
     input logic[0:2] odd_unit_id,
+    input logic odd_reg_write,
 
     output logic[0:6] even_write_addr_q,
     output logic[0:127] even_source_a_q,
@@ -25,6 +27,7 @@ module rf_ex_reg (
     output logic[0:127] even_source_c_q,
     output opcode_t even_opcode_q,
     output logic[0:2] even_unit_id_q,
+    output logic even_reg_write_q,
 
     
     output logic[0:6] odd_write_addr_q,
@@ -32,7 +35,8 @@ module rf_ex_reg (
     output logic[0:127] odd_source_b_q,
     output logic[0:127] odd_source_c_q,
     output opcode_t odd_opcode_q,
-    output logic[0:2] odd_unit_id_q
+    output logic[0:2] odd_unit_id_q,
+    output logic odd_reg_write_q
 
 );
 
@@ -44,6 +48,7 @@ always_ff @(posedge clk) begin
     even_source_c_q <= even_source_c;
     even_opcode_q <= even_opcode;
     even_unit_id_q <= even_unit_id;
+    even_reg_write_q <= even_reg_write;
 
     odd_write_addr_q <= odd_write_addr;
     odd_source_a_q <= odd_source_a;
@@ -51,6 +56,7 @@ always_ff @(posedge clk) begin
     odd_source_c_q <= odd_source_c;
     odd_opcode_q <= odd_opcode;
     odd_unit_id_q <= odd_unit_id;
+    odd_reg_write_q <= odd_reg_write;
 
 end
 

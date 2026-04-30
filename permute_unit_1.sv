@@ -10,6 +10,7 @@ module permute_unit(
     input logic [0:6] odd_write_address,
     input opcode_t odd_opcode,
     input logic[0:2] odd_unit_id,
+    input logic reg_write,
 
     output unit_result_packet output_packet
 );
@@ -24,7 +25,7 @@ always_ff @(posedge clk) begin
         // Record unit id, write addr, other control signals
         output_packet.unit_id <= odd_unit_id;
         output_packet.reg_write_addr <= odd_write_address;
-        output_packet.reg_write_flag <= 1;
+        output_packet.reg_write_flag <= reg_write;
         output_packet.present_bit <= 1;
         output_packet.ready_stage_number <= 4;
         output_packet.current_stage_number <= 2;

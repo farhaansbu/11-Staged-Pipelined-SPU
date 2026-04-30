@@ -1,18 +1,25 @@
 `timescale 1ns/1ps
 
 module instruction_buffer (
-    input  logic[0:8]  program_counter,          // 512 entries needs 9 bits
+    input logic clk,
+    input logic reset,
+
+    //signals that affect PC
+    input logic same_pipe_hazard,
+    input logic branch_signal,
+    input logic[0:8] branch_addr,
+
     output logic[0:31] instruction_1,
     output logic[0:31] instruction_2,
-    output logic[0:8] pc_1,
-    output logic[0:8] pc_2
+    output logic[0:10] pc_1,
+    output logic[0:10] pc_2
 );
 
     logic [0:7] imem[2048];
     logic [0:31] temp_instr [0:511];
+    logic [0:10] program_counter;
 
     initial begin
-        
         $readmemb("instructions.txt", temp_instr);
         for (int i = 0; i < 512; i++) begin
             imem[i*4 + 0] = temp_instr[i][0:7];
@@ -22,14 +29,39 @@ module instruction_buffer (
         end
     end
 
-    always_comb begin
-        for (int i = 0; i < 512; i++) begin
-            instruction_1[i * 8 +: 8] = imem[program_counter + i];
-            instruction_2[i * 8 +: 8] = imem[program_counter + 4 + i];
-        end
+    always_ff @(posedge clk or posedge reset) begin
+        
+        if (reset) begin
+            program_counter <= 0;
+            instruction_1 <= 0;
+            instruction_2 <= 0;
+            pc_1 <= 0;
+            pc_2 <= 0;
 
-        pc_1 = program_counter;
-        pc_2 = program_counter + 4;
+        end else begin
+
+            // If branching, jump to branch address first
+            if (branch_signal == 1) begin
+                program_counter <= branch_addr;
+            end
+
+            // Get instructions needed
+            for (int i = 0; i < 4; ++i) begin
+                instruction_1[i*8 +: 8] <= imem[program_counter + i];
+                instruction_2[i*8 +: 8] <= imem[program_counter + 4 + i];
+            end
+
+            pc_1 <= program_counter;
+            pc_2 <= program_counter + 4;
+
+            if (same_pipe_hazard == 1) begin
+                program_counter <= program_counter + 4;
+            end 
+            else begin
+                program_counter <= program_counter + 8;
+            end
+        end 
+
     end
 
 endmodule

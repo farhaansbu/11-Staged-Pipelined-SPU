@@ -15,7 +15,7 @@ module forwarding_unit (
     input logic[0:6] odd_read_addr_c,
     input logic[0:2] odd_unit_id,
     //input unit_result_packet odd_branch_forwarded_result,
-    input unit_result_packet[0:4] odd_pipe_forwarded_results,
+    input unit_result_packet[0:6] odd_pipe_forwarded_results,
     input opcode_t odd_opcode,
     input instruction_type odd_instruction_type,
 
@@ -105,7 +105,7 @@ always_comb begin : forwarding_unit_body
         end
 
         // Check even instruction with odd pipe
-        for (int i = 0; i < 5; ++i) begin
+        for (int i = 0; i < 7; ++i) begin
             // Extract informaiton about forwarded instruction
             temp_reg_write = odd_pipe_forwarded_results[i].reg_write_flag;
             temp_present_bit = odd_pipe_forwarded_results[i].present_bit;
@@ -191,15 +191,24 @@ always_comb begin : forwarding_unit_body
 
             // Add checks for store operations, edgecase
             if (odd_opcode == OP_STORE_QUADWORD_D || odd_opcode == OP_STORE_QUADWORD_A || odd_opcode == OP_STORE_QUADWORD_X) begin
-                    if (odd_read_addr_c == temp_write_addr) begin
-                        odd_forwarding_signal_c = 1;
-                        odd_forwarded_data_c = temp_result;
-                    end
+                if (odd_read_addr_c == temp_write_addr) begin
+                    odd_forwarding_signal_c = 1;
+                    odd_forwarded_data_c = temp_result;
+                end
+            end
+
+            // Add checks for branch operations, edgecase
+            if (odd_opcode == OP_BRANCH_IF_ZERO_WORD || odd_opcode == OP_BRANCH_IF_ZERO_HALFWORD ||
+            odd_opcode == OP_BRANCH_IF_NOT_ZERO_WORD || odd_opcode == OP_BRANCH_IF_NOT_ZERO_HALFWORD) begin
+                if (odd_read_addr_b == temp_write_addr) begin
+                    odd_forwarding_signal_b = 1;
+                    odd_forwarded_data_b = temp_result;
+                end
             end
         end
 
         // Check odd instruction with odd pipe
-        for (int i = 0; i < 5; ++i) begin
+        for (int i = 0; i < 7; ++i) begin
             // Extract informaiton about forwarded instruction
             temp_reg_write = odd_pipe_forwarded_results[i].reg_write_flag;
             temp_present_bit = odd_pipe_forwarded_results[i].present_bit;
@@ -234,6 +243,15 @@ always_comb begin : forwarding_unit_body
                         odd_forwarding_signal_c = 1;
                         odd_forwarded_data_c = temp_result;
                     end
+            end
+            
+            // Add checks for branch operations, edgecase
+            if (odd_opcode == OP_BRANCH_IF_ZERO_WORD || odd_opcode == OP_BRANCH_IF_ZERO_HALFWORD ||
+            odd_opcode == OP_BRANCH_IF_NOT_ZERO_WORD || odd_opcode == OP_BRANCH_IF_NOT_ZERO_HALFWORD) begin
+                if (odd_read_addr_b == temp_write_addr) begin
+                    odd_forwarding_signal_b = 1;
+                    odd_forwarded_data_b = temp_result;
+                end
             end
 
         end

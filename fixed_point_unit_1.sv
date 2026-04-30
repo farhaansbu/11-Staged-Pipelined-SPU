@@ -10,6 +10,7 @@ module simple_fixed_1_1(
     input logic [0:6] write_address,
     input opcode_t opcode,
     input logic[0:2] even_unit_id,
+    input logic reg_write,
 
     output unit_result_packet output_packet
 
@@ -26,7 +27,7 @@ always_ff @(posedge clk) begin
         // Record unit id, write addr, other control signals
         output_packet.unit_id <= even_unit_id;
         output_packet.reg_write_addr <= write_address;
-        output_packet.reg_write_flag <= 1;
+        output_packet.reg_write_flag <= reg_write;
         output_packet.present_bit <= 1;
         output_packet.ready_stage_number <= 3;
         output_packet.current_stage_number <= 2;

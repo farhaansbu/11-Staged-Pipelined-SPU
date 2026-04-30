@@ -10,6 +10,7 @@ module even_pipe_unit (
     input logic [0:6] even_write_address,
     input opcode_t even_opcode,
     input logic[0:2] even_unit_id,
+    input logic even_reg_write,
 
     output unit_result_packet even_output_to_write_back,
     output unit_result_packet even_stage_2_forwarded_res, // After second stage, 3rd cycle
@@ -58,6 +59,7 @@ simple_fixed_1_1 fixed_1_1 (
     .write_address(even_write_address),
     .opcode(even_opcode),
     .even_unit_id(even_unit_id),
+    .reg_write(even_reg_write),
     .output_packet(fixed_1_1_output)
 );
 
@@ -76,6 +78,7 @@ simple_fixed_2_1 fixed_2_1 (
     .write_address(even_write_address),
     .opcode(even_opcode),
     .even_unit_id(even_unit_id),
+    .reg_write(even_reg_write),
     .output_packet(fixed_2_1_output)
 );
 
@@ -100,6 +103,7 @@ single_precision_1 sp_1 (
     .write_address(even_write_address),
     .opcode(even_opcode),
     .even_unit_id(even_unit_id),
+    .reg_write(even_reg_write),
     .output_packet(sp_1_output)
 );
 
@@ -149,6 +153,7 @@ byte_unit byte_1(
     .write_address(even_write_address),
     .opcode(even_opcode),
     .even_unit_id(even_unit_id),
+    .reg_write(even_reg_write),
     .output_packet(byte_1_output)
 );
 

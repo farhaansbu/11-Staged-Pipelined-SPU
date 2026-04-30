@@ -15,6 +15,7 @@ module top_level (
     input logic[0:2] even_unit_id,
     input logic[0:10] even_program_counter,
     input logic[0:17] even_immediate,
+    input logic even_reg_write,
 
     input logic[0:6] odd_ra_addr,
     input logic[0:6] odd_rb_addr,
@@ -23,6 +24,7 @@ module top_level (
     input instruction_type odd_instruction_type,
     input opcode_t odd_opcode,
     input logic[0:2] odd_unit_id,
+    input logic odd_reg_write,
     input logic[0:10] odd_program_counter,
     input logic[0:17] odd_immediate
 
@@ -36,6 +38,7 @@ logic[0:6] id_rf_reg_output_even_rt_addr_q;
 instruction_type id_rf_reg_output_even_instruction_type_q;
 opcode_t id_rf_reg_output_even_opcode_q;
 logic[0:2] id_rf_reg_output_even_unit_id_q;
+logic id_rf_reg_output_even_reg_write_q;
 logic[0:10] id_rf_reg_output_even_program_counter_q;
 logic[0:17] id_rf_reg_output_even_immediate_q;
 logic[0:6] id_rf_reg_output_odd_ra_addr_q;
@@ -45,6 +48,7 @@ logic[0:6] id_rf_reg_output_odd_rt_addr_q;
 instruction_type id_rf_reg_output_odd_instruction_type_q;
 opcode_t id_rf_reg_output_odd_opcode_q;
 logic[0:2] id_rf_reg_output_odd_unit_id_q;
+logic id_rf_reg_output_odd_reg_write_q;
 logic[0:10] id_rf_reg_output_odd_program_counter_q;
 logic[0:17] id_rf_reg_output_odd_immediate_q; 
 
@@ -87,6 +91,7 @@ logic[0:127] rf_ex_out_even_source_b_q;
 logic[0:127] rf_ex_out_even_source_c_q;
 opcode_t rf_ex_out_even_opcode_q;
 logic[0:2] rf_ex_out_even_unit_id_q;
+logic rf_ex_out_even_reg_write_q;
 
 logic[0:6] rf_ex_out_odd_write_addr_q;
 logic[0:127] rf_ex_out_odd_source_a_q;
@@ -94,6 +99,7 @@ logic[0:127] rf_ex_out_odd_source_b_q;
 logic[0:127] rf_ex_out_odd_source_c_q;
 opcode_t rf_ex_out_odd_opcode_q;
 logic[0:2] rf_ex_out_odd_unit_id_q;
+logic rf_ex_out_odd_reg_write_q;
 
 // execution unit outputs
 unit_result_packet exec_output_even_to_write_back;
@@ -105,7 +111,9 @@ unit_result_packet exec_output_even_stage_4_forwarded_res;
 unit_result_packet exec_output_even_stage_5_forwarded_res;
 unit_result_packet exec_output_even_stage_6_forwarded_res;
 
-unit_result_packet exec_output_odd_branch_forwarded_res;
+logic exec_output_odd_branch_signal;
+unit_result_packet exec_output_odd_stage_1_forwarded_res;
+unit_result_packet exec_output_odd_stage_2_forwarded_res;
 unit_result_packet exec_output_odd_stage_3_forwarded_res;
 unit_result_packet exec_output_odd_stage_4_forwarded_res;
 unit_result_packet exec_output_odd_stage_5_forwarded_res;
@@ -129,6 +137,7 @@ id_rf_reg dec_rf_reg (
     .even_instruction_type(even_instruction_type),
     .even_opcode(even_opcode), 
     .even_unit_id(even_unit_id),
+    .even_reg_write(even_reg_write),
     .even_program_counter(even_program_counter),
     .even_immediate(even_immediate),
 
@@ -139,6 +148,7 @@ id_rf_reg dec_rf_reg (
     .odd_instruction_type(odd_instruction_type),
     .odd_opcode(odd_opcode), 
     .odd_unit_id(odd_unit_id),
+    .odd_reg_write(odd_reg_write),
     .odd_program_counter(odd_program_counter),
     .odd_immediate(odd_immediate),
 
@@ -149,6 +159,7 @@ id_rf_reg dec_rf_reg (
     .even_instruction_type_q(id_rf_reg_output_even_instruction_type_q),
     .even_opcode_q(id_rf_reg_output_even_opcode_q),
     .even_unit_id_q(id_rf_reg_output_even_unit_id_q),
+    .even_reg_write_q(id_rf_reg_output_even_reg_write_q),
     .even_program_counter_q(id_rf_reg_output_even_program_counter_q),
     .even_immediate_q(id_rf_reg_output_even_immediate_q),
 
@@ -159,6 +170,7 @@ id_rf_reg dec_rf_reg (
     .odd_instruction_type_q(id_rf_reg_output_odd_instruction_type_q),
     .odd_opcode_q(id_rf_reg_output_odd_opcode_q),
     .odd_unit_id_q(id_rf_reg_output_odd_unit_id_q),
+    .odd_reg_write_q(id_rf_reg_output_odd_reg_write_q),
     .odd_program_counter_q(id_rf_reg_output_odd_program_counter_q),
     .odd_immediate_q(id_rf_reg_output_odd_immediate_q)      
 );
@@ -208,7 +220,9 @@ forwarding_unit fw_unit (
     .odd_read_addr_c(id_rf_reg_output_odd_rc_addr_q),
     .odd_unit_id(id_rf_reg_output_odd_unit_id_q),
     .odd_instruction_type(id_rf_reg_output_odd_instruction_type_q),
-    .odd_pipe_forwarded_results('{exec_output_odd_stage_3_forwarded_res,
+    .odd_pipe_forwarded_results('{exec_output_odd_stage_1_forwarded_res,
+                                  exec_output_odd_stage_2_forwarded_res,
+                                  exec_output_odd_stage_3_forwarded_res,
                                   exec_output_odd_stage_4_forwarded_res,
                                   exec_output_odd_stage_5_forwarded_res,
                                   exec_output_odd_stage_6_forwarded_res,
@@ -284,6 +298,7 @@ rf_ex_reg rf_exec_reg (
     .even_source_c(sourcing_unit_out_even_source_c),
     .even_opcode(id_rf_reg_output_even_opcode_q),
     .even_unit_id(id_rf_reg_output_even_unit_id_q),
+    .even_reg_write(id_rf_reg_output_even_reg_write_q),
 
     .odd_write_addr(id_rf_reg_output_odd_rt_addr_q),
     .odd_source_a(sourcing_unit_out_odd_source_a),
@@ -291,6 +306,7 @@ rf_ex_reg rf_exec_reg (
     .odd_source_c(sourcing_unit_out_odd_source_c),
     .odd_opcode(id_rf_reg_output_odd_opcode_q),
     .odd_unit_id(id_rf_reg_output_odd_unit_id_q),
+    .odd_reg_write(id_rf_reg_output_odd_reg_write_q),
 
     .even_write_addr_q(rf_ex_out_even_write_addr_q),
     .even_source_a_q(rf_ex_out_even_source_a_q),
@@ -298,13 +314,15 @@ rf_ex_reg rf_exec_reg (
     .even_source_c_q(rf_ex_out_even_source_c_q),
     .even_opcode_q(rf_ex_out_even_opcode_q),
     .even_unit_id_q(rf_ex_out_even_unit_id_q),
+    .even_reg_write_q(rf_ex_out_even_reg_write_q),
 
     .odd_write_addr_q(rf_ex_out_odd_write_addr_q),
     .odd_source_a_q(rf_ex_out_odd_source_a_q),
     .odd_source_b_q(rf_ex_out_odd_source_b_q),
     .odd_source_c_q(rf_ex_out_odd_source_c_q),
     .odd_opcode_q(rf_ex_out_odd_opcode_q),
-    .odd_unit_id_q(rf_ex_out_odd_unit_id_q)
+    .odd_unit_id_q(rf_ex_out_odd_unit_id_q),
+    .odd_reg_write_q(rf_ex_out_odd_reg_write_q)
 
 );
 
@@ -317,6 +335,7 @@ execution_unit exec_unit(
     .even_write_address(rf_ex_out_even_write_addr_q),
     .even_opcode(rf_ex_out_even_opcode_q),
     .even_unit_id(rf_ex_out_even_unit_id_q),
+    .even_reg_write(rf_ex_out_even_reg_write_q),
 
     .odd_source_a(rf_ex_out_odd_source_a_q),
     .odd_source_b(rf_ex_out_odd_source_b_q),
@@ -324,6 +343,7 @@ execution_unit exec_unit(
     .odd_write_address(rf_ex_out_odd_write_addr_q),
     .odd_opcode(rf_ex_out_odd_opcode_q),
     .odd_unit_id(rf_ex_out_odd_unit_id_q),
+    .odd_reg_write(rf_ex_out_odd_reg_write_q),
 
     .even_output_to_write_back(exec_output_even_to_write_back),
     .odd_output_to_write_back(exec_output_odd_to_write_back),
@@ -334,7 +354,9 @@ execution_unit exec_unit(
     .even_stage_5_forwarded_res(exec_output_even_stage_5_forwarded_res),
     .even_stage_6_forwarded_res(exec_output_even_stage_6_forwarded_res),
 
-    .odd_branch_forwarded_res(exec_output_odd_branch_forwarded_res),
+    .branch_signal(exec_output_odd_branch_signal),
+    .odd_stage_1_forwarded_res(exec_output_odd_stage_1_forwarded_res),
+    .odd_stage_2_forwarded_res(exec_output_odd_stage_2_forwarded_res),
     .odd_stage_3_forwarded_res(exec_output_odd_stage_3_forwarded_res),
     .odd_stage_4_forwarded_res(exec_output_odd_stage_4_forwarded_res),
     .odd_stage_5_forwarded_res(exec_output_odd_stage_5_forwarded_res),

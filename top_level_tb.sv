@@ -38,6 +38,7 @@ top_level dut(
     .even_instruction_type(even_instruction_type),
     .even_opcode(even_opcode),
     .even_unit_id(even_unit_id),
+    .even_reg_write(even_register_write),
     .even_program_counter(even_program_counter),
     .even_immediate(even_immediate),
 
@@ -48,6 +49,7 @@ top_level dut(
     .odd_instruction_type(odd_instruction_type),
     .odd_opcode(odd_opcode),
     .odd_unit_id(odd_unit_id),
+    .odd_reg_write(odd_register_write),
     .odd_program_counter(odd_program_counter),
     .odd_immediate(odd_immediate)
 );
@@ -105,6 +107,7 @@ initial begin
     even_opcode = OP_IMMEDIATE_LOAD_WORD;
     even_unit_id = 1;
     even_immediate = 4;
+    even_register_write = 1;
     even_instruction_type = RI16;
 
     @(posedge clk);
@@ -116,6 +119,7 @@ initial begin
     even_opcode = OP_IMMEDIATE_LOAD_WORD;
     even_unit_id = 1;
     even_immediate = 5;
+    even_register_write = 1;
     even_instruction_type = RI16;
 
 @(posedge clk);

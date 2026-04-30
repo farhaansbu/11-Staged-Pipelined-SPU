@@ -48,7 +48,11 @@ module source_operand_unit (
 always_comb begin : source_operand_unit_body
 
     // Even sources
-    if (even_instruction_type == RI18) begin
+    if (even_opcode == OP_NO_OP_EVEN) begin
+
+    end
+
+    else if (even_instruction_type == RI18) begin
         even_source_a[0:17] = even_immediate;
         even_source_a[18:127] = '0;
     end
@@ -129,7 +133,10 @@ always_comb begin : source_operand_unit_body
     end
 
     // Odd sources
-    if (odd_instruction_type == RI18) begin
+    if (odd_opcode == OP_NO_OP_ODD) begin
+    end
+
+    else if (odd_instruction_type == RI18) begin
         odd_source_a[0:17] = odd_immediate;
         odd_source_a[18:127] = '0;
     end
@@ -205,6 +212,17 @@ always_comb begin : source_operand_unit_body
     if (odd_unit_id == 7) begin
         odd_source_c[0:10] = odd_program_counter;
         odd_source_c[11:127] = '0;
+
+        if (odd_opcode == OP_BRANCH_IF_ZERO_WORD || odd_opcode == OP_BRANCH_IF_ZERO_HALFWORD ||
+        odd_opcode == OP_BRANCH_IF_NOT_ZERO_WORD || odd_opcode == OP_BRANCH_IF_NOT_ZERO_HALFWORD) begin
+            if (odd_forwarding_signal_b == 1) begin
+                odd_source_b = odd_forwarded_data_b;
+            end
+            else begin
+                odd_source_b = odd_reg_data_b;
+            end
+        end
+
     end
     
 end //comb end 

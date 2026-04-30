@@ -14,6 +14,7 @@ module id_rf_reg(
     input logic[0:2] even_unit_id,
     input logic[0:10] even_program_counter,
     input logic[0:17] even_immediate,
+    input logic even_reg_write,
 
     input logic[0:6] odd_ra_addr,
     input logic[0:6] odd_rb_addr,
@@ -24,6 +25,7 @@ module id_rf_reg(
     input logic[0:2] odd_unit_id,
     input logic[0:10] odd_program_counter,
     input logic[0:17] odd_immediate,
+    input logic odd_reg_write,
 
     // Outputs
     output logic[0:6] even_ra_addr_q,
@@ -35,6 +37,7 @@ module id_rf_reg(
     output logic[0:2] even_unit_id_q,
     output logic[0:10] even_program_counter_q,
     output logic[0:17] even_immediate_q,
+    output logic even_reg_write_q,
 
     output logic[0:6] odd_ra_addr_q,
     output logic[0:6] odd_rb_addr_q,
@@ -44,7 +47,8 @@ module id_rf_reg(
     output opcode_t odd_opcode_q,
     output logic[0:2] odd_unit_id_q,
     output logic[0:10] odd_program_counter_q,
-    output logic[0:17] odd_immediate_q
+    output logic[0:17] odd_immediate_q,
+    output logic odd_reg_write_q
 
 );
 
@@ -58,6 +62,7 @@ always_ff @(posedge clk) begin
     even_unit_id_q <= even_unit_id;
     even_program_counter_q <= even_program_counter;
     even_immediate_q <= even_immediate;
+    even_reg_write_q <= even_reg_write;
 
     odd_ra_addr_q <= odd_ra_addr;
     odd_rb_addr_q <= odd_rb_addr;
@@ -68,6 +73,7 @@ always_ff @(posedge clk) begin
     odd_unit_id_q <= odd_unit_id;
     odd_program_counter_q <= odd_program_counter;
     odd_immediate_q <= odd_immediate;
+    odd_reg_write_q <= odd_reg_write;
 
 end
 

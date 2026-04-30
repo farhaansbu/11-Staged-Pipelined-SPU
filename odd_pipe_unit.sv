@@ -9,9 +9,12 @@ module odd_pipe_unit (
     input logic [0:6] odd_write_address,
     input opcode_t odd_opcode,
     input logic[0:2] odd_unit_id,
+    input logic odd_reg_write,
 
+    output logic branch_signal,
     output unit_result_packet odd_output_to_write_back,
-    output unit_result_packet odd_branch_forwarded_res, // After second stage, 3rd cycle
+    output unit_result_packet odd_stage_1_forwarded_res,
+    output unit_result_packet odd_stage_2_forwarded_res, // After second stage, 3rd cycle
     output unit_result_packet odd_stage_3_forwarded_res,
     output unit_result_packet odd_stage_4_forwarded_res,
     output unit_result_packet odd_stage_5_forwarded_res,
@@ -45,7 +48,9 @@ branch_unit branch_1 (
     .odd_write_address(odd_write_address),
     .odd_opcode(odd_opcode),
     .odd_unit_id(odd_unit_id),
-    .output_packet(odd_branch_forwarded_res)
+    .reg_write(odd_reg_write),
+    .output_packet(odd_stage_1_forwarded_res),
+    .branch_signal(branch_signal)
 );
 
 // Permute
@@ -57,6 +62,7 @@ permute_unit permute_1 (
     .odd_write_address(odd_write_address),
     .odd_opcode(odd_opcode),
     .odd_unit_id(odd_unit_id),
+    .reg_write(odd_reg_write),
     .output_packet(perm_1_output)
 );
 
@@ -100,6 +106,7 @@ local_store_unit local_store_1(
     .odd_write_address(odd_write_address),
     .odd_opcode(odd_opcode),
     .odd_unit_id(odd_unit_id),
+    .reg_write(odd_reg_write),
     .output_packet(ls_1_output)
 );
 

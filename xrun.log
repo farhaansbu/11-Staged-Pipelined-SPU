@@ -1,5 +1,5 @@
 xrun(64): 24.09-s001: (c) Copyright 1995-2024 Cadence Design Systems, Inc.
-TOOL:	xrun(64)	24.09-s001: Started on Apr 27, 2026 at 21:05:49 EDT
+TOOL:	xrun(64)	24.09-s001: Started on Apr 30, 2026 at 00:40:30 EDT
 xrun
 	-f files.f
 		instructions.sv
@@ -27,14 +27,11 @@ xrun
 		top_level_unit.sv
 		top_level_tb.sv
 Recompiling... reason: file './decoder.sv' is newer than expected.
-	expected: Mon Apr 27 19:48:48 2026
-	actual:   Mon Apr 27 21:05:37 2026
+	expected: Thu Apr 30 00:14:42 2026
+	actual:   Thu Apr 30 00:40:12 2026
 file: decoder.sv
-endfunction : deecode_instruction
-                                |
-xmvlog: *W,LBLMAT (decoder.sv,494|32): Label/name mismatch: decode_instruction - deecode_instruction.
 	module worklib.decoder:sv
-		errors: 0, warnings: 1
+		errors: 0, warnings: 0
 		Caching library 'worklib' ....... Done
 	Elaborating the design hierarchy:
 	Top level design units:
@@ -48,51 +45,51 @@ xmvlog: *W,LBLMAT (decoder.sv,494|32): Label/name mismatch: decode_instruction -
 	Generating native compiled code:
 		worklib.wb_register:sv <0x6ddb20d4>
 			streams:   2, words:   542
-		worklib.local_store_unit:sv <0x37f1b33d>
-			streams:  22, words: 15581
-		worklib.permute_unit:sv <0x05ad7833>
-			streams:  22, words: 110065
-		worklib.branch_unit:sv <0x54dd5525>
-			streams:  29, words: 23886
-		worklib.odd_pipe_unit:sv <0x7bd11ec7>
-			streams:  27, words: 10301
+		worklib.local_store_unit:sv <0x12352069>
+			streams:  17, words: 13123
+		worklib.permute_unit:sv <0x13deda88>
+			streams:  22, words: 110100
+		worklib.branch_unit:sv <0x07dfce76>
+			streams:  39, words: 33740
+		worklib.odd_pipe_unit:sv <0x623498da>
+			streams:  28, words: 10898
 		worklib.execution_pipe_mux:sv <0x45013985>
 			streams:   1, words:   975
 		worklib.execution_pipe_mux:sv <0x72cbf097>
 			streams:   1, words:   975
-		worklib.byte_unit:sv <0x5b803a80>
-			streams:  16, words: 23942
-		worklib.single_precision_1:sv <0x676109c1>
-			streams:  55, words: 56217
-		worklib.simple_fixed_2_1:sv <0x5fcf22ec>
-			streams:  32, words: 46742
+		worklib.byte_unit:sv <0x35ae9d5b>
+			streams:  16, words: 23977
+		worklib.single_precision_1:sv <0x621353ee>
+			streams:  55, words: 56249
+		worklib.simple_fixed_2_1:sv <0x7cd971fa>
+			streams:  32, words: 46777
 		worklib.execution_pipe_register:sv <0x2fbe30c1>
 			streams:   2, words:   542
-		worklib.simple_fixed_1_1:sv <0x4bc6c6f1>
-			streams:  94, words: 107650
-		worklib.even_pipe_unit:sv <0x1e8a23e4>
+		worklib.simple_fixed_1_1:sv <0x5da30ca2>
+			streams:  94, words: 107682
+		worklib.even_pipe_unit:sv <0x17b55378>
 			streams:  43, words: 16784
-		worklib.execution_unit:sv <0x070f53dd>
-			streams:  11, words:  6468
-		worklib.rf_ex_reg:sv <0x423dcb31>
-			streams:   2, words:  2548
-		worklib.source_operand_unit:sv <0x5373a7d8>
-			streams:   1, words: 13087
-		worklib.forwarding_unit:sv <0x13a772f5>
-			streams:   1, words: 10267
+		worklib.execution_unit:sv <0x49bfdd96>
+			streams:  13, words:  7644
+		worklib.rf_ex_reg:sv <0x01106a9e>
+			streams:   2, words:  2808
+		worklib.source_operand_unit:sv <0x24454d07>
+			streams:   1, words: 13813
+		worklib.forwarding_unit:sv <0x6d326116>
+			streams:   1, words: 11361
 		worklib.register_file:sv <0x70dd0905>
 			streams:   2, words: 76855
-		worklib.id_rf_reg:sv <0x30c5cb05>
-			streams:   2, words:  2380
-		worklib.top_level:sv <0x453a4a56>
-			streams: 125, words: 34112
-		worklib.tbench:sv <0x36efa0cb>
-			streams:  10, words: 12979
-		worklib.decoder:sv <0x78181a72>
-			streams:   2, words: 37760
+		worklib.id_rf_reg:sv <0x6cbe5cf3>
+			streams:   2, words:  2649
+		worklib.top_level:sv <0x6218c88a>
+			streams: 135, words: 37042
+		worklib.tbench:sv <0x450d5f3c>
+			streams:  10, words: 13175
+		worklib.decoder:sv <0x755f84e6>
+			streams:   2, words: 158079
 		worklib.if_id_reg:sv <0x7ad7ca39>
 			streams:   0, words:     0
-		worklib.instruction_buffer:sv <0x75ba20a2>
+		worklib.instruction_buffer:sv <0x13b2ec52>
 			streams:   1, words:   306
 	Building instance specific data structures.
 	Loading native compiled code:     .................... Done
@@ -100,12 +97,12 @@ xmvlog: *W,LBLMAT (decoder.sv,494|32): Label/name mismatch: decode_instruction -
 		                 Instances  Unique
 		Modules:                53      23
 		Verilog packages:        1       1
-		Registers:             979     946
-		Scalar wires:           22       -
-		Vectored wires:        343       -
+		Registers:             999     966
+		Scalar wires:           39       -
+		Vectored wires:        350       -
 		Always blocks:          51      21
 		Initial blocks:          3       3
-		Pseudo assignments:    210       -
+		Pseudo assignments:    223       -
 		Compilation units:       1       1
 		Process Clocks:         35       1
 		Simulation timescale:  1ps
@@ -119,6 +116,6 @@ xcelium> run
                   45 | EvenRA=4 EvenRB=x | EvenRC=x EvenRT=3 | EvenOpcode=38 
                   55 | EvenRA=2 EvenRB=1 | EvenRC=3 EvenRT=4 | EvenOpcode=5 
 Simulation complete via $finish(1) at time 455 NS + 0
-./top_level_tb.sv:375     $finish;
+./top_level_tb.sv:379     $finish;
 xcelium> exit
-TOOL:	xrun(64)	24.09-s001: Exiting on Apr 27, 2026 at 21:05:50 EDT  (total: 00:00:01)
+TOOL:	xrun(64)	24.09-s001: Exiting on Apr 30, 2026 at 00:40:31 EDT  (total: 00:00:01)
