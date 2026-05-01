@@ -10,9 +10,11 @@ module branch_unit(
     input opcode_t odd_opcode,
     input logic[0:2] odd_unit_id,
     input logic reg_write,
+    input logic odd_first,
 
     output unit_result_packet output_packet,
-    output logic branch_signal
+    output logic flush_all,
+    output logic flush_after
 );
 
 logic[0:127] rt_for_set_link;
@@ -21,7 +23,8 @@ always_ff @(posedge clk) begin
 
     if (odd_unit_id != 7) begin // Unit id doesn't match
         output_packet.present_bit <= 0;
-        branch_signal <= 0;
+        flush_all <= 0; 
+        flush_after <= 0;
     end
 
     else begin
@@ -32,35 +35,66 @@ always_ff @(posedge clk) begin
         output_packet.present_bit <= 1;
         output_packet.ready_stage_number <= 2;
         output_packet.current_stage_number <= 2;
-        branch_signal <= 1;
+        flush_all = 0;
+        flush_after = 0;
 
         // Calculate result
         case (odd_opcode)
 
         OP_BRANCH_RELATIVE: begin
             output_packet.branch_addr <= branch_relative(odd_source_a[0:15], odd_source_c[0:10]);
+            if (odd_first) begin
+                flush_all = 1;
+            end else begin
+                flush_after = 1;
+            end
         end
 
         OP_BRANCH_ABSOLUTE: begin
             output_packet.branch_addr <= branch_absolute(odd_source_a[0:15]);
+            if (odd_first) begin
+                flush_all = 1;
+            end else begin
+                flush_after = 1;
+            end
         end
 
         OP_BRANCH_INDIRECT: begin
             output_packet.branch_addr <= branch_indirect(odd_source_a);
+            if (odd_first) begin
+                flush_all = 1;
+            end else begin
+                flush_after = 1;
+            end
         end
 
         OP_BRANCH_RELATIVE_AND_SET_LINK: begin
             output_packet.branch_addr <= branch_relative_and_set_link(odd_source_a[0:15], rt_for_set_link, odd_source_c[0:10]);
+            if (odd_first) begin
+                flush_all = 1;
+            end else begin
+                flush_after = 1;
+            end
             output_packet.result <= rt_for_set_link;
         end
 
         OP_BRANCH_ABSOLUTE_AND_SET_LINK: begin
             output_packet.branch_addr <= branch_absolute_and_set_link(odd_source_a[0:15], rt_for_set_link, odd_source_c[0:10]);
+            if (odd_first) begin
+                flush_all = 1;
+            end else begin
+                flush_after = 1;
+            end
             output_packet.result <= rt_for_set_link;
         end
 
         OP_BRANCH_INDIRECT_AND_SET_LINK: begin
             output_packet.branch_addr <= branch_indirect_and_set_link(rt_for_set_link, odd_source_a, odd_source_c[0:10]);
+            if (odd_first) begin
+                flush_all = 1;
+            end else begin
+                flush_after = 1;
+            end
             output_packet.result <= rt_for_set_link;
         end
 
@@ -158,6 +192,11 @@ function automatic logic[0:31] branch_if_zero_word (input logic[0:15] i16, input
 
     if (rt[0:31] == 0) begin
         branch_addr = (program_counter + imm32) & LSLR & 32'hFFFF_FFFC;
+        if (odd_first) begin
+                flush_all = 1;
+        end else begin
+                flush_after = 1;
+        end
     end else begin
         branch_addr = (program_counter + 4) & LSLR;
     end
@@ -171,6 +210,11 @@ function automatic logic[0:31] branch_if_zero_halfword (input logic[0:15] i16, i
 
     if (rt[16:31] == 0) begin
         branch_addr = (program_counter + imm32) & LSLR & 32'hFFFF_FFFC;
+        if (odd_first) begin
+                flush_all = 1;
+        end else begin
+                flush_after = 1;
+        end
     end else begin
         branch_addr = (program_counter + 4) & LSLR;
     end
@@ -184,6 +228,11 @@ function automatic logic[0:31] branch_if_not_zero_word (input logic[0:15] i16, i
 
     if (rt[0:31] != 0) begin
         branch_addr = (program_counter + imm32) & LSLR & 32'hFFFF_FFFC;
+        if (odd_first) begin
+                flush_all = 1;
+        end else begin
+                flush_after = 1;
+        end
     end else begin
         branch_addr = (program_counter + 4) & LSLR;
     end
@@ -197,6 +246,11 @@ function automatic logic[0:31] branch_if_not_zero_halfword (input logic[0:15] i1
 
     if (rt[16:31] != 0) begin
         branch_addr = (program_counter + imm32) & LSLR & 32'hFFFF_FFFC;
+        if (odd_first) begin
+                flush_all = 1;
+        end else begin
+                flush_after = 1;
+        end
     end else begin
         branch_addr = (program_counter + 4) & LSLR;
     end
@@ -210,6 +264,11 @@ function automatic logic[0:31] branch_indirect_if_zero (input logic[0:127] ra, i
 
     if (rt[0:31] == 0) begin
         branch_addr = ra[0:31] & LSLR & 32'hFFFF_FFFC;
+        if (odd_first) begin
+                flush_all = 1;
+        end else begin
+                flush_after = 1;
+        end
     end else begin
         branch_addr = (program_counter + 4) & LSLR;
     end
@@ -221,6 +280,11 @@ function automatic logic[0:31] branch_indirect_if_zero_halfword (input logic[0:1
 
     if (rt[16:31] == 0) begin
         branch_addr = ra[0:31] & LSLR & 32'hFFFF_FFFC;
+        if (odd_first) begin
+                flush_all = 1;
+        end else begin
+                flush_after = 1;
+        end
     end else begin
         branch_addr = (program_counter + 4) & LSLR;
     end
@@ -232,6 +296,11 @@ function automatic logic[0:31] branch_indirect_if_not_zero (input logic[0:127] r
 
     if (rt[0:31] != 0) begin
         branch_addr = ra[0:31] & LSLR & 32'hFFFF_FFFC;
+        if (odd_first) begin
+                flush_all = 1;
+        end else begin
+                flush_after = 1;
+        end
     end else begin
         branch_addr = (program_counter + 4) & LSLR;
     end
@@ -243,6 +312,11 @@ function automatic logic[0:31] branch_indirect_if_not_zero_halfword (input logic
 
     if (rt[16:31] != 0) begin
         branch_addr = ra[0:31] & LSLR & 32'hFFFF_FFFC;
+        if (odd_first) begin
+                flush_all = 1;
+        end else begin
+                flush_after = 1;
+        end
     end else begin
         branch_addr = (program_counter + 4) & LSLR;
     end

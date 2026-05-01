@@ -29,6 +29,16 @@ module register_file(
 //register array (first part is defined with data type)
 logic [0:127] reg_file[0:127];
 
+initial begin
+    for (int i = 0; i < 127; i++) begin
+        for (int j = 0; j < 4; ++j) begin
+            int index;
+            index = j * 32;
+            reg_file[i][index +: 32] = i;
+        end
+    end
+end
+
 always_comb begin : register_file_body
 
     // Write to registers
@@ -49,11 +59,11 @@ always_comb begin : register_file_body
     odd_read_data_2 = reg_file[odd_read_addr_2];
     odd_read_data_3 = reg_file[odd_read_addr_3];
 
-    if (reset == 1) begin
-        for (int i = 0; i < 128; i++) begin
-            reg_file[i] <= 128'b0; //non blocking executes in parallel
-        end 
-    end
+    // if (reset == 1) begin
+    //     for (int i = 0; i < 128; i++) begin
+    //         reg_file[i] <= 128'b0; //non blocking executes in parallel
+    //     end 
+    // end
     
     
 end

@@ -6,8 +6,9 @@ module instruction_buffer (
 
     //signals that affect PC
     input logic same_pipe_hazard,
+    input logic same_write_dest_hazard,
     input logic branch_signal,
-    input logic[0:8] branch_addr,
+    input logic[0:10] branch_addr,
 
     output logic[0:31] instruction_1,
     output logic[0:31] instruction_2,
@@ -20,7 +21,7 @@ module instruction_buffer (
     logic [0:10] program_counter;
 
     initial begin
-        $readmemb("instructions.txt", temp_instr);
+        $readmemb("instructions1.txt", temp_instr);
         for (int i = 0; i < 512; i++) begin
             imem[i*4 + 0] = temp_instr[i][0:7];
             imem[i*4 + 1] = temp_instr[i][8:15];
@@ -54,7 +55,7 @@ module instruction_buffer (
             pc_1 <= program_counter;
             pc_2 <= program_counter + 4;
 
-            if (same_pipe_hazard == 1) begin
+            if (same_pipe_hazard == 1 || same_write_dest_hazard) begin
                 program_counter <= program_counter + 4;
             end 
             else begin

@@ -10,8 +10,10 @@ module odd_pipe_unit (
     input opcode_t odd_opcode,
     input logic[0:2] odd_unit_id,
     input logic odd_reg_write,
+    input logic odd_first,
 
-    output logic branch_signal,
+    output logic flush_all,
+    output logic flush_after,
     output unit_result_packet odd_output_to_write_back,
     output unit_result_packet odd_stage_1_forwarded_res,
     output unit_result_packet odd_stage_2_forwarded_res, // After second stage, 3rd cycle
@@ -49,8 +51,10 @@ branch_unit branch_1 (
     .odd_opcode(odd_opcode),
     .odd_unit_id(odd_unit_id),
     .reg_write(odd_reg_write),
+    .odd_first(odd_first),
     .output_packet(odd_stage_1_forwarded_res),
-    .branch_signal(branch_signal)
+    .flush_all(flush_all),
+    .flush_after(flush_after)
 );
 
 // Permute

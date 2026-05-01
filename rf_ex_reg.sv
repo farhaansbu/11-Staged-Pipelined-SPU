@@ -20,6 +20,7 @@ module rf_ex_reg (
     input opcode_t odd_opcode,
     input logic[0:2] odd_unit_id,
     input logic odd_reg_write,
+    input logic odd_first,
 
     output logic[0:6] even_write_addr_q,
     output logic[0:127] even_source_a_q,
@@ -36,7 +37,8 @@ module rf_ex_reg (
     output logic[0:127] odd_source_c_q,
     output opcode_t odd_opcode_q,
     output logic[0:2] odd_unit_id_q,
-    output logic odd_reg_write_q
+    output logic odd_reg_write_q,
+    output logic odd_first_q
 
 );
 
@@ -57,6 +59,7 @@ always_ff @(posedge clk) begin
     odd_opcode_q <= odd_opcode;
     odd_unit_id_q <= odd_unit_id;
     odd_reg_write_q <= odd_reg_write;
+    odd_first_q <= odd_first;
 
 end
 

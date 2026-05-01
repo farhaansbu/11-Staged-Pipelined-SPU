@@ -19,6 +19,7 @@ module execution_unit(
     input opcode_t odd_opcode,
     input logic[0:2] odd_unit_id,
     input logic odd_reg_write,
+    input logic odd_first,
 
     output unit_result_packet even_output_to_write_back,
     output unit_result_packet odd_output_to_write_back,
@@ -29,7 +30,8 @@ module execution_unit(
     output unit_result_packet even_stage_5_forwarded_res,
     output unit_result_packet even_stage_6_forwarded_res,
 
-    output logic branch_signal,
+    output logic flush_all,
+    output logic flush_after,
     output unit_result_packet odd_stage_1_forwarded_res, 
     output unit_result_packet odd_stage_2_forwarded_res,
     output unit_result_packet odd_stage_3_forwarded_res,
@@ -64,7 +66,9 @@ odd_pipe_unit odd_pipe(
     .odd_opcode(odd_opcode),
     .odd_unit_id(odd_unit_id),
     .odd_reg_write(odd_reg_write),
-    .branch_signal(branch_signal),
+    .flush_all(flush_all),
+    .flush_after(flush_after),
+    .odd_first(odd_first),
     .odd_output_to_write_back(odd_output_to_write_back),
     .odd_stage_1_forwarded_res(odd_stage_1_forwarded_res),
     .odd_stage_2_forwarded_res(odd_stage_2_forwarded_res),

@@ -63,6 +63,7 @@ logic[0:2] dec_out_odd_unit_id;
 logic[0:10] dec_out_odd_program_counter;
 logic[0:17] dec_out_odd_immediate;
 logic dec_out_odd_reg_write;
+logic dec_out_odd_first;
 logic dec_out_same_pipe_hazard;
 logic dec_out_same_write_dest_hazard;
 
@@ -86,6 +87,7 @@ instruction_type id_rf_reg_output_odd_instruction_type_q;
 opcode_t id_rf_reg_output_odd_opcode_q;
 logic[0:2] id_rf_reg_output_odd_unit_id_q;
 logic id_rf_reg_output_odd_reg_write_q;
+logic id_rf_reg_output_odd_first_q;
 logic[0:10] id_rf_reg_output_odd_program_counter_q;
 logic[0:17] id_rf_reg_output_odd_immediate_q; 
 
@@ -137,6 +139,7 @@ logic[0:127] rf_ex_out_odd_source_c_q;
 opcode_t rf_ex_out_odd_opcode_q;
 logic[0:2] rf_ex_out_odd_unit_id_q;
 logic rf_ex_out_odd_reg_write_q;
+logic rf_ex_out_odd_first_q;
 
 // execution unit outputs
 unit_result_packet exec_output_even_to_write_back;
@@ -148,7 +151,8 @@ unit_result_packet exec_output_even_stage_4_forwarded_res;
 unit_result_packet exec_output_even_stage_5_forwarded_res;
 unit_result_packet exec_output_even_stage_6_forwarded_res;
 
-logic exec_output_odd_branch_signal;
+logic exec_output_odd_flush_all;
+logic exec_output_odd_flush_after;
 unit_result_packet exec_output_odd_stage_1_forwarded_res;
 unit_result_packet exec_output_odd_stage_2_forwarded_res;
 unit_result_packet exec_output_odd_stage_3_forwarded_res;
@@ -215,6 +219,7 @@ decoder dec(
     .odd_program_counter(dec_out_odd_program_counter),
     .odd_immediate(dec_out_odd_immediate),
     .odd_reg_write(dec_out_odd_reg_write),
+    .odd_first(dec_out_odd_first),
     
     .same_pipe_hazard(dec_out_same_pipe_hazard),
     .same_write_dest_hazard(dec_out_same_write_dest_hazard)
@@ -244,6 +249,7 @@ id_rf_reg dec_rf_reg (
     .odd_opcode(dec_out_odd_opcode), 
     .odd_unit_id(dec_out_odd_unit_id),
     .odd_reg_write(dec_out_odd_reg_write),
+    .odd_first(dec_out_odd_first),
     .odd_program_counter(dec_out_odd_program_counter),
     .odd_immediate(dec_out_odd_immediate),
 
@@ -266,6 +272,7 @@ id_rf_reg dec_rf_reg (
     .odd_opcode_q(id_rf_reg_output_odd_opcode_q),
     .odd_unit_id_q(id_rf_reg_output_odd_unit_id_q),
     .odd_reg_write_q(id_rf_reg_output_odd_reg_write_q),
+    .odd_first_q(id_rf_reg_output_odd_first_q),
     .odd_program_counter_q(id_rf_reg_output_odd_program_counter_q),
     .odd_immediate_q(id_rf_reg_output_odd_immediate_q)      
 );
@@ -402,6 +409,7 @@ rf_ex_reg rf_exec_reg (
     .odd_opcode(id_rf_reg_output_odd_opcode_q),
     .odd_unit_id(id_rf_reg_output_odd_unit_id_q),
     .odd_reg_write(id_rf_reg_output_odd_reg_write_q),
+    .odd_first(id_rf_reg_output_odd_first_q),
 
     .even_write_addr_q(rf_ex_out_even_write_addr_q),
     .even_source_a_q(rf_ex_out_even_source_a_q),
@@ -417,7 +425,8 @@ rf_ex_reg rf_exec_reg (
     .odd_source_c_q(rf_ex_out_odd_source_c_q),
     .odd_opcode_q(rf_ex_out_odd_opcode_q),
     .odd_unit_id_q(rf_ex_out_odd_unit_id_q),
-    .odd_reg_write_q(rf_ex_out_odd_reg_write_q)
+    .odd_reg_write_q(rf_ex_out_odd_reg_write_q),
+    .odd_first_q(rf_ex_out_odd_first_q)
 
 );
 
@@ -439,6 +448,7 @@ execution_unit exec_unit(
     .odd_opcode(rf_ex_out_odd_opcode_q),
     .odd_unit_id(rf_ex_out_odd_unit_id_q),
     .odd_reg_write(rf_ex_out_odd_reg_write_q),
+    .odd_first(rf_ex_out_odd_first_q),
 
     .even_output_to_write_back(exec_output_even_to_write_back),
     .odd_output_to_write_back(exec_output_odd_to_write_back),
@@ -449,7 +459,8 @@ execution_unit exec_unit(
     .even_stage_5_forwarded_res(exec_output_even_stage_5_forwarded_res),
     .even_stage_6_forwarded_res(exec_output_even_stage_6_forwarded_res),
 
-    .branch_signal(exec_output_odd_branch_signal),
+    .flush_all(exec_output_odd_flush_all),
+    .flush_after(exec_output_odd_flush_after),
     .odd_stage_1_forwarded_res(exec_output_odd_stage_1_forwarded_res),
     .odd_stage_2_forwarded_res(exec_output_odd_stage_2_forwarded_res),
     .odd_stage_3_forwarded_res(exec_output_odd_stage_3_forwarded_res),

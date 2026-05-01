@@ -1,0 +1,8 @@
+loop:
+a $4, $2, $1
+shlqby $5, $3, $2
+andi $7, $6, -1
+cntb $8, $9
+br loop
+sf $10, $11, $12
+

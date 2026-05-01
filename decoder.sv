@@ -30,6 +30,8 @@ module decoder(
     output logic[0:17] odd_immediate,
     output logic odd_reg_write,
 
+    output logic odd_first,
+
     // Hazard signals
     output logic same_pipe_hazard,
     output logic same_write_dest_hazard
@@ -74,13 +76,11 @@ always_comb begin : decoder_body
             odd_unit_id = unit_id_2;
             // If both instructions have same write_dest
             if (even_reg_write && odd_reg_write && even_rt_addr == odd_rt_addr) begin
-
-                // Check which is first, stall second one
-                if (program_counter_1 < program_counter_2) begin
-                end
-                else begin
-                end
-
+                // Stall odd instruction (make it no-op and refetch on next cycle)
+                odd_opcode = OP_NO_OP_HARDWARE;
+                odd_unit_id = 0;
+                odd_reg_write = 0;
+                same_write_dest_hazard = 1;
             end
         end
     end
@@ -98,15 +98,20 @@ always_comb begin : decoder_body
             even_unit_id = unit_id_2;
             // If both instructions have same write_dest
             if (even_reg_write && odd_reg_write && even_rt_addr == odd_rt_addr) begin
-
-                // Check which is first, stall second one
-                if (program_counter_1 < program_counter_2) begin
-                end
-                else begin
-                end
-
+                // Stall odd instruction (make it no-op and refetch on next cycle)
+                even_opcode = OP_NO_OP_HARDWARE;
+                even_unit_id = 0;
+                even_reg_write = 0;
+                same_write_dest_hazard = 1;
             end
         end
+   end
+
+   // Set which instruction is first
+   if (even_program_counter >= odd_program_counter) begin
+        odd_first = 0;
+   end else begin
+        odd_first = 1;
    end
 
    // If both instructions are nop

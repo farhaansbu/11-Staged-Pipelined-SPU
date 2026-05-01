@@ -1,5 +1,5 @@
 xrun(64): 24.09-s001: (c) Copyright 1995-2024 Cadence Design Systems, Inc.
-TOOL:	xrun(64)	24.09-s001: Started on May 01, 2026 at 00:01:28 EDT
+TOOL:	xrun(64)	24.09-s001: Started on May 01, 2026 at 18:48:33 EDT
 xrun
 	-f files.f
 		instructions.sv
@@ -30,20 +30,21 @@ xrun
 	-gui
 	-access +rwc
 	-input initial-test.tcl
-Recompiling... reason: file './top_level_unit.sv' is newer than expected.
-	expected: Thu Apr 30 20:40:55 2026
-	actual:   Fri May  1 00:00:00 2026
-file: top_level_unit.sv
-	module worklib.top_level:sv
+Recompiling... reason: file './instruction_buffer.sv' is newer than expected.
+	expected: Fri May  1 18:22:20 2026
+	actual:   Fri May  1 18:48:21 2026
+file: instruction_buffer.sv
+	module worklib.instruction_buffer:sv
 		errors: 0, warnings: 0
 	Elaborating the design hierarchy:
 		Caching library 'worklib' ....... Done
 instruction_buffer ibuffer(
                          |
-xmelab: *W,CUVWSI (./top_level_unit.sv,167|25): 3 input ports were not connected:
+xmelab: *W,CUVWSI (./top_level_unit.sv,171|25): 4 input ports were not connected:
 xmelab: (./instruction_buffer.sv,8): same_pipe_hazard
-xmelab: (./instruction_buffer.sv,9): branch_signal
-xmelab: (./instruction_buffer.sv,10): branch_addr
+xmelab: (./instruction_buffer.sv,9): same_write_dest_hazard
+xmelab: (./instruction_buffer.sv,10): branch_signal
+xmelab: (./instruction_buffer.sv,11): branch_addr
 
 	Top level design units:
 		instruction_pkg
@@ -51,22 +52,30 @@ xmelab: (./instruction_buffer.sv,10): branch_addr
 		tbench
 	Building instance overlay tables: .................... Done
 	Generating native compiled code:
-		worklib.top_level:sv <0x0ad417cb>
-			streams: 195, words: 55115
+		worklib.branch_unit:sv <0x170971d7>
+			streams:  40, words: 43797
+		worklib.odd_pipe_unit:sv <0x11b906b1>
+			streams:  30, words: 12404
+		worklib.execution_unit:sv <0x28745569>
+			streams:  15, words:  8937
+		worklib.instruction_buffer:sv <0x08ac5266>
+			streams:   6, words:  5767
+		worklib.top_level:sv <0x23bd39e5>
+			streams: 202, words: 56811
 	Building instance specific data structures.
 	Loading native compiled code:     .................... Done
 	Design hierarchy summary:
 		                   Instances  Unique
 		Modules:                  53      23
 		Verilog packages:          1       1
-		Registers:             1,009     976
-		Scalar wires:             52       -
+		Registers:             1,021     988
+		Scalar wires:             68       -
 		Vectored wires:          408       -
 		Always blocks:            51      21
-		Initial blocks:            3       3
-		Pseudo assignments:      281       -
+		Initial blocks:            4       4
+		Pseudo assignments:      290       -
 		Compilation units:         1       1
-		Process Clocks:           37       2
+		Process Clocks:           36       2
 		Simulation timescale:    1ps
 	Writing initial simulation snapshot: worklib.tbench:sv
 xmsim: *W,NOMTDGUI: Multi-Threaded Dumping is disabled for interactive debug mode.
@@ -195,13 +204,13 @@ xcelium> simvision -input initial-test.tcl.svcf
 xcelium> run
 Simulation complete via $finish(1) at time 415 NS + 0
 ./top_level_tb.sv:379     $finish;
-xcelium> probe -create -shm tbench.dut.rf_exec_reg.clk
+xcelium> probe -create -shm tbench.dut.ibuffer.instruction_2 tbench.dut.if_dec_reg.instruction_2_q tbench.dut.dec.odd_instruction_type tbench.dut.dec.odd_opcode tbench.dut.dec.odd_program_counter tbench.dut.dec.odd_ra_addr tbench.dut.dec.odd_rb_addr tbench.dut.dec.odd_reg_write tbench.dut.dec.odd_unit_id
 Created probe 9
 xcelium> reset
 Loaded snapshot worklib.tbench:sv
 xcelium> run
 Simulation complete via $finish(1) at time 415 NS + 0
 ./top_level_tb.sv:379     $finish;
-xcelium> ^C
-xcelium> exit
-TOOL:	xrun(64)	24.09-s001: Exiting on May 01, 2026 at 00:22:12 EDT  (total: 00:20:44)
+xcelium> probe -create -shm tbench.dut.dec.odd_immediate
+Created probe 10
+xcelium> 

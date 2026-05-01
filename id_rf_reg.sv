@@ -26,6 +26,7 @@ module id_rf_reg(
     input logic[0:10] odd_program_counter,
     input logic[0:17] odd_immediate,
     input logic odd_reg_write,
+    input logic odd_first,
 
     // Outputs
     output logic[0:6] even_ra_addr_q,
@@ -48,7 +49,8 @@ module id_rf_reg(
     output logic[0:2] odd_unit_id_q,
     output logic[0:10] odd_program_counter_q,
     output logic[0:17] odd_immediate_q,
-    output logic odd_reg_write_q
+    output logic odd_reg_write_q,
+    output logic odd_first_q
 
 );
 
@@ -74,6 +76,7 @@ always_ff @(posedge clk) begin
     odd_program_counter_q <= odd_program_counter;
     odd_immediate_q <= odd_immediate;
     odd_reg_write_q <= odd_reg_write;
+    odd_first_q <= odd_first;
 
 end
 
