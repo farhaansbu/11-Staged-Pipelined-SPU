@@ -17,9 +17,9 @@
 1774831705 /home/home5/fkhan/ese545project/write_back_register.sv
 1777487251 /home/home5/fkhan/ese545project/rf_ex_reg.sv
 1777506846 /home/home5/fkhan/ese545project/source_operand.sv
-1777521215 /home/home5/fkhan/ese545project/top_level_unit.sv
-1777520639 /home/home5/fkhan/ese545project/top_level_tb.sv
+1777608000 /home/home5/fkhan/ese545project/top_level_unit.sv
+1777596014 /home/home5/fkhan/ese545project/top_level_tb.sv
 1777519608 /home/home5/fkhan/ese545project/instruction_buffer.sv
 1777510390 /home/home5/fkhan/ese545project/if_id_reg.sv
 1777240546 /home/home5/fkhan/ese545project/instruction_buffer_tb.sv
-1777524012 /home/home5/fkhan/ese545project/decoder.sv
+1777595850 /home/home5/fkhan/ese545project/decoder.sv

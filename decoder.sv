@@ -412,7 +412,7 @@ function automatic void decode_instruction (input logic[0:31] instruction, input
         odd_reg_write = 1;
     end
 
-    else if (instruction[0:7] == 8'b0011_0100) begin  //stqd
+    else if (instruction[0:7] == 8'b0010_0100) begin  //stqd
         unit_id = 6;
         odd_instruction_type = RI10;
         odd_opcode = OP_STORE_QUADWORD_D;
@@ -506,7 +506,7 @@ function automatic void decode_instruction (input logic[0:31] instruction, input
         odd_reg_write = 0;
     end
 
-    else if (instruction[0:8] == 9'b0_0110_0000) begin //brsl
+    else if (instruction[0:8] == 9'b0_0110_0110) begin //brsl
         unit_id = 7;
         odd_instruction_type = RI16;
         odd_opcode = OP_BRANCH_RELATIVE_AND_SET_LINK;

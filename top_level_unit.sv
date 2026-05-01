@@ -4,33 +4,70 @@ module top_level (
 
      // Inputs
     input logic clk,
-    input logic reset,
+    input logic reset
 
-    input logic[0:6] even_ra_addr,
-    input logic[0:6] even_rb_addr,
-    input logic[0:6] even_rc_addr,
-    input logic[0:6] even_rt_addr,
-    input instruction_type even_instruction_type,
-    input opcode_t even_opcode,
-    input logic[0:2] even_unit_id,
-    input logic[0:10] even_program_counter,
-    input logic[0:17] even_immediate,
-    input logic even_reg_write,
+    // input logic[0:6] even_ra_addr,
+    // input logic[0:6] even_rb_addr,
+    // input logic[0:6] even_rc_addr,
+    // input logic[0:6] even_rt_addr,
+    // input instruction_type even_instruction_type,
+    // input opcode_t even_opcode,
+    // input logic[0:2] even_unit_id,
+    // input logic[0:10] even_program_counter,
+    // input logic[0:17] even_immediate,
+    // input logic even_reg_write,
 
-    input logic[0:6] odd_ra_addr,
-    input logic[0:6] odd_rb_addr,
-    input logic[0:6] odd_rc_addr,
-    input logic[0:6] odd_rt_addr,
-    input instruction_type odd_instruction_type,
-    input opcode_t odd_opcode,
-    input logic[0:2] odd_unit_id,
-    input logic odd_reg_write,
-    input logic[0:10] odd_program_counter,
-    input logic[0:17] odd_immediate
+    // input logic[0:6] odd_ra_addr,
+    // input logic[0:6] odd_rb_addr,
+    // input logic[0:6] odd_rc_addr,
+    // input logic[0:6] odd_rt_addr,
+    // input instruction_type odd_instruction_type,
+    // input opcode_t odd_opcode,
+    // input logic[0:2] odd_unit_id,
+    // input logic odd_reg_write,
+    // input logic[0:10] odd_program_counter,
+    // input logic[0:17] odd_immediate
 
 );
 
-// id_if outputs
+// instruction buffer outputs
+logic[0:31] instruction_buffer_out_instruction_1;
+logic[0:31] instruction_buffer_out_instruction_2;
+logic[0:10] instruction_buffer_out_pc_1;
+logic[0:10] instruction_buffer_out_pc_2;
+
+//if_id outputs
+logic[0:31] if_id_out_instruction_1;
+logic[0:31] if_id_out_instruction_2;
+logic[0:10] if_id_out_pc_1;
+logic[0:10] if_id_out_pc_2;
+
+//decoder outputs
+logic[0:6] dec_out_even_ra_addr;
+logic[0:6] dec_out_even_rb_addr;
+logic[0:6] dec_out_even_rc_addr;
+logic[0:6] dec_out_even_rt_addr;
+instruction_type dec_out_even_instruction_type;
+opcode_t dec_out_even_opcode;
+logic[0:2] dec_out_even_unit_id;
+logic[0:10] dec_out_even_program_counter;
+logic[0:17] dec_out_even_immediate;
+logic dec_out_even_reg_write;
+logic[0:6] dec_out_odd_ra_addr;
+logic[0:6] dec_out_odd_rb_addr;
+logic[0:6] dec_out_odd_rc_addr;
+logic[0:6] dec_out_odd_rt_addr;
+instruction_type dec_out_odd_instruction_type;
+opcode_t dec_out_odd_opcode;
+logic[0:2] dec_out_odd_unit_id;
+logic[0:10] dec_out_odd_program_counter;
+logic[0:17] dec_out_odd_immediate;
+logic dec_out_odd_reg_write;
+logic dec_out_same_pipe_hazard;
+logic dec_out_same_write_dest_hazard;
+
+
+// id_rf outputs
 logic[0:6] id_rf_reg_output_even_ra_addr_q;
 logic[0:6] id_rf_reg_output_even_rb_addr_q;
 logic[0:6] id_rf_reg_output_even_rc_addr_q;
@@ -127,30 +164,88 @@ unit_result_packet odd_write_back_packet;
 
 // Structural Design Instantiations
 
+instruction_buffer ibuffer(
+    .clk(clk),
+    .reset(reset),
+    
+    .instruction_1(instruction_buffer_out_instruction_1),
+    .instruction_2(instruction_buffer_out_instruction_2),
+    .pc_1(instruction_buffer_out_pc_1),
+    .pc_2(instruction_buffer_out_pc_2)
+
+);
+
+if_id_reg if_dec_reg(
+    .clk(clk),
+    .instruction_1_d(instruction_buffer_out_instruction_1),
+    .instruction_2_d(instruction_buffer_out_instruction_2),
+    .program_counter_1_d(instruction_buffer_out_pc_1),
+    .program_counter_2_d(instruction_buffer_out_pc_2),
+
+    .instruction_1_q(if_id_out_instruction_1),
+    .instruction_2_q(if_id_out_instruction_2),
+    .program_counter_1_q(if_id_out_pc_1),
+    .program_counter_2_q(if_id_out_pc_2)
+);
+
+decoder dec(
+    .instruction_1(if_id_out_instruction_1),
+    .instruction_2(if_id_out_instruction_2),
+    .program_counter_1(if_id_out_pc_1),
+    .program_counter_2(if_id_out_pc_2),
+
+    .even_ra_addr(dec_out_even_ra_addr),
+    .even_rb_addr(dec_out_even_rb_addr),
+    .even_rc_addr(dec_out_even_rc_addr),
+    .even_rt_addr(dec_out_even_rt_addr),
+    .even_instruction_type(dec_out_even_instruction_type),
+    .even_opcode(dec_out_even_opcode),
+    .even_unit_id(dec_out_even_unit_id),
+    .even_program_counter(dec_out_even_program_counter),
+    .even_immediate(dec_out_even_immediate),
+    .even_reg_write(dec_out_even_reg_write),
+
+    .odd_ra_addr(dec_out_odd_ra_addr),
+    .odd_rb_addr(dec_out_odd_rb_addr),
+    .odd_rc_addr(dec_out_odd_rc_addr),
+    .odd_rt_addr(dec_out_odd_rt_addr),
+    .odd_instruction_type(dec_out_odd_instruction_type),
+    .odd_opcode(dec_out_odd_opcode),
+    .odd_unit_id(dec_out_odd_unit_id),
+    .odd_program_counter(dec_out_odd_program_counter),
+    .odd_immediate(dec_out_odd_immediate),
+    .odd_reg_write(dec_out_odd_reg_write),
+    
+    .same_pipe_hazard(dec_out_same_pipe_hazard),
+    .same_write_dest_hazard(dec_out_same_write_dest_hazard)
+
+);
+
+
 id_rf_reg dec_rf_reg (
     .clk(clk),
 
-    .even_ra_addr(even_ra_addr),
-    .even_rb_addr(even_rb_addr),
-    .even_rc_addr(even_rc_addr),
-    .even_rt_addr(even_rt_addr),
-    .even_instruction_type(even_instruction_type),
-    .even_opcode(even_opcode), 
-    .even_unit_id(even_unit_id),
-    .even_reg_write(even_reg_write),
-    .even_program_counter(even_program_counter),
-    .even_immediate(even_immediate),
+    .even_ra_addr(dec_out_even_ra_addr),
+    .even_rb_addr(dec_out_even_rb_addr),
+    .even_rc_addr(dec_out_even_rc_addr),
+    .even_rt_addr(dec_out_even_rt_addr),
+    .even_instruction_type(dec_out_even_instruction_type),
+    .even_opcode(dec_out_even_opcode), 
+    .even_unit_id(dec_out_even_unit_id),
+    .even_reg_write(dec_out_even_reg_write),
+    .even_program_counter(dec_out_even_program_counter),
+    .even_immediate(dec_out_even_immediate),
 
-    .odd_ra_addr(odd_ra_addr),
-    .odd_rb_addr(odd_rb_addr),
-    .odd_rc_addr(odd_rc_addr),
-    .odd_rt_addr(odd_rt_addr),
-    .odd_instruction_type(odd_instruction_type),
-    .odd_opcode(odd_opcode), 
-    .odd_unit_id(odd_unit_id),
-    .odd_reg_write(odd_reg_write),
-    .odd_program_counter(odd_program_counter),
-    .odd_immediate(odd_immediate),
+    .odd_ra_addr(dec_out_odd_ra_addr),
+    .odd_rb_addr(dec_out_odd_rb_addr),
+    .odd_rc_addr(dec_out_odd_rc_addr),
+    .odd_rt_addr(dec_out_odd_rt_addr),
+    .odd_instruction_type(dec_out_odd_instruction_type),
+    .odd_opcode(dec_out_odd_opcode), 
+    .odd_unit_id(dec_out_odd_unit_id),
+    .odd_reg_write(dec_out_odd_reg_write),
+    .odd_program_counter(dec_out_odd_program_counter),
+    .odd_immediate(dec_out_odd_immediate),
 
     .even_ra_addr_q(id_rf_reg_output_even_ra_addr_q),
     .even_rb_addr_q(id_rf_reg_output_even_rb_addr_q),

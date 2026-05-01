@@ -2,11 +2,14 @@
 // File created by:  xrun
 // Do not modify this file
 //
+-gui
+-INPUT
+initial-test.tcl
 -MESSAGES
 +EMGRLOG
 xrun.log
 -XLSTIME
-1777524030
+1777608088
 -XLKEEP
 -XLMODE
 ./xcelium.d/run.lnx8664.24.09.d

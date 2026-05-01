@@ -4,3 +4,10 @@
 //
 -f
 files.f
+-top
+tbench
+-gui
+-access
++rwc
+-input
+initial-test.tcl
