@@ -1,11 +1,12 @@
 xrun(64): 24.09-s001: (c) Copyright 1995-2024 Cadence Design Systems, Inc.
-TOOL:	xrun(64)	24.09-s001: Started on May 01, 2026 at 18:48:33 EDT
+TOOL:	xrun(64)	24.09-s001: Started on May 02, 2026 at 15:59:53 EDT
 xrun
 	-f files.f
 		instructions.sv
 		instruction_buffer.sv
 		if_id_reg.sv
 		decoder.sv
+		hazard_unit.sv
 		id_rf_reg.sv
 		register_file.sv
 		forwarding_unit.sv
@@ -29,51 +30,56 @@ xrun
 	-top tbench
 	-gui
 	-access +rwc
-	-input initial-test.tcl
-Recompiling... reason: file './instruction_buffer.sv' is newer than expected.
-	expected: Fri May  1 18:22:20 2026
-	actual:   Fri May  1 18:48:21 2026
-file: instruction_buffer.sv
-	module worklib.instruction_buffer:sv
-		errors: 0, warnings: 0
+	-input final-restore.tcl
 	Elaborating the design hierarchy:
 		Caching library 'worklib' ....... Done
-instruction_buffer ibuffer(
-                         |
-xmelab: *W,CUVWSI (./top_level_unit.sv,171|25): 4 input ports were not connected:
-xmelab: (./instruction_buffer.sv,8): same_pipe_hazard
-xmelab: (./instruction_buffer.sv,9): same_write_dest_hazard
-xmelab: (./instruction_buffer.sv,10): branch_signal
-xmelab: (./instruction_buffer.sv,11): branch_addr
-
 	Top level design units:
 		instruction_pkg
-		$unit_0x3c157b47
+		$unit_0x0b0b0e87
 		tbench
+    .branch_addr(exec_output_odd_stage_1_forwarded_res.branch_addr[22:31]),
+                                                                 |
+xmelab: *W,CUVMPW (./top_level_unit.sv,185|65): port sizes differ in port connection(10/11) for the instance(tbench.dut) .
 	Building instance overlay tables: .................... Done
 	Generating native compiled code:
-		worklib.branch_unit:sv <0x170971d7>
-			streams:  40, words: 43797
-		worklib.odd_pipe_unit:sv <0x11b906b1>
+		worklib.local_store_unit:sv <0x11abe4b6>
+			streams:  18, words: 14426
+		worklib.permute_unit:sv <0x43ee179d>
+			streams:  23, words: 22898
+		worklib.branch_unit:sv <0x012ba273>
+			streams:  41, words: 44614
+		worklib.odd_pipe_unit:sv <0x6b19822e>
 			streams:  30, words: 12404
-		worklib.execution_unit:sv <0x28745569>
+		worklib.byte_unit:sv <0x16e57e2e>
+			streams:  17, words: 15338
+		worklib.single_precision_1:sv <0x0a8d8414>
+			streams:  56, words: 59336
+		worklib.simple_fixed_2_1:sv <0x5d9053ce>
+			streams:  33, words: 38102
+		worklib.simple_fixed_1_1:sv <0x18bcfde5>
+			streams:  95, words: 98326
+		worklib.even_pipe_unit:sv <0x078ae2f1>
+			streams:  43, words: 17764
+		worklib.execution_unit:sv <0x70f3b878>
 			streams:  15, words:  8937
-		worklib.instruction_buffer:sv <0x08ac5266>
-			streams:   6, words:  5767
-		worklib.top_level:sv <0x23bd39e5>
-			streams: 202, words: 56811
+		worklib.rf_ex_reg:sv <0x42ae5675>
+			streams:   3, words:  4593
+		worklib.hazard_unit:sv <0x514659e1>
+			streams:   1, words:  1509
+		worklib.top_level:sv <0x6ff87b75>
+			streams: 217, words: 59730
 	Building instance specific data structures.
 	Loading native compiled code:     .................... Done
 	Design hierarchy summary:
 		                   Instances  Unique
-		Modules:                  53      23
+		Modules:                  54      24
 		Verilog packages:          1       1
-		Registers:             1,021     988
-		Scalar wires:             68       -
+		Registers:             1,031     998
+		Scalar wires:             84       -
 		Vectored wires:          408       -
-		Always blocks:            51      21
+		Always blocks:            52      22
 		Initial blocks:            4       4
-		Pseudo assignments:      290       -
+		Pseudo assignments:      305       -
 		Compilation units:         1       1
 		Process Clocks:           36       2
 		Simulation timescale:    1ps
@@ -91,7 +97,7 @@ xcelium> #
 xcelium> #
 xcelium> # You can restore this configuration with:
 xcelium> #
-xcelium> #      xrun -f files.f -top tbench -access +rwc -input initial-test.tcl
+xcelium> #      xrun -f files.f -top tbench -access +rwc -input final-restore.tcl
 xcelium> #
 xcelium> 
 xcelium> set tcl_prompt1 {puts -nonewline "xcelium> "}
@@ -199,18 +205,31 @@ xcelium> probe -create -database waves tbench.dut.dec_rf_reg.even_instruction_ty
 Created probe 7
 xcelium> probe -create -database waves tbench.dut.rf_exec_reg.even_opcode_q tbench.dut.rf_exec_reg.even_source_a_q tbench.dut.rf_exec_reg.even_source_b_q tbench.dut.rf_exec_reg.even_write_addr_q tbench.dut.rf_exec_reg.even_unit_id_q tbench.dut.rf_exec_reg.even_reg_write_q
 Created probe 8
-xcelium> 
-xcelium> simvision -input initial-test.tcl.svcf
-xcelium> run
-Simulation complete via $finish(1) at time 415 NS + 0
-./top_level_tb.sv:379     $finish;
-xcelium> probe -create -shm tbench.dut.ibuffer.instruction_2 tbench.dut.if_dec_reg.instruction_2_q tbench.dut.dec.odd_instruction_type tbench.dut.dec.odd_opcode tbench.dut.dec.odd_program_counter tbench.dut.dec.odd_ra_addr tbench.dut.dec.odd_rb_addr tbench.dut.dec.odd_reg_write tbench.dut.dec.odd_unit_id
+xcelium> probe -create -database waves tbench.dut.exec_unit.flush_all tbench.dut.exec_unit.flush_after
 Created probe 9
-xcelium> reset
-Loaded snapshot worklib.tbench:sv
+xcelium> probe -create -database waves tbench.dut.ibuffer.instruction_2 tbench.dut.if_dec_reg.instruction_2_q tbench.dut.dec.odd_instruction_type tbench.dut.dec.odd_opcode tbench.dut.dec.odd_reg_write
+Created probe 10
+xcelium> probe -create -database waves tbench.dut.dec_rf_reg.even_reg_write_q tbench.dut.dec_rf_reg.odd_opcode_q tbench.dut.dec_rf_reg.odd_instruction_type_q tbench.dut.dec_rf_reg.odd_reg_write_q
+Created probe 11
+xcelium> probe -create -database waves tbench.dut.dec.odd_first tbench.dut.rf_exec_reg.odd_opcode_q tbench.dut.rf_exec_reg.odd_unit_id_q tbench.dut.rf_exec_reg.odd_reg_write_q tbench.dut.rf_exec_reg.odd_write_addr_q
+Created probe 12
+xcelium> probe -create -database waves tbench.dut.hazard_detection.branch_signal
+Created probe 13
+xcelium> probe -create -database waves tbench.dut.ibuffer.branch_signal tbench.dut.ibuffer.branch_addr
+Created probe 14
+xcelium> probe -create -database waves tbench.dut.ibuffer.same_pipe_hazard tbench.dut.ibuffer.same_write_dest_hazard
+Created probe 15
+xcelium> probe -create -database waves tbench.dut.ibuffer.pc_1 tbench.dut.ibuffer.pc_2
+Created probe 16
+xcelium> probe -create -database waves tbench.dut.clk
+Created probe 17
+xcelium> probe -create -database waves tbench.reset
+Created probe 18
+xcelium> 
+xcelium> simvision -input final-restore.tcl.svcf
+xcelium> probe -create -shm tbench.dut.hazard_detection.flush_ex_1 tbench.dut.hazard_detection.flush_id_rf tbench.dut.hazard_detection.flush_if_id tbench.dut.hazard_detection.flush_rf_ex
+Created probe 19
 xcelium> run
 Simulation complete via $finish(1) at time 415 NS + 0
 ./top_level_tb.sv:379     $finish;
-xcelium> probe -create -shm tbench.dut.dec.odd_immediate
-Created probe 10
 xcelium> 

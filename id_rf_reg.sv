@@ -4,6 +4,7 @@ module id_rf_reg(
 
     // Inputs
     input logic clk,
+    input logic flush,
 
     input logic[0:6] even_ra_addr,
     input logic[0:6] even_rb_addr,
@@ -55,28 +56,42 @@ module id_rf_reg(
 );
 
 always_ff @(posedge clk) begin
-    even_ra_addr_q <= even_ra_addr;
-    even_rb_addr_q <= even_rb_addr;
-    even_rc_addr_q <= even_rc_addr;
-    even_rt_addr_q <= even_rt_addr;
-    even_instruction_type_q <= even_instruction_type;
-    even_opcode_q <= even_opcode;
-    even_unit_id_q <= even_unit_id;
-    even_program_counter_q <= even_program_counter;
-    even_immediate_q <= even_immediate;
-    even_reg_write_q <= even_reg_write;
 
-    odd_ra_addr_q <= odd_ra_addr;
-    odd_rb_addr_q <= odd_rb_addr;
-    odd_rc_addr_q <= odd_rc_addr;
-    odd_rt_addr_q <= odd_rt_addr;
-    odd_instruction_type_q <= odd_instruction_type;
-    odd_opcode_q <= odd_opcode;
-    odd_unit_id_q <= odd_unit_id;
-    odd_program_counter_q <= odd_program_counter;
-    odd_immediate_q <= odd_immediate;
-    odd_reg_write_q <= odd_reg_write;
-    odd_first_q <= odd_first;
+    if (flush) begin
+        even_opcode_q <= OP_NO_OP_HARDWARE;
+        even_reg_write_q <= 0;
+        even_unit_id_q <= 0;
+
+        odd_opcode_q <= OP_NO_OP_HARDWARE;
+        odd_reg_write_q <= 0;
+        odd_unit_id_q <= 0;
+    end
+
+    else begin
+        even_ra_addr_q <= even_ra_addr;
+        even_rb_addr_q <= even_rb_addr;
+        even_rc_addr_q <= even_rc_addr;
+        even_rt_addr_q <= even_rt_addr;
+        even_instruction_type_q <= even_instruction_type;
+        even_opcode_q <= even_opcode;
+        even_unit_id_q <= even_unit_id;
+        even_program_counter_q <= even_program_counter;
+        even_immediate_q <= even_immediate;
+        even_reg_write_q <= even_reg_write;
+
+        odd_ra_addr_q <= odd_ra_addr;
+        odd_rb_addr_q <= odd_rb_addr;
+        odd_rc_addr_q <= odd_rc_addr;
+        odd_rt_addr_q <= odd_rt_addr;
+        odd_instruction_type_q <= odd_instruction_type;
+        odd_opcode_q <= odd_opcode;
+        odd_unit_id_q <= odd_unit_id;
+        odd_program_counter_q <= odd_program_counter;
+        odd_immediate_q <= odd_immediate;
+        odd_reg_write_q <= odd_reg_write;
+        odd_first_q <= odd_first;
+    end
+
 
 end
 

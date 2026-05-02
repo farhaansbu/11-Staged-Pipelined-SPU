@@ -43,7 +43,7 @@ module instruction_buffer (
 
             // If branching, jump to branch address first
             if (branch_signal == 1) begin
-                program_counter <= branch_addr;
+                program_counter = branch_addr;
             end
 
             // Get instructions needed
@@ -51,16 +51,20 @@ module instruction_buffer (
                 instruction_1[i*8 +: 8] <= imem[program_counter + i];
                 instruction_2[i*8 +: 8] <= imem[program_counter + 4 + i];
             end
+            
+            pc_1 = program_counter;
+            pc_2 = program_counter + 4;
 
-            pc_1 <= program_counter;
-            pc_2 <= program_counter + 4;
 
-            if (same_pipe_hazard == 1 || same_write_dest_hazard) begin
-                program_counter <= program_counter + 4;
-            end 
-            else begin
-                program_counter <= program_counter + 8;
+            if (branch_signal != 1) begin
+                if (same_pipe_hazard == 1 || same_write_dest_hazard) begin
+                    program_counter = program_counter + 4;
+                end 
+                else begin
+                    program_counter = program_counter + 8;
+                end
             end
+            
         end 
 
     end

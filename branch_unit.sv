@@ -2,6 +2,7 @@ import instruction_pkg::*;
 
 module branch_unit(
     input logic clk,
+    input logic flush_stage_1,
 
     input logic [0:127] odd_source_a,
     input logic [0:127] odd_source_b,
@@ -31,7 +32,6 @@ always_ff @(posedge clk) begin
         // Record unit id, write addr, other control signals
         output_packet.unit_id <= odd_unit_id;
         output_packet.reg_write_addr <= odd_write_address;
-        output_packet.reg_write_flag <= reg_write;
         output_packet.present_bit <= 1;
         output_packet.ready_stage_number <= 2;
         output_packet.current_stage_number <= 2;
@@ -133,6 +133,15 @@ always_ff @(posedge clk) begin
         default: ;
 
         endcase
+
+        if (flush_stage_1) begin
+            output_packet.reg_write_flag <= 0;
+            flush_all = 0;
+            flush_after = 0;
+        end
+        else begin
+            output_packet.reg_write_flag <= reg_write;
+        end
 
     end
 end

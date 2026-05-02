@@ -4,12 +4,12 @@
 //
 -gui
 -INPUT
-initial-test.tcl
+final-restore.tcl
 -MESSAGES
 +EMGRLOG
 xrun.log
 -XLSTIME
-1777675713
+1777751993
 -XLKEEP
 -XLMODE
 ./xcelium.d/run.lnx8664.24.09.d

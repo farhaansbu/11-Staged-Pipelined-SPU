@@ -2,6 +2,7 @@ instructions.sv
 instruction_buffer.sv
 if_id_reg.sv
 decoder.sv
+hazard_unit.sv
 id_rf_reg.sv
 register_file.sv
 forwarding_unit.sv

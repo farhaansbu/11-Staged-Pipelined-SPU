@@ -3,6 +3,7 @@ import instruction_pkg::*;
 module permute_unit(
     
     input logic clk,
+    input logic flush_stage_1,
 
     input logic [0:127] odd_source_a,
     input logic [0:127] odd_source_b,
@@ -25,7 +26,12 @@ always_ff @(posedge clk) begin
         // Record unit id, write addr, other control signals
         output_packet.unit_id <= odd_unit_id;
         output_packet.reg_write_addr <= odd_write_address;
-        output_packet.reg_write_flag <= reg_write;
+        if (flush_stage_1) begin
+            output_packet.reg_write_flag <= 0;
+        end
+        else begin
+            output_packet.reg_write_flag <= reg_write;
+        end
         output_packet.present_bit <= 1;
         output_packet.ready_stage_number <= 4;
         output_packet.current_stage_number <= 2;

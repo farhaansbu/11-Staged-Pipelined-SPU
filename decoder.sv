@@ -70,6 +70,8 @@ always_comb begin : decoder_body
         // If both even
         if (unit_id_2 >= 1 && unit_id_2 <= 4) begin
             odd_unit_id = 0;
+            odd_opcode = OP_NO_OP_HARDWARE;
+            odd_reg_write = 0;
             same_pipe_hazard = 1;
         end
         else begin // Even + odd
@@ -92,6 +94,8 @@ always_comb begin : decoder_body
         // If both odd
         if (unit_id_2 >= 5 && unit_id_2 <= 7) begin
             even_unit_id = 0;
+            even_opcode = OP_NO_OP_HARDWARE;
+            even_reg_write = 0;
             same_pipe_hazard = 1;
         end
         else begin // Odd + even
@@ -109,9 +113,9 @@ always_comb begin : decoder_body
 
    // Set which instruction is first
    if (even_program_counter >= odd_program_counter) begin
-        odd_first = 0;
-   end else begin
         odd_first = 1;
+   end else begin
+        odd_first = 0;
    end
 
    // If both instructions are nop

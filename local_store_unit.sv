@@ -2,6 +2,7 @@ import instruction_pkg::*;
 
 module local_store_unit (
     input logic clk,
+    input logic flush_stage_1,
 
     input logic [0:127] odd_source_a,
     input logic [0:127] odd_source_b,
@@ -25,41 +26,48 @@ always_ff @(posedge clk) begin
         // Record unit id, write addr, other control signals
         output_packet.unit_id <= odd_unit_id;
         output_packet.reg_write_addr <= odd_write_address;
-        output_packet.reg_write_flag <= reg_write;
         output_packet.present_bit <= 1;
         output_packet.ready_stage_number <= 7;
         output_packet.current_stage_number <= 2;
+        
+        if (flush_stage_1) begin
+            output_packet.reg_write_flag <= 0;
+        end
+        else begin
+            output_packet.reg_write_flag <= reg_write;
+            // Calculate result
+            case (odd_opcode)
 
-        // Calculate result
-        case (odd_opcode)
+                OP_LOAD_QUADWORD_X: begin
+                    output_packet.result <= load_quadword_x(odd_source_a, odd_source_b);
+                end
 
-            OP_LOAD_QUADWORD_X: begin
-                output_packet.result <= load_quadword_x(odd_source_a, odd_source_b);
-            end
+                OP_LOAD_QUADWORD_D: begin
+                    output_packet.result <= load_quadword_d(odd_source_a, odd_source_b[0:9]);
+                end
 
-            OP_LOAD_QUADWORD_D: begin
-                output_packet.result <= load_quadword_d(odd_source_a, odd_source_b[0:9]);
-            end
+                OP_LOAD_QUADWORD_A: begin
+                    output_packet.result <= load_quadword_a(odd_source_a[0:15]);
+                end
 
-            OP_LOAD_QUADWORD_A: begin
-                output_packet.result <= load_quadword_a(odd_source_a[0:15]);
-            end
+                OP_STORE_QUADWORD_X: begin
+                    store_quadword_x(odd_source_a, odd_source_b, odd_source_c);
+                end
 
-            OP_STORE_QUADWORD_X: begin
-                store_quadword_x(odd_source_a, odd_source_b, odd_source_c);
-            end
+                OP_STORE_QUADWORD_D: begin
+                    store_quadword_d(odd_source_a, odd_source_b[0:9], odd_source_c);
+                end
+                
+                OP_STORE_QUADWORD_A: begin
+                    store_quadword_a(odd_source_a[0:15], odd_source_c);
+                end
 
-            OP_STORE_QUADWORD_D: begin
-                store_quadword_d(odd_source_a, odd_source_b[0:9], odd_source_c);
-            end
-            
-            OP_STORE_QUADWORD_A: begin
-                store_quadword_a(odd_source_a[0:15], odd_source_c);
-            end
+                default: ;
 
-            default: ;
+            endcase
+        end
 
-        endcase
+
     end
 end
 

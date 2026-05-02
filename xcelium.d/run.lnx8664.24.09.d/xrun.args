@@ -10,4 +10,4 @@ tbench
 -access
 +rwc
 -input
-initial-test.tcl
+final-restore.tcl

@@ -6,6 +6,7 @@
 /home/home5/fkhan/ese545project/instruction_buffer.sv
 /home/home5/fkhan/ese545project/if_id_reg.sv
 /home/home5/fkhan/ese545project/decoder.sv
+/home/home5/fkhan/ese545project/hazard_unit.sv
 /home/home5/fkhan/ese545project/id_rf_reg.sv
 /home/home5/fkhan/ese545project/register_file.sv
 /home/home5/fkhan/ese545project/forwarding_unit.sv

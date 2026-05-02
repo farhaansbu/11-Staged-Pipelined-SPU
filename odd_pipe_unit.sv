@@ -2,6 +2,7 @@ import instruction_pkg::*;
 
 module odd_pipe_unit (
     input logic clk,
+    input logic flush_stage_1,
 
     input logic [0:127] odd_source_a,
     input logic [0:127] odd_source_b,
@@ -44,6 +45,7 @@ unit_result_packet odd_stage_6_mux_output;
 // Branch unit
 branch_unit branch_1 (
     .clk(clk),
+    .flush_stage_1(flush_stage_1),
     .odd_source_a(odd_source_a),
     .odd_source_b(odd_source_b),
     .odd_source_c(odd_source_c),
@@ -60,6 +62,7 @@ branch_unit branch_1 (
 // Permute
 permute_unit permute_1 (
     .clk(clk),
+    .flush_stage_1(flush_stage_1),
     .odd_source_a(odd_source_a),
     .odd_source_b(odd_source_b),
     .odd_source_c(odd_source_c),
@@ -104,6 +107,7 @@ execution_pipe_register forward_odd6 (
 // Local Store Unit
 local_store_unit local_store_1(
     .clk(clk),
+    .flush_stage_1(flush_stage_1),
     .odd_source_a(odd_source_a),
     .odd_source_b(odd_source_b),
     .odd_source_c(odd_source_c),

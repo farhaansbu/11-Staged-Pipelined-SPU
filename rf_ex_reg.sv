@@ -3,6 +3,7 @@ import instruction_pkg::*;
 module rf_ex_reg (
     
     input logic clk,
+    input logic flush,
     
     input logic[0:6] even_write_addr,
     input logic[0:127] even_source_a,
@@ -44,22 +45,35 @@ module rf_ex_reg (
 
 always_ff @(posedge clk) begin
 
-    even_write_addr_q <= even_write_addr;
-    even_source_a_q <= even_source_a;
-    even_source_b_q <= even_source_b;
-    even_source_c_q <= even_source_c;
-    even_opcode_q <= even_opcode;
-    even_unit_id_q <= even_unit_id;
-    even_reg_write_q <= even_reg_write;
+    if (flush) begin
+        even_opcode_q <= OP_NO_OP_HARDWARE;
+        even_reg_write_q <= 0;
+        even_unit_id_q <= 0;
 
-    odd_write_addr_q <= odd_write_addr;
-    odd_source_a_q <= odd_source_a;
-    odd_source_b_q <= odd_source_b;
-    odd_source_c_q <= odd_source_c;
-    odd_opcode_q <= odd_opcode;
-    odd_unit_id_q <= odd_unit_id;
-    odd_reg_write_q <= odd_reg_write;
-    odd_first_q <= odd_first;
+        odd_opcode_q <= OP_NO_OP_HARDWARE;
+        odd_reg_write_q <= 0;
+        odd_unit_id_q <= 0;
+    end
+
+    else begin
+            even_write_addr_q <= even_write_addr;
+            even_source_a_q <= even_source_a;
+            even_source_b_q <= even_source_b;
+            even_source_c_q <= even_source_c;
+            even_opcode_q <= even_opcode;
+            even_unit_id_q <= even_unit_id;
+            even_reg_write_q <= even_reg_write;
+
+            odd_write_addr_q <= odd_write_addr;
+            odd_source_a_q <= odd_source_a;
+            odd_source_b_q <= odd_source_b;
+            odd_source_c_q <= odd_source_c;
+            odd_opcode_q <= odd_opcode;
+            odd_unit_id_q <= odd_unit_id;
+            odd_reg_write_q <= odd_reg_write;
+            odd_first_q <= odd_first;
+    end
+
 
 end
 

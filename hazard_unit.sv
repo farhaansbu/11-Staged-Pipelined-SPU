@@ -1,31 +1,39 @@
+
+
 module hazard_unit(
 
     input logic flush_all,
     input logic flush_after,
 
     output logic branch_signal,
-    output logic flush_fetch,
-    output logic flush_decode,
-    output logic flush rf_,
-    output logic flush_exec_1,
+    output logic flush_if_id,
+    output logic flush_id_rf,
+    output logic flush_rf_ex,
+    output logic flush_ex_1
+
 );
+
+    always_comb begin : hazard_unit_body
+
+        branch_signal = 0;
+        flush_if_id = 0;
+        flush_id_rf = 0;
+        flush_rf_ex = 0;
+        flush_ex_1 = 0;
+
+        // Control Hazards
+        if (flush_all || flush_after) begin
+            branch_signal = 1;
+            flush_if_id = 1;
+            flush_id_rf = 1;
+            flush_rf_ex = 1;
+            flush_ex_1 = 1;
+            
+        end
+    end
 
 endmodule
 
 
-always_comb begin : hazard_unit_body
-
-    // Control Hazards
-    if (flush_all || flush_after) begin
-        branch_signal = 1;
-
-        //
-    end
-   
-
-
-
-
-end
 
 

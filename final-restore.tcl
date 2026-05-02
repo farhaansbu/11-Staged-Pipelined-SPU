@@ -2,6 +2,11 @@
 # XM-Sim Command File
 # TOOL:	xmsim(64)	24.09-s001
 #
+#
+# You can restore this configuration with:
+#
+#      xrun -f files.f -top tbench -access +rwc -input final-restore.tcl
+#
 
 set tcl_prompt1 {puts -nonewline "xcelium> "}
 set tcl_prompt2 {puts -nonewline "> "}
@@ -58,7 +63,16 @@ probe -create -database waves tbench.dut.dec.even_immediate tbench.dut.dec.even_
 probe -create -database waves tbench.dut.rf.reg_file
 probe -create -database waves tbench.dut.dec_rf_reg.even_instruction_type_q tbench.dut.dec_rf_reg.even_opcode_q tbench.dut.dec_rf_reg.even_immediate_q tbench.dut.dec_rf_reg.even_rt_addr_q
 probe -create -database waves tbench.dut.rf_exec_reg.even_opcode_q tbench.dut.rf_exec_reg.even_source_a_q tbench.dut.rf_exec_reg.even_source_b_q tbench.dut.rf_exec_reg.even_write_addr_q tbench.dut.rf_exec_reg.even_unit_id_q tbench.dut.rf_exec_reg.even_reg_write_q
-probe -create -database waves tbench.dut.ibuffer.instruction_2 tbench.dut.if_dec_reg.instruction_2_q tbench.dut.dec.odd_instruction_type tbench.dut.dec.odd_opcode tbench.dut.dec.odd_program_counter tbench.dut.dec.odd_ra_addr tbench.dut.dec.odd_rb_addr tbench.dut.dec.odd_reg_write tbench.dut.dec.odd_unit_id
-probe -create -database waves tbench.dut.dec.odd_immediate
+probe -create -database waves tbench.dut.exec_unit.flush_all tbench.dut.exec_unit.flush_after
+probe -create -database waves tbench.dut.ibuffer.instruction_2 tbench.dut.if_dec_reg.instruction_2_q tbench.dut.dec.odd_instruction_type tbench.dut.dec.odd_opcode tbench.dut.dec.odd_reg_write
+probe -create -database waves tbench.dut.dec_rf_reg.even_reg_write_q tbench.dut.dec_rf_reg.odd_opcode_q tbench.dut.dec_rf_reg.odd_instruction_type_q tbench.dut.dec_rf_reg.odd_reg_write_q
+probe -create -database waves tbench.dut.dec.odd_first tbench.dut.rf_exec_reg.odd_opcode_q tbench.dut.rf_exec_reg.odd_unit_id_q tbench.dut.rf_exec_reg.odd_reg_write_q tbench.dut.rf_exec_reg.odd_write_addr_q
+probe -create -database waves tbench.dut.hazard_detection.branch_signal
+probe -create -database waves tbench.dut.ibuffer.branch_signal tbench.dut.ibuffer.branch_addr
+probe -create -database waves tbench.dut.ibuffer.same_pipe_hazard tbench.dut.ibuffer.same_write_dest_hazard
+probe -create -database waves tbench.dut.ibuffer.pc_1 tbench.dut.ibuffer.pc_2
+probe -create -database waves tbench.dut.clk
+probe -create -database waves tbench.reset
+probe -create -database waves tbench.dut.hazard_detection.flush_ex_1 tbench.dut.hazard_detection.flush_id_rf tbench.dut.hazard_detection.flush_if_id tbench.dut.hazard_detection.flush_rf_ex
 
-simvision -input /home/home5/fkhan/ese545project/.simvision/1437221_fkhan_lab01.ece.stonybrook.edu_autosave.tcl.svcf
+simvision -input final-restore.tcl.svcf

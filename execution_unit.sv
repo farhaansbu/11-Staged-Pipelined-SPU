@@ -3,6 +3,7 @@ import instruction_pkg::*;
 
 module execution_unit(
     input logic clk,
+    input logic flush_stage_1,
 
     input logic [0:127] even_source_a,
     input logic [0:127] even_source_b,
@@ -42,6 +43,7 @@ module execution_unit(
 
 even_pipe_unit even_pipe(
     .clk(clk),
+    .flush_stage_1(flush_stage_1),
     .even_source_a(even_source_a),
     .even_source_b(even_source_b),
     .even_source_c(even_source_c),
@@ -59,6 +61,7 @@ even_pipe_unit even_pipe(
 
 odd_pipe_unit odd_pipe(
     .clk(clk),
+    .flush_stage_1(flush_stage_1),
     .odd_source_a(odd_source_a),
     .odd_source_b(odd_source_b),
     .odd_source_c(odd_source_c),

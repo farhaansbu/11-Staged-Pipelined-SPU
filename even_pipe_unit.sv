@@ -3,6 +3,7 @@ import instruction_pkg::*;
 module even_pipe_unit (
 
     input logic clk,
+    input logic flush_stage_1,
 
     input logic [0:127] even_source_a,
     input logic [0:127] even_source_b,
@@ -53,6 +54,7 @@ unit_result_packet stage_7_mux_output;
 // Fixed point 1 unit
 simple_fixed_1_1 fixed_1_1 (
     .clk(clk),
+    .flush_stage_1(flush_stage_1),
     .source_a(even_source_a),
     .source_b(even_source_b),
     .source_c(even_source_c),
@@ -72,6 +74,7 @@ execution_pipe_register fixed_1_2 (
 // Fixed point 2 unit
 simple_fixed_2_1 fixed_2_1 (
     .clk(clk),
+    .flush_stage_1(flush_stage_1),
     .source_a(even_source_a),
     .source_b(even_source_b),
     .source_c(even_source_c),
@@ -97,6 +100,7 @@ execution_pipe_register fixed_2_3 (
 // Single Precision Unit
 single_precision_1 sp_1 (
     .clk(clk),
+    .flush_stage_1(flush_stage_1),
     .source_a(even_source_a),
     .source_b(even_source_b),
     .source_c(even_source_c),
@@ -147,6 +151,7 @@ execution_pipe_register sp_7 (
 
 byte_unit byte_1(
     .clk(clk),
+    .flush_stage_1(flush_stage_1),
     .source_a(even_source_a),
     .source_b(even_source_b),
     .source_c(even_source_c),
