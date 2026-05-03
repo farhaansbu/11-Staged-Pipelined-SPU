@@ -2,14 +2,11 @@
 // File created by:  xrun
 // Do not modify this file
 //
--gui
--INPUT
-final-restore.tcl
 -MESSAGES
 +EMGRLOG
 xrun.log
 -XLSTIME
-1777782989
+1777794233
 -XLKEEP
 -XLMODE
 ./xcelium.d/run.lnx8664.24.09.d
@@ -23,4 +20,4 @@ xrun
 -XLVERSION
 "TOOL:	xrun(64)	24.09-s001"
 -XLNAME
-./xcelium.d/run.lnx8664.24.09.d/lab01.ece.stonybrook.edu_1469092
+./xcelium.d/run.lnx8664.24.09.d/lab01.ece.stonybrook.edu_1472497

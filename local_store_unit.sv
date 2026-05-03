@@ -19,7 +19,12 @@ module local_store_unit (
 logic[0:7] local_store[0:32768];
 initial begin
         for (int i = 0; i < 32768; i++) begin
-            local_store[i] = '0;
+            if (i < 16) begin
+                local_store[i] = i;
+            end
+            else begin
+                local_store[i] = '0;
+            end
         end
 end
 

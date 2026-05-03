@@ -66,17 +66,23 @@ logic dec_out_odd_reg_write;
 logic dec_out_odd_first;
 logic dec_out_same_pipe_hazard;
 logic dec_out_same_write_dest_hazard;
+logic dec_out_concurrent_data_dependency_hazard;
 logic[0:31] dec_out_stalled_instruction;
 logic[0:10] dec_out_stalled_pc;
 
 
 //hazard_unit outputs
+logic haz_out_data_hazard_signal;
 logic haz_out_branch_signal;
 logic haz_out_flush_if_id;
 logic haz_out_flush_id_rf;
 logic haz_out_flush_rf_ex;
 logic haz_out_flush_ex_1;
 logic haz_out_flush_even_2;
+logic[0:31] haz_out_instruction_refetch_1;
+logic[0:31] haz_out_instruction_refetch_2;
+logic[0:9] haz_out_refetch_pc1;
+logic[0:9] haz_out_refetch_pc2;
 
 
 // id_rf outputs
@@ -188,6 +194,8 @@ instruction_buffer ibuffer(
     .branch_addr(exec_output_odd_stage_1_forwarded_res.branch_addr[21:31]),
     .same_pipe_hazard(dec_out_same_pipe_hazard),
     .same_write_dest_hazard(dec_out_same_write_dest_hazard),
+    .data_hazard_signal(haz_out_data_hazard_signal),
+    .concurrent_data_dependency_hazard_signal(dec_out_concurrent_data_dependency_hazard),
     
     .instruction_1(instruction_buffer_out_instruction_1),
     .instruction_2(instruction_buffer_out_instruction_2),
@@ -201,6 +209,8 @@ if_id_reg if_dec_reg(
     .flush(haz_out_flush_if_id),
     .same_pipe_hazard(dec_out_same_pipe_hazard),
     .same_write_dest_hazard(dec_out_same_write_dest_hazard),
+    .data_dependency_hazard(haz_out_data_hazard_signal),
+    .concurrent_data_dependency_hazard(dec_out_concurrent_data_dependency_hazard),
 
     .instruction_1_d(instruction_buffer_out_instruction_1),
     .instruction_2_d(instruction_buffer_out_instruction_2),
@@ -208,6 +218,11 @@ if_id_reg if_dec_reg(
     .program_counter_2_d(instruction_buffer_out_pc_2),
     .pending_instruction(dec_out_stalled_instruction),
     .pending_pc(dec_out_stalled_pc),
+    .refetch_instruction_1(haz_out_instruction_refetch_1),
+    .refetch_instruction_2(haz_out_instruction_refetch_2),
+    .refetch_pc_1(),
+    .refetch_pc_2(),
+
     
     .instruction_1_q(if_id_out_instruction_1),
     .instruction_2_q(if_id_out_instruction_2),
@@ -246,6 +261,7 @@ decoder dec(
     
     .same_pipe_hazard(dec_out_same_pipe_hazard),
     .same_write_dest_hazard(dec_out_same_write_dest_hazard),
+    .concurrent_data_dependency_hazard(dec_out_concurrent_data_dependency_hazard),
     .stalled_instruction(dec_out_stalled_instruction),
     .stalled_pc(dec_out_stalled_pc)
 
@@ -254,13 +270,47 @@ decoder dec(
 hazard_unit hazard_detection (
     .flush_all(exec_output_odd_flush_all),
     .flush_after(exec_output_odd_flush_after),
+    .instruction_1(if_id_out_instruction_1),
+    .instruction_2(if_id_out_instruction_2),
+    .pc_1(if_id_out_pc_1),
+    .pc_2(if_id_out_pc_2),
+
+    .even_read_addr_a(dec_out_even_ra_addr),
+    .even_read_addr_b(dec_out_even_rb_addr),
+    .even_read_addr_c(dec_out_even_rc_addr),
+    .even_instruction_type(dec_out_even_instruction_type),
+    .even_opcode(dec_out_even_opcode),
+
+    .odd_read_addr_a(dec_out_odd_ra_addr),
+    .odd_read_addr_b(dec_out_odd_rb_addr),
+    .odd_read_addr_c(dec_out_odd_rc_addr),
+    .odd_instruction_type(dec_out_odd_instruction_type),
+    .odd_opcode(dec_out_odd_opcode),
+    
+    .id_rf_even_rt_addr(id_rf_reg_output_even_rt_addr_q),
+    .id_rf_even_reg_write(id_rf_reg_output_even_reg_write_q),
+    .id_rf_odd_rt_addr(id_rf_reg_output_odd_rt_addr_q),
+    .id_rf_odd_reg_write(id_rf_reg_output_odd_reg_write_q),
+
+    .rf_ex_even_rt_addr(rf_ex_out_even_write_addr_q),
+    .rf_ex_even_reg_write(rf_ex_out_even_reg_write_q),
+    .rf_ex_odd_rt_addr(rf_ex_out_odd_write_addr_q),
+    .rf_ex_odd_reg_write(rf_ex_out_odd_reg_write_q),
+
+    .even_stage_results(),
+    .odd_stage_results(),
+
 
     .branch_signal(haz_out_branch_signal),
     .flush_if_id(haz_out_flush_if_id),
     .flush_id_rf(haz_out_flush_id_rf),
     .flush_rf_ex(haz_out_flush_rf_ex),
     .flush_ex_1(haz_out_flush_ex_1),
-    .flush_even_2(haz_out_flush_even_2)
+    .flush_even_2(haz_out_flush_even_2),
+    .instruction_refetch_1(haz_out_instruction_refetch_1),
+    .instruction_refetch_2(haz_out_instruction_refetch_2),
+    .refetch_pc1(haz_out_refetch_pc1),
+    .refetch_pc2(haz_out_refetch_pc2)
 );
 
 

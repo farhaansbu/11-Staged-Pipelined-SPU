@@ -114,7 +114,8 @@ typedef enum logic[0:6] {
     OP_BRANCH_INDIRECT_IF_NOT_ZERO_HALFWORD,
     OP_NO_OP_EVEN,
     OP_NO_OP_ODD,
-    OP_NO_OP_HARDWARE
+    OP_NO_OP_HARDWARE,
+    OP_STOP_AND_SIGNAL
 } opcode_t;
 
 

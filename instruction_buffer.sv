@@ -8,6 +8,8 @@ module instruction_buffer (
     input logic same_pipe_hazard,
     input logic same_write_dest_hazard,
     input logic branch_signal,
+    input logic data_hazard_signal,
+    input logic concurrent_data_dependency_hazard_signal,
     input logic[0:10] branch_addr,
 
     output logic[0:31] instruction_1,
@@ -46,11 +48,16 @@ module instruction_buffer (
                 program_counter = branch_addr;
             end
 
-            // If same pipe hazard
-            else if (same_pipe_hazard == 1 || same_write_dest_hazard) begin
+            else if (data_hazard_signal == 1) begin
+                program_counter = program_counter - 8;
+            end
+
+            // If same pipe hazard, WAW hazard, or data dependency hazards between instructions being fetched
+            else if (same_pipe_hazard == 1 || same_write_dest_hazard == 1 || concurrent_data_dependency_hazard_signal == 1) begin
                 program_counter = program_counter - 4;
             end 
 
+            
             // Get instructions needed
             for (int i = 0; i < 4; ++i) begin
                 instruction_1[i*8 +: 8] <= imem[program_counter + i];

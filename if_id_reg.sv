@@ -4,6 +4,8 @@ module if_id_reg (
     input logic flush,
     input logic same_pipe_hazard,
     input logic same_write_dest_hazard,
+    input logic data_dependency_hazard,
+    input logic concurrent_data_dependency_hazard,
 
     input logic[0:31] instruction_1_d,
     input logic[0:10] program_counter_1_d,
@@ -13,6 +15,10 @@ module if_id_reg (
     input logic[0:31] pending_instruction,
     input logic[0:10] pending_pc,
 
+    input logic[0:31] refetch_instruction_1,
+    input logic[0:10] refetch_pc_1,
+    input logic[0:31] refetch_instruction_2,
+    input logic[0:10] refetch_pc_2,
 
     output logic[0:31] instruction_1_q,
     output logic[0:10] program_counter_1_q,
@@ -35,7 +41,16 @@ always_ff @(posedge clk) begin
         instruction_2_q = instruction_2_d;
         program_counter_2_q = program_counter_2_d;
 
-        if (same_pipe_hazard || same_write_dest_hazard) begin
+        if (data_dependency_hazard) begin
+            instruction_1_q = refetch_instruction_1;
+            program_counter_1_q = refetch_pc_1;
+
+            instruction_2_q = refetch_instruction_2;
+            program_counter_2_q = refetch_pc_2;
+
+        end
+
+        if (same_pipe_hazard || same_write_dest_hazard || concurrent_data_dependency_hazard) begin
             instruction_1_q = pending_instruction;
             program_counter_1_q = pending_pc;
 

@@ -19,6 +19,7 @@ always_ff @(posedge clk) begin
     end
     else begin
         unit_packet_q = unit_packet;
+        unit_packet_q.current_stage_number += 1;
     end
 
 

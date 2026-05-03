@@ -36,7 +36,8 @@ module decoder(
 
     // Hazard signals
     output logic same_pipe_hazard,
-    output logic same_write_dest_hazard
+    output logic same_write_dest_hazard,
+    output logic concurrent_data_dependency_hazard
 
 );
 
@@ -44,6 +45,7 @@ logic[0:2] unit_id_1;
 logic[0:2] unit_id_2;
 logic even_nop;
 logic odd_nop;
+logic[0:6] temp_write_addr;
 
 always_comb begin : decoder_body
 
@@ -54,6 +56,8 @@ always_comb begin : decoder_body
    odd_nop = 0;
    same_pipe_hazard = 0;
    same_write_dest_hazard = 0;
+   concurrent_data_dependency_hazard = 0;
+   
 
    // Decode instruction 2
    decode_instruction(instruction_2, program_counter_2, unit_id_2);
@@ -69,7 +73,7 @@ always_comb begin : decoder_body
    // If instruction1 is even
    if (unit_id_1 >= 1 && unit_id_1 <= 4) begin
         even_unit_id = unit_id_1;
-        // If both even
+        // If both even, stall second one
         if (unit_id_2 >= 1 && unit_id_2 <= 4) begin
             odd_unit_id = 0;
             odd_opcode = OP_NO_OP_HARDWARE;
@@ -81,7 +85,7 @@ always_comb begin : decoder_body
 
         else begin // Even + odd
             odd_unit_id = unit_id_2;
-            // If both instructions have same write_dest
+            // If both instructions have same write_dest, stall odd(2nd)
             if (even_reg_write && odd_reg_write && even_rt_addr == odd_rt_addr) begin
                 // Stall odd instruction (make it no-op and refetch on next cycle)
                 odd_opcode = OP_NO_OP_HARDWARE;
@@ -91,8 +95,65 @@ always_comb begin : decoder_body
                 stalled_instruction = instruction_2;
                 stalled_pc = program_counter_2;
             end
-        end
-    end
+
+            // Check for dependency between instruction 1 and 2
+            if (even_reg_write) begin
+                temp_write_addr = even_rt_addr;
+                // Analyze second instruction being decoded
+                if (odd_instruction_type == RI18 || (odd_instruction_type == RI16 && odd_opcode != OP_STORE_QUADWORD_A)) begin
+                end
+
+                // All instruction types have at least reg_A as source
+                else if (odd_ra_addr == temp_write_addr) begin
+                    concurrent_data_dependency_hazard = 1;
+                    odd_opcode = OP_NO_OP_HARDWARE;
+                    odd_unit_id = 0;
+                    odd_reg_write = 0;
+                    stalled_instruction = instruction_2;
+                    stalled_pc = program_counter_2;
+                end
+                
+                // All other instruction types for odd pipe have at most a second source register
+                if (odd_instruction_type == RR) begin
+                    if (odd_opcode != OP_BRANCH_INDIRECT && odd_opcode != OP_BRANCH_INDIRECT_AND_SET_LINK) begin
+                        if (odd_rb_addr == temp_write_addr) begin
+                            concurrent_data_dependency_hazard = 1;
+                            odd_opcode = OP_NO_OP_HARDWARE;
+                            odd_unit_id = 0;
+                            odd_reg_write = 0;
+                            stalled_instruction = instruction_2;
+                            stalled_pc = program_counter_2;
+                        end
+                    end
+                end
+
+                // Add checks for store operations, edgecase
+                if (odd_opcode == OP_STORE_QUADWORD_D || odd_opcode == OP_STORE_QUADWORD_A || odd_opcode == OP_STORE_QUADWORD_X) begin
+                    if (odd_rc_addr == temp_write_addr) begin
+                        concurrent_data_dependency_hazard = 1;
+                        odd_opcode = OP_NO_OP_HARDWARE;
+                        odd_unit_id = 0;
+                        odd_reg_write = 0;
+                        stalled_instruction = instruction_2;
+                        stalled_pc = program_counter_2;
+                    end
+                end
+
+                // Add checks for branch operations, edgecase
+                if (odd_opcode == OP_BRANCH_IF_ZERO_WORD || odd_opcode == OP_BRANCH_IF_ZERO_HALFWORD ||
+                odd_opcode == OP_BRANCH_IF_NOT_ZERO_WORD || odd_opcode == OP_BRANCH_IF_NOT_ZERO_HALFWORD) begin
+                    if (odd_rb_addr == temp_write_addr) begin
+                        concurrent_data_dependency_hazard = 1;
+                        odd_opcode = OP_NO_OP_HARDWARE;
+                        odd_unit_id = 0;
+                        odd_reg_write = 0;
+                        stalled_instruction = instruction_2;
+                        stalled_pc = program_counter_2;
+                    end
+                end
+            end  // End of concurrent dependency check
+        end // End of Even + Odd
+    end // End of instruction1 = even
    
 
    // If instruction1 is odd
@@ -119,8 +180,74 @@ always_comb begin : decoder_body
                 stalled_instruction = instruction_2;
                 stalled_pc = program_counter_2;
             end
-        end
-   end
+
+            // Check for dependency between instruction 1 and 2
+            if (odd_reg_write) begin
+                temp_write_addr = odd_rt_addr;
+                 // Analyze current instruction thats about to be executed
+                if (even_instruction_type == RI18 || even_instruction_type == RI16) begin
+                    if (even_opcode == OP_IMMEDIATE_OR_HALFWORD_LOWER) begin
+                        if (even_ra_addr == temp_write_addr) begin
+                            even_unit_id = 0;
+                            even_opcode = OP_NO_OP_HARDWARE;
+                            even_reg_write = 0;
+                            concurrent_data_dependency_hazard = 1;
+                            stalled_instruction = instruction_2;
+                            stalled_pc = program_counter_2;
+                        end
+                    end
+                end
+
+                // All instruction types have at least reg_A as source
+                else if (even_ra_addr == temp_write_addr) begin
+                    even_unit_id = 0;
+                    even_opcode = OP_NO_OP_HARDWARE;
+                    even_reg_write = 0;
+                    concurrent_data_dependency_hazard = 1;
+                    stalled_instruction = instruction_2;
+                    stalled_pc = program_counter_2;
+                end
+            
+                // Two source registers
+                if (even_instruction_type == RR) begin
+                    if (even_opcode != OP_COUNT_LEADING_ZEROS && even_opcode != OP_FORM_SELECT_MASK_FOR_HALFWORDS &&
+                        even_opcode != OP_FORM_SELECT_MASK_FOR_HALFWORDS && even_opcode != OP_COUNT_ONES_IN_BYTES) begin
+
+                        if (even_rb_addr == temp_write_addr) begin
+                            even_unit_id = 0;
+                            even_opcode = OP_NO_OP_HARDWARE;
+                            even_reg_write = 0;
+                            concurrent_data_dependency_hazard = 1;
+                            stalled_instruction = instruction_2;
+                            stalled_pc = program_counter_2;
+                        end
+                    end
+                end
+
+                // Three source registers
+                else if (even_instruction_type == RRR) begin
+                    if (even_rb_addr == temp_write_addr) begin
+                        even_unit_id = 0;
+                        even_opcode = OP_NO_OP_HARDWARE;
+                        even_reg_write = 0;
+                        concurrent_data_dependency_hazard = 1;
+                        stalled_instruction = instruction_2;
+                        stalled_pc = program_counter_2;
+                    end
+
+                    if (even_rc_addr == temp_write_addr) begin
+                        even_unit_id = 0;
+                        even_opcode = OP_NO_OP_HARDWARE;
+                        even_reg_write = 0;
+                        concurrent_data_dependency_hazard = 1;
+                        stalled_instruction = instruction_2;
+                        stalled_pc = program_counter_2;
+                    end
+
+                end
+            end // End of concurrent dependency check
+        end // End of Odd + Even
+   end // End of instruction 1 = odd
 
    // Set which instruction is first
    if (even_program_counter >= odd_program_counter) begin
@@ -139,6 +266,9 @@ always_comb begin : decoder_body
             stalled_pc = program_counter_2;
         end
    end
+
+
+   // Check for 
 
 
 end
@@ -1369,7 +1499,11 @@ function automatic void decode_instruction (input logic[0:31] instruction, input
         even_reg_write = 0;
         even_nop = 1;
     end
-// hnop
+
+// stop
+    else if (instruction[0:10] == 11'b0000_0000_000) begin
+        unit_id = -1;
+    end
 
 
 
