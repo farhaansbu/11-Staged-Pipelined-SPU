@@ -1,5 +1,5 @@
 xrun(64): 24.09-s001: (c) Copyright 1995-2024 Cadence Design Systems, Inc.
-TOOL:	xrun(64)	24.09-s001: Started on May 02, 2026 at 15:59:53 EDT
+TOOL:	xrun(64)	24.09-s001: Started on May 03, 2026 at 00:36:29 EDT
 xrun
 	-f files.f
 		instructions.sv
@@ -31,55 +31,149 @@ xrun
 	-gui
 	-access +rwc
 	-input final-restore.tcl
+Recompiling... reason: file './local_store_unit.sv' is newer than expected.
+	expected: Sat May  2 15:57:27 2026
+	actual:   Sun May  3 00:36:27 2026
+file: local_store_unit.sv
+	module worklib.local_store_unit:sv
+		errors: 0, warnings: 0
 	Elaborating the design hierarchy:
 		Caching library 'worklib' ....... Done
+execution_pipe_register fixed_2_3 (
+                                |
+xmelab: *W,CUVWSI (./even_pipe_unit.sv,97|32): 1 input port was not connected:
+xmelab: (./execution_pipe_register.sv,8): flush
+
+execution_pipe_register sp_3 (
+                           |
+xmelab: *W,CUVWSI (./even_pipe_unit.sv,124|27): 1 input port was not connected:
+xmelab: (./execution_pipe_register.sv,8): flush
+
+execution_pipe_register sp_4 (
+                           |
+xmelab: *W,CUVWSI (./even_pipe_unit.sv,130|27): 1 input port was not connected:
+xmelab: (./execution_pipe_register.sv,8): flush
+
+execution_pipe_register sp_5 (
+                           |
+xmelab: *W,CUVWSI (./even_pipe_unit.sv,136|27): 1 input port was not connected:
+xmelab: (./execution_pipe_register.sv,8): flush
+
+execution_pipe_register sp_6 (
+                           |
+xmelab: *W,CUVWSI (./even_pipe_unit.sv,142|27): 1 input port was not connected:
+xmelab: (./execution_pipe_register.sv,8): flush
+
+execution_pipe_register sp_7 (
+                           |
+xmelab: *W,CUVWSI (./even_pipe_unit.sv,148|27): 1 input port was not connected:
+xmelab: (./execution_pipe_register.sv,8): flush
+
+execution_pipe_register byte_3 (
+                             |
+xmelab: *W,CUVWSI (./even_pipe_unit.sv,176|29): 1 input port was not connected:
+xmelab: (./execution_pipe_register.sv,8): flush
+
+execution_pipe_register forward_even3 (
+                                    |
+xmelab: *W,CUVWSI (./even_pipe_unit.sv,185|36): 1 input port was not connected:
+xmelab: (./execution_pipe_register.sv,8): flush
+
+execution_pipe_register forward_even4 (
+                                    |
+xmelab: *W,CUVWSI (./even_pipe_unit.sv,197|36): 1 input port was not connected:
+xmelab: (./execution_pipe_register.sv,8): flush
+
+execution_pipe_register forward_even5 (
+                                    |
+xmelab: *W,CUVWSI (./even_pipe_unit.sv,203|36): 1 input port was not connected:
+xmelab: (./execution_pipe_register.sv,8): flush
+
+execution_pipe_register forward_even6 (
+                                    |
+xmelab: *W,CUVWSI (./even_pipe_unit.sv,210|36): 1 input port was not connected:
+xmelab: (./execution_pipe_register.sv,8): flush
+
+execution_pipe_register forward_even7 (
+                                    |
+xmelab: *W,CUVWSI (./even_pipe_unit.sv,221|36): 1 input port was not connected:
+xmelab: (./execution_pipe_register.sv,8): flush
+
+execution_pipe_register permute_2 (
+                                |
+xmelab: *W,CUVWSI (./odd_pipe_unit.sv,76|32): 1 input port was not connected:
+xmelab: (./execution_pipe_register.sv,8): flush
+
+execution_pipe_register permute_3 (
+                                |
+xmelab: *W,CUVWSI (./odd_pipe_unit.sv,82|32): 1 input port was not connected:
+xmelab: (./execution_pipe_register.sv,8): flush
+
+execution_pipe_register forward_odd4 (
+                                   |
+xmelab: *W,CUVWSI (./odd_pipe_unit.sv,89|35): 1 input port was not connected:
+xmelab: (./execution_pipe_register.sv,8): flush
+
+execution_pipe_register forward_odd5 (
+                                   |
+xmelab: *W,CUVWSI (./odd_pipe_unit.sv,95|35): 1 input port was not connected:
+xmelab: (./execution_pipe_register.sv,8): flush
+
+execution_pipe_register forward_odd6 (
+                                   |
+xmelab: *W,CUVWSI (./odd_pipe_unit.sv,101|35): 1 input port was not connected:
+xmelab: (./execution_pipe_register.sv,8): flush
+
+execution_pipe_register ls_2 (
+                           |
+xmelab: *W,CUVWSI (./odd_pipe_unit.sv,121|27): 1 input port was not connected:
+xmelab: (./execution_pipe_register.sv,8): flush
+
+execution_pipe_register ls_3 (
+                           |
+xmelab: *W,CUVWSI (./odd_pipe_unit.sv,127|27): 1 input port was not connected:
+xmelab: (./execution_pipe_register.sv,8): flush
+
+execution_pipe_register ls_4 (
+                           |
+xmelab: *W,CUVWSI (./odd_pipe_unit.sv,132|27): 1 input port was not connected:
+xmelab: (./execution_pipe_register.sv,8): flush
+
+execution_pipe_register ls_5 (
+                           |
+xmelab: *W,CUVWSI (./odd_pipe_unit.sv,137|27): 1 input port was not connected:
+xmelab: (./execution_pipe_register.sv,8): flush
+
+execution_pipe_register ls_6 (
+                           |
+xmelab: *W,CUVWSI (./odd_pipe_unit.sv,143|27): 1 input port was not connected:
+xmelab: (./execution_pipe_register.sv,8): flush
+
+execution_pipe_register forward_odd7 (
+                                   |
+xmelab: *W,CUVWSI (./odd_pipe_unit.sv,154|35): 1 input port was not connected:
+xmelab: (./execution_pipe_register.sv,8): flush
+
 	Top level design units:
 		instruction_pkg
 		$unit_0x0b0b0e87
 		tbench
-    .branch_addr(exec_output_odd_stage_1_forwarded_res.branch_addr[22:31]),
-                                                                 |
-xmelab: *W,CUVMPW (./top_level_unit.sv,185|65): port sizes differ in port connection(10/11) for the instance(tbench.dut) .
 	Building instance overlay tables: .................... Done
 	Generating native compiled code:
-		worklib.local_store_unit:sv <0x11abe4b6>
-			streams:  18, words: 14426
-		worklib.permute_unit:sv <0x43ee179d>
-			streams:  23, words: 22898
-		worklib.branch_unit:sv <0x012ba273>
-			streams:  41, words: 44614
-		worklib.odd_pipe_unit:sv <0x6b19822e>
-			streams:  30, words: 12404
-		worklib.byte_unit:sv <0x16e57e2e>
-			streams:  17, words: 15338
-		worklib.single_precision_1:sv <0x0a8d8414>
-			streams:  56, words: 59336
-		worklib.simple_fixed_2_1:sv <0x5d9053ce>
-			streams:  33, words: 38102
-		worklib.simple_fixed_1_1:sv <0x18bcfde5>
-			streams:  95, words: 98326
-		worklib.even_pipe_unit:sv <0x078ae2f1>
-			streams:  43, words: 17764
-		worklib.execution_unit:sv <0x70f3b878>
-			streams:  15, words:  8937
-		worklib.rf_ex_reg:sv <0x42ae5675>
-			streams:   3, words:  4593
-		worklib.hazard_unit:sv <0x514659e1>
-			streams:   1, words:  1509
-		worklib.top_level:sv <0x6ff87b75>
-			streams: 217, words: 59730
+		worklib.local_store_unit:sv <0x66fc37b0>
+			streams:  19, words: 14691
 	Building instance specific data structures.
 	Loading native compiled code:     .................... Done
 	Design hierarchy summary:
 		                   Instances  Unique
 		Modules:                  54      24
 		Verilog packages:          1       1
-		Registers:             1,031     998
-		Scalar wires:             84       -
-		Vectored wires:          408       -
+		Registers:             1,038   1,005
+		Scalar wires:            112       -
+		Vectored wires:          414       -
 		Always blocks:            52      22
-		Initial blocks:            4       4
-		Pseudo assignments:      305       -
+		Initial blocks:            5       5
+		Pseudo assignments:      311       -
 		Compilation units:         1       1
 		Process Clocks:           36       2
 		Simulation timescale:    1ps
@@ -225,10 +319,12 @@ xcelium> probe -create -database waves tbench.dut.clk
 Created probe 17
 xcelium> probe -create -database waves tbench.reset
 Created probe 18
+xcelium> probe -create -database waves tbench.dut.hazard_detection.flush_ex_1 tbench.dut.hazard_detection.flush_id_rf tbench.dut.hazard_detection.flush_if_id tbench.dut.hazard_detection.flush_rf_ex
+Created probe 19
+xcelium> probe -create -database waves tbench.dut.hazard_detection.flush_even_2 tbench.dut.exec_unit.even_pipe.fixed_1_2.flush tbench.dut.exec_unit.even_pipe.fixed_1_2.unit_packet tbench.dut.exec_unit.even_pipe.fixed_1_2.unit_packet_q
+Created probe 20
 xcelium> 
 xcelium> simvision -input final-restore.tcl.svcf
-xcelium> probe -create -shm tbench.dut.hazard_detection.flush_ex_1 tbench.dut.hazard_detection.flush_id_rf tbench.dut.hazard_detection.flush_if_id tbench.dut.hazard_detection.flush_rf_ex
-Created probe 19
 xcelium> run
 Simulation complete via $finish(1) at time 415 NS + 0
 ./top_level_tb.sv:379     $finish;

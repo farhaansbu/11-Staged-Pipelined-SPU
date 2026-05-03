@@ -5,6 +5,7 @@ module execution_pipe_register (
     
 
     input logic clk,
+    input logic flush,
     input unit_result_packet unit_packet,
 
     output unit_result_packet unit_packet_q
@@ -13,7 +14,13 @@ module execution_pipe_register (
 
 always_ff @(posedge clk) begin
 
-    unit_packet_q <= unit_packet;
+    if (flush) begin
+        unit_packet_q = '{default: 0};
+    end
+    else begin
+        unit_packet_q = unit_packet;
+    end
+
 
 end
 

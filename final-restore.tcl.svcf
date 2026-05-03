@@ -1,4 +1,4 @@
-# SimVision Command Script (Sat May 02 04:02:45 PM EDT 2026)
+# SimVision Command Script (Sat May 02 06:31:03 PM EDT 2026)
 #
 # Version 24.09.s001
 #
@@ -52,8 +52,8 @@ mmap new  -reuse -name {Example Map} -radix %x -contents {{%b=11???? -bgcolor or
 #
 # Design Browser windows
 #
-if {[catch {window new WatchList -name "Design Browser 1" -geometry 2560x1377+0+23}] != ""} {
-    window geometry "Design Browser 1" 2560x1377+0+23
+if {[catch {window new WatchList -name "Design Browser 1" -geometry 2560x1377+8+31}] != ""} {
+    window geometry "Design Browser 1" 2560x1377+8+31
 }
 window target "Design Browser 1" on
 browser using {Design Browser 1}
@@ -192,22 +192,26 @@ set id [waveform add -signals [subst  {
 	{simulator::[format {tbench.dut.exec_unit.flush_all}]}
 	} ]]
 set id [waveform add -signals [subst  {
-	{simulator::[format {tbench.dut.hazard_detection.flush_ex_1}]}
+	{simulator::[format {tbench.dut.hazard_detection.flush_if_id}]}
 	} ]]
 set id [waveform add -signals [subst  {
 	{simulator::[format {tbench.dut.hazard_detection.flush_id_rf}]}
 	} ]]
 set id [waveform add -signals [subst  {
-	{simulator::[format {tbench.dut.hazard_detection.flush_if_id}]}
+	{simulator::[format {tbench.dut.hazard_detection.flush_rf_ex}]}
 	} ]]
 set id [waveform add -signals [subst  {
-	{simulator::[format {tbench.dut.hazard_detection.flush_rf_ex}]}
+	{simulator::[format {tbench.dut.hazard_detection.flush_ex_1}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{simulator::[format {tbench.dut.hazard_detection.flush_even_2}]}
 	} ]]
 set id [waveform add -signals [subst  {
 	{simulator::[format {tbench.dut.rf.reg_file[0:127]}]}
 	} ]]
+waveform hierarchy collapse $id
 
-waveform xview limits 33747ps 161747ps
+waveform xview limits 0 103752ps
 
 #
 # Waveform Window Links

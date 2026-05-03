@@ -4,6 +4,7 @@ module even_pipe_unit (
 
     input logic clk,
     input logic flush_stage_1,
+    input logic flush_even_2,
 
     input logic [0:127] even_source_a,
     input logic [0:127] even_source_b,
@@ -67,6 +68,7 @@ simple_fixed_1_1 fixed_1_1 (
 
 execution_pipe_register fixed_1_2 (
     .clk(clk),
+    .flush(flush_even_2),
     .unit_packet(fixed_1_1_output),
     .unit_packet_q(fixed_1_2_output)
 );
@@ -87,6 +89,7 @@ simple_fixed_2_1 fixed_2_1 (
 
 execution_pipe_register fixed_2_2 (
     .clk(clk),
+    .flush(flush_even_2),
     .unit_packet(fixed_2_1_output),
     .unit_packet_q(fixed_2_2_output)
 );
@@ -113,6 +116,7 @@ single_precision_1 sp_1 (
 
 execution_pipe_register sp_2 (
     .clk(clk),
+    .flush(flush_even_2),
     .unit_packet(sp_1_output),
     .unit_packet_q(sp_2_output)
 );
@@ -164,6 +168,7 @@ byte_unit byte_1(
 
 execution_pipe_register byte_2 (
     .clk(clk),
+    .flush(flush_even_2),
     .unit_packet(byte_1_output),
     .unit_packet_q(byte_2_output)
 );

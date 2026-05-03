@@ -9,7 +9,8 @@ module hazard_unit(
     output logic flush_if_id,
     output logic flush_id_rf,
     output logic flush_rf_ex,
-    output logic flush_ex_1
+    output logic flush_ex_1,
+    output logic flush_even_2
 
 );
 
@@ -20,6 +21,7 @@ module hazard_unit(
         flush_id_rf = 0;
         flush_rf_ex = 0;
         flush_ex_1 = 0;
+        flush_even_2 = 0;
 
         // Control Hazards
         if (flush_all || flush_after) begin
@@ -28,6 +30,10 @@ module hazard_unit(
             flush_id_rf = 1;
             flush_rf_ex = 1;
             flush_ex_1 = 1;
+
+            if (flush_all) begin
+                flush_even_2 = 1;
+            end
             
         end
     end

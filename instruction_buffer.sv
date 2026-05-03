@@ -46,6 +46,11 @@ module instruction_buffer (
                 program_counter = branch_addr;
             end
 
+            // If same pipe hazard
+            else if (same_pipe_hazard == 1 || same_write_dest_hazard) begin
+                program_counter = program_counter - 4;
+            end 
+
             // Get instructions needed
             for (int i = 0; i < 4; ++i) begin
                 instruction_1[i*8 +: 8] <= imem[program_counter + i];
@@ -55,15 +60,9 @@ module instruction_buffer (
             pc_1 = program_counter;
             pc_2 = program_counter + 4;
 
+            program_counter = program_counter + 8; // Increment PC
 
-            if (branch_signal != 1) begin
-                if (same_pipe_hazard == 1 || same_write_dest_hazard) begin
-                    program_counter = program_counter + 4;
-                end 
-                else begin
-                    program_counter = program_counter + 8;
-                end
-            end
+
             
         end 
 

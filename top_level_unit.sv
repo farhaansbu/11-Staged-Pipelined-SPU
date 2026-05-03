@@ -66,6 +66,8 @@ logic dec_out_odd_reg_write;
 logic dec_out_odd_first;
 logic dec_out_same_pipe_hazard;
 logic dec_out_same_write_dest_hazard;
+logic[0:31] dec_out_stalled_instruction;
+logic[0:10] dec_out_stalled_pc;
 
 
 //hazard_unit outputs
@@ -74,6 +76,7 @@ logic haz_out_flush_if_id;
 logic haz_out_flush_id_rf;
 logic haz_out_flush_rf_ex;
 logic haz_out_flush_ex_1;
+logic haz_out_flush_even_2;
 
 
 // id_rf outputs
@@ -182,7 +185,7 @@ instruction_buffer ibuffer(
     .clk(clk),
     .reset(reset),
     .branch_signal(haz_out_branch_signal),
-    .branch_addr(exec_output_odd_stage_1_forwarded_res.branch_addr[22:31]),
+    .branch_addr(exec_output_odd_stage_1_forwarded_res.branch_addr[21:31]),
     .same_pipe_hazard(dec_out_same_pipe_hazard),
     .same_write_dest_hazard(dec_out_same_write_dest_hazard),
     
@@ -196,11 +199,16 @@ instruction_buffer ibuffer(
 if_id_reg if_dec_reg(
     .clk(clk),
     .flush(haz_out_flush_if_id),
+    .same_pipe_hazard(dec_out_same_pipe_hazard),
+    .same_write_dest_hazard(dec_out_same_write_dest_hazard),
+
     .instruction_1_d(instruction_buffer_out_instruction_1),
     .instruction_2_d(instruction_buffer_out_instruction_2),
     .program_counter_1_d(instruction_buffer_out_pc_1),
     .program_counter_2_d(instruction_buffer_out_pc_2),
-
+    .pending_instruction(dec_out_stalled_instruction),
+    .pending_pc(dec_out_stalled_pc),
+    
     .instruction_1_q(if_id_out_instruction_1),
     .instruction_2_q(if_id_out_instruction_2),
     .program_counter_1_q(if_id_out_pc_1),
@@ -237,7 +245,9 @@ decoder dec(
     .odd_first(dec_out_odd_first),
     
     .same_pipe_hazard(dec_out_same_pipe_hazard),
-    .same_write_dest_hazard(dec_out_same_write_dest_hazard)
+    .same_write_dest_hazard(dec_out_same_write_dest_hazard),
+    .stalled_instruction(dec_out_stalled_instruction),
+    .stalled_pc(dec_out_stalled_pc)
 
 );
 
@@ -249,7 +259,8 @@ hazard_unit hazard_detection (
     .flush_if_id(haz_out_flush_if_id),
     .flush_id_rf(haz_out_flush_id_rf),
     .flush_rf_ex(haz_out_flush_rf_ex),
-    .flush_ex_1(haz_out_flush_ex_1)
+    .flush_ex_1(haz_out_flush_ex_1),
+    .flush_even_2(haz_out_flush_even_2)
 );
 
 
@@ -461,6 +472,7 @@ rf_ex_reg rf_exec_reg (
 execution_unit exec_unit(
     .clk(clk),
     .flush_stage_1(haz_out_flush_ex_1),
+    .flush_even_2(haz_out_flush_even_2),
 
     .even_source_a(rf_ex_out_even_source_a_q),
     .even_source_b(rf_ex_out_even_source_b_q),

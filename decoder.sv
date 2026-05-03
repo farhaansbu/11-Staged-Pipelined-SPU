@@ -31,6 +31,8 @@ module decoder(
     output logic odd_reg_write,
 
     output logic odd_first,
+    output logic[0:31] stalled_instruction,
+    output logic[0:10] stalled_pc,
 
     // Hazard signals
     output logic same_pipe_hazard,
@@ -73,7 +75,10 @@ always_comb begin : decoder_body
             odd_opcode = OP_NO_OP_HARDWARE;
             odd_reg_write = 0;
             same_pipe_hazard = 1;
+            stalled_instruction = instruction_2;
+            stalled_pc = program_counter_2;
         end
+
         else begin // Even + odd
             odd_unit_id = unit_id_2;
             // If both instructions have same write_dest
@@ -83,6 +88,8 @@ always_comb begin : decoder_body
                 odd_unit_id = 0;
                 odd_reg_write = 0;
                 same_write_dest_hazard = 1;
+                stalled_instruction = instruction_2;
+                stalled_pc = program_counter_2;
             end
         end
     end
@@ -97,6 +104,8 @@ always_comb begin : decoder_body
             even_opcode = OP_NO_OP_HARDWARE;
             even_reg_write = 0;
             same_pipe_hazard = 1;
+            stalled_instruction = instruction_2;
+            stalled_pc = program_counter_2;
         end
         else begin // Odd + even
             even_unit_id = unit_id_2;
@@ -107,6 +116,8 @@ always_comb begin : decoder_body
                 even_unit_id = 0;
                 even_reg_write = 0;
                 same_write_dest_hazard = 1;
+                stalled_instruction = instruction_2;
+                stalled_pc = program_counter_2;
             end
         end
    end
@@ -124,6 +135,8 @@ always_comb begin : decoder_body
         if (odd_nop ^ even_nop) begin
             // set signal to move pc by 4 and refetch other instruction
             same_pipe_hazard = 1;
+            stalled_instruction = instruction_2;
+            stalled_pc = program_counter_2;
         end
    end
 

@@ -1,0 +1,19 @@
+label:
+br label
+il r29, 16
+il r28, 16
+new:
+clz $27, $1
+loop:
+a $4, $2, $1
+shlqby $5, $3, $2
+andi $7, $6, -1
+cntb $8, $9
+rotqby $10, $11, $12
+ai $13, $14, 5
+lqx $15, $16, $17
+mpyi $18, $19, -3
+shlqbi $20, $21, $22
+il $23, 100
+br loop
+sf $24, $25, $26

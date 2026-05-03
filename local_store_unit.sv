@@ -16,6 +16,13 @@ module local_store_unit (
 
 );
 
+logic[0:7] local_store[0:32768];
+initial begin
+        for (int i = 0; i < 32768; i++) begin
+            local_store[i] = '0;
+        end
+end
+
 always_ff @(posedge clk) begin
 
     if (odd_unit_id != 6) begin // Unit id doesn't match
@@ -74,7 +81,10 @@ end
 
 localparam logic[0:32] LSLR = 32'h0000_7FFF;    // max size of memory 32 KB (32768 bytes)
 
-logic[0:7] local_store[0:32768];
+
+
+
+
 
 function automatic logic[0:127] load_quadword_x (input logic[0:127] ra, input logic[0:127] rb);
     logic[0:127] loaded_data;
