@@ -21,8 +21,18 @@ module odd_pipe_unit (
     output unit_result_packet odd_stage_3_forwarded_res,
     output unit_result_packet odd_stage_4_forwarded_res,
     output unit_result_packet odd_stage_5_forwarded_res,
-    output unit_result_packet odd_stage_6_forwarded_res
+    output unit_result_packet odd_stage_6_forwarded_res,
+
+    output unit_result_packet odd_stage_1_hazard_res, 
+    output unit_result_packet odd_stage_2_hazard_res, 
+    output unit_result_packet odd_stage_3_hazard_res,
+    output unit_result_packet odd_stage_4_hazard_res,
+    output unit_result_packet odd_stage_5_hazard_res
 );
+
+
+
+unit_result_packet branch_1_output;
 
 unit_result_packet perm_1_output;
 unit_result_packet perm_2_output;
@@ -35,11 +45,16 @@ unit_result_packet ls_4_output;
 unit_result_packet ls_5_output;
 unit_result_packet ls_6_output;
 
+unit_result_packet fw_odd_2_output;
+unit_result_packet fw_odd_3_output;
 unit_result_packet fw_odd_4_output;
 unit_result_packet fw_odd_5_output;
 unit_result_packet fw_odd_6_output;
 
+unit_result_packet odd_stage_3_mux_output;
 unit_result_packet odd_stage_6_mux_output;
+
+unit_result_packet odd_stage_1_mux_output;
 
 
 // Branch unit
@@ -54,10 +69,23 @@ branch_unit branch_1 (
     .odd_unit_id(odd_unit_id),
     .reg_write(odd_reg_write),
     .odd_first(odd_first),
-    .output_packet(odd_stage_1_forwarded_res),
+    .output_packet(branch_1_output),
     .flush_all(flush_all),
     .flush_after(flush_after)
 );
+
+execution_pipe_register forward_odd2 (
+    .clk(clk),
+    .unit_packet(branch_1_output),
+    .unit_packet_q(fw_odd_2_output)
+);
+
+execution_pipe_register forward_odd3 (
+    .clk(clk),
+    .unit_packet(fw_odd_2_output),
+    .unit_packet_q(fw_odd_3_output)
+);
+
 
 // Permute
 permute_unit permute_1 (
@@ -85,10 +113,15 @@ execution_pipe_register permute_3 (
     .unit_packet_q(perm_3_output)
 );
 
+execution_pipe_mux #(.NUM_INPUTS(2)) fw_odd_mux_3(
+    .input_packets('{perm_3_output, fw_odd_3_output}),
+    .output_packet(odd_stage_3_mux_output)
+);
+
 // Forwarding pipeline registers
 execution_pipe_register forward_odd4 (
     .clk(clk),
-    .unit_packet(perm_3_output),
+    .unit_packet(odd_stage_3_mux_output),
     .unit_packet_q(fw_odd_4_output)
 );
 
@@ -157,15 +190,31 @@ execution_pipe_register forward_odd7 (
     .unit_packet_q(odd_output_to_write_back)
 );
 
+execution_pipe_mux #(.NUM_INPUTS(3)) odd_stage_1_mux (
+    .input_packets('{perm_1_output, ls_1_output, branch_1_output}),
+    .output_packet(odd_stage_1_hazard_res)
+);
+
+execution_pipe_mux #(.NUM_INPUTS(3)) odd_stage_2_mux (
+    .input_packets('{perm_2_output, ls_2_output, fw_odd_2_output}),
+    .output_packet(odd_stage_2_hazard_res)
+);
+
+
+
 
 
 always_comb begin : odd_pipe_body
-
-    odd_stage_3_forwarded_res = perm_3_output;
+    odd_stage_1_forwarded_res = branch_1_output;
+    odd_stage_2_forwarded_res = fw_odd_2_output;
+    odd_stage_3_forwarded_res = odd_stage_3_mux_output;
     odd_stage_4_forwarded_res = fw_odd_4_output;
     odd_stage_5_forwarded_res = fw_odd_5_output;
     odd_stage_6_forwarded_res = odd_stage_6_mux_output;
 
+    odd_stage_3_hazard_res = ls_3_output;
+    odd_stage_4_hazard_res = ls_4_output;
+    odd_stage_5_hazard_res = ls_5_output;
 end
 
 

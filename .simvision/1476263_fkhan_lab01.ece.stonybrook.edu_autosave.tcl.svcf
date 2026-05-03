@@ -1,0 +1,270 @@
+
+#
+# Preferences
+#
+preferences set toolbar-Standard-WatchWindow {
+  usual
+  shown 0
+}
+preferences set plugin-enable-svdatabrowser-new 1
+preferences set toolbar-Windows-WatchWindow {
+  usual
+  shown 0
+}
+preferences set plugin-enable-groupscope 0
+preferences set plugin-enable-interleaveandcompare 0
+preferences set plugin-enable-waveformfrequencyplot 0
+preferences set toolbar-SimControl-WatchWindow {
+  usual
+  shown 0
+}
+preferences set toolbar-TimeSearch-WatchWindow {
+  usual
+  shown 0
+}
+
+#
+# Mnemonic Maps
+#
+mmap new  -reuse -name {Boolean as Logic} -radix %b -contents {{%c=FALSE -edgepriority 1 -shape low}
+{%c=TRUE -edgepriority 1 -shape high}}
+mmap new  -reuse -name {Example Map} -radix %x -contents {{%b=11???? -bgcolor orange -label REG:%x -linecolor yellow -shape bus}
+{%x=1F -bgcolor red -label ERROR -linecolor white -shape EVENT}
+{%x=2C -bgcolor red -label ERROR -linecolor white -shape EVENT}
+{%x=* -label %x -linecolor gray -shape bus}}
+
+#
+# Design Browser windows
+#
+if {[catch {window new WatchList -name "Design Browser 1" -geometry 2560x1377+8+31}] != ""} {
+    window geometry "Design Browser 1" 2560x1377+8+31
+}
+window target "Design Browser 1" on
+browser using {Design Browser 1}
+browser set -scope  simulator::tbench.dut.hazard_detection 
+browser set \
+    -signalsort name
+browser yview see  simulator::tbench.dut.hazard_detection 
+browser timecontrol set -lock 0
+
+#
+# Waveform windows
+#
+if {[catch {window new WaveWindow -name "Waveform 1" -geometry 2560x1377+8+31}] != ""} {
+    window geometry "Waveform 1" 2560x1377+8+31
+}
+window target "Waveform 1" on
+waveform using {Waveform 1}
+waveform sidebar visibility partial
+waveform set \
+    -primarycursor TimeA \
+    -signalnames name \
+    -signalwidth 309 \
+    -units ps \
+    -valuewidth 176
+waveform baseline set -time 0
+
+set id [waveform add -signals  {
+	simulator::tbench.dut.clk
+	} ]
+set id [waveform add -signals  {
+	simulator::tbench.reset
+	} ]
+set id [waveform add -signals  {
+	{simulator::tbench.dut.ibuffer.imem[0:2047]}
+	} ]
+set id [waveform add -signals  {
+	simulator::tbench.dut.ibuffer.branch_signal
+	} ]
+set id [waveform add -signals  {
+	simulator::tbench.dut.ibuffer.same_pipe_hazard
+	} ]
+set id [waveform add -signals  {
+	simulator::tbench.dut.ibuffer.same_write_dest_hazard
+	} ]
+set id [waveform add -signals  {
+	simulator::tbench.dut.ibuffer.concurrent_data_dependency_hazard_signal
+	} ]
+set id [waveform add -signals  {
+	simulator::tbench.dut.ibuffer.data_hazard_signal
+	} ]
+set id [waveform add -signals  {
+	{simulator::tbench.dut.ibuffer.branch_addr[0:10]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::tbench.dut.ibuffer.program_counter[0:10]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::tbench.dut.ibuffer.pc_1[0:10]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::tbench.dut.ibuffer.pc_2[0:10]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::tbench.dut.ibuffer.instruction_1[0:31]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::tbench.dut.ibuffer.instruction_2[0:31]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::tbench.dut.if_dec_reg.instruction_1_q[0:31]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::tbench.dut.if_dec_reg.instruction_2_q[0:31]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::tbench.dut.dec.even_opcode[0:6]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::tbench.dut.dec.even_instruction_type[0:2]}
+	} ]
+set id [waveform add -signals  {
+	simulator::tbench.dut.dec.even_reg_write
+	} ]
+set id [waveform add -signals  {
+	{simulator::tbench.dut.dec.even_rt_addr[0:6]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::tbench.dut.dec.odd_opcode[0:6]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::tbench.dut.dec.odd_instruction_type[0:2]}
+	} ]
+set id [waveform add -signals  {
+	simulator::tbench.dut.dec.odd_reg_write
+	} ]
+set id [waveform add -signals  {
+	{simulator::tbench.dut.dec.odd_rt_addr[0:6]}
+	} ]
+set id [waveform add -signals  {
+	simulator::tbench.dut.dec.odd_first
+	} ]
+set id [waveform add -signals  {
+	{simulator::tbench.dut.dec_rf_reg.even_opcode_q[0:6]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::tbench.dut.dec_rf_reg.even_instruction_type_q[0:2]}
+	} ]
+set id [waveform add -signals  {
+	simulator::tbench.dut.dec_rf_reg.even_reg_write_q
+	} ]
+set id [waveform add -signals  {
+	{simulator::tbench.dut.dec_rf_reg.odd_opcode_q[0:6]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::tbench.dut.dec_rf_reg.odd_instruction_type_q[0:2]}
+	} ]
+set id [waveform add -signals  {
+	simulator::tbench.dut.dec_rf_reg.odd_reg_write_q
+	} ]
+set id [waveform add -signals  {
+	{simulator::tbench.dut.rf_exec_reg.even_opcode_q[0:6]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::tbench.dut.rf_exec_reg.even_unit_id_q[0:2]}
+	} ]
+set id [waveform add -signals  {
+	simulator::tbench.dut.rf_exec_reg.even_reg_write_q
+	} ]
+set id [waveform add -signals  {
+	{simulator::tbench.dut.rf_exec_reg.even_write_addr_q[0:6]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::tbench.dut.rf_exec_reg.odd_opcode_q[0:6]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::tbench.dut.rf_exec_reg.odd_unit_id_q[0:2]}
+	} ]
+set id [waveform add -signals  {
+	simulator::tbench.dut.rf_exec_reg.odd_reg_write_q
+	} ]
+set id [waveform add -signals  {
+	{simulator::tbench.dut.rf_exec_reg.odd_write_addr_q[0:6]}
+	} ]
+set id [waveform add -signals  {
+	simulator::tbench.dut.exec_unit.flush_after
+	} ]
+set id [waveform add -signals  {
+	simulator::tbench.dut.exec_unit.flush_all
+	} ]
+set id [waveform add -signals  {
+	simulator::tbench.dut.hazard_detection.flush_if_id
+	} ]
+set id [waveform add -signals  {
+	simulator::tbench.dut.hazard_detection.flush_id_rf
+	} ]
+set id [waveform add -signals  {
+	simulator::tbench.dut.hazard_detection.flush_rf_ex
+	} ]
+set id [waveform add -signals  {
+	simulator::tbench.dut.hazard_detection.flush_ex_1
+	} ]
+set id [waveform add -signals  {
+	simulator::tbench.dut.hazard_detection.flush_even_2
+	} ]
+set id [waveform add -signals  {
+	{simulator::tbench.dut.hazard_detection.even_opcode[0:6]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::tbench.dut.hazard_detection.even_instruction_type[0:2]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::tbench.dut.hazard_detection.odd_instruction_type[0:2]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::tbench.dut.hazard_detection.odd_opcode[0:6]}
+	} ]
+set id [waveform add -signals  {
+	simulator::tbench.dut.hazard_detection.id_rf_even_reg_write
+	} ]
+set id [waveform add -signals  {
+	{simulator::tbench.dut.hazard_detection.id_rf_even_rt_addr[0:6]}
+	} ]
+set id [waveform add -signals  {
+	simulator::tbench.dut.hazard_detection.id_rf_odd_reg_write
+	} ]
+set id [waveform add -signals  {
+	{simulator::tbench.dut.hazard_detection.id_rf_odd_rt_addr[0:6]}
+	} ]
+set id [waveform add -signals  {
+	simulator::tbench.dut.hazard_detection.rf_ex_even_reg_write
+	} ]
+set id [waveform add -signals  {
+	{simulator::tbench.dut.hazard_detection.rf_ex_even_rt_addr[0:6]}
+	} ]
+set id [waveform add -signals  {
+	simulator::tbench.dut.hazard_detection.rf_ex_odd_reg_write
+	} ]
+set id [waveform add -signals  {
+	{simulator::tbench.dut.hazard_detection.rf_ex_odd_rt_addr[0:6]}
+	} ]
+set id [waveform add -signals  {
+	{simulator::tbench.dut.hazard_detection.even_stage_results[0:5]}
+	} ]
+waveform hierarchy expand $id
+set id2 [lindex [waveform hierarchy content $id] 0]
+waveform hierarchy expand $id2
+set id [waveform add -signals  {
+	{simulator::tbench.dut.hazard_detection.odd_stage_results[0:4]}
+	} ]
+waveform hierarchy expand $id
+set id [waveform add -signals  {
+	{simulator::tbench.dut.rf.reg_file[0:127]}
+	} ]
+waveform hierarchy expand $id
+
+waveform xview limits 129056ps 180944ps
+
+#
+# Waveform Window Links
+#
+
+#
+# Console windows
+#
+console set -windowname Console
+window geometry Console 730x250+0+0
+
+#
+# Layout selection
+#

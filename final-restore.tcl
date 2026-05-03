@@ -75,5 +75,7 @@ probe -create -database waves tbench.dut.clk
 probe -create -database waves tbench.reset
 probe -create -database waves tbench.dut.hazard_detection.flush_ex_1 tbench.dut.hazard_detection.flush_id_rf tbench.dut.hazard_detection.flush_if_id tbench.dut.hazard_detection.flush_rf_ex
 probe -create -database waves tbench.dut.hazard_detection.flush_even_2 tbench.dut.exec_unit.even_pipe.fixed_1_2.flush tbench.dut.exec_unit.even_pipe.fixed_1_2.unit_packet tbench.dut.exec_unit.even_pipe.fixed_1_2.unit_packet_q
+probe -create -database waves tbench.dut.ibuffer.concurrent_data_dependency_hazard_signal tbench.dut.ibuffer.data_hazard_signal
+probe -create -database waves tbench.dut.dec.odd_rt_addr
 
 simvision -input final-restore.tcl.svcf

@@ -19,7 +19,15 @@ module even_pipe_unit (
     output unit_result_packet even_stage_3_forwarded_res,
     output unit_result_packet even_stage_4_forwarded_res,
     output unit_result_packet even_stage_5_forwarded_res,
-    output unit_result_packet even_stage_6_forwarded_res
+    output unit_result_packet even_stage_6_forwarded_res,
+
+    output unit_result_packet even_stage_1_hazard_res, 
+    output unit_result_packet even_stage_2_hazard_res, 
+    output unit_result_packet even_stage_3_hazard_res,
+    output unit_result_packet even_stage_4_hazard_res,
+    output unit_result_packet even_stage_5_hazard_res,
+    output unit_result_packet even_stage_6_hazard_res
+
 
 );
 
@@ -229,6 +237,18 @@ execution_pipe_mux #(.NUM_INPUTS(2)) fw_even_8_mux (
     .output_packet(even_output_to_write_back)
 );
 
+execution_pipe_mux #(.NUM_INPUTS(4)) haz_even_1_mux(
+    .input_packets('{sp_1_output, fixed_1_1_output, byte_1_output, fixed_2_1_output}),
+    .output_packet(even_stage_1_hazard_res)
+);
+
+execution_pipe_mux #(.NUM_INPUTS(3)) haz_even_2_mux(
+    .input_packets('{sp_2_output, byte_2_output, fixed_2_2_output}),
+    .output_packet(even_stage_2_hazard_res)
+);
+
+
+
 always_comb begin : even_pipe_body
 
     even_stage_2_forwarded_res = fixed_1_2_output;
@@ -237,6 +257,10 @@ always_comb begin : even_pipe_body
     even_stage_5_forwarded_res = fw_even_5_output;
     even_stage_6_forwarded_res = stage_6_mux_output;
 
+    even_stage_3_hazard_res = sp_3_output;
+    even_stage_4_hazard_res = sp_4_output;
+    even_stage_5_hazard_res = sp_5_output;
+    even_stage_6_hazard_res = sp_6_output;
 end
 
 

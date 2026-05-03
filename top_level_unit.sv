@@ -168,6 +168,15 @@ unit_result_packet exec_output_even_stage_4_forwarded_res;
 unit_result_packet exec_output_even_stage_5_forwarded_res;
 unit_result_packet exec_output_even_stage_6_forwarded_res;
 
+unit_result_packet exec_output_even_stage_1_hazard_res;
+unit_result_packet exec_output_even_stage_2_hazard_res; 
+unit_result_packet exec_output_even_stage_3_hazard_res;
+unit_result_packet exec_output_even_stage_4_hazard_res;
+unit_result_packet exec_output_even_stage_5_hazard_res;
+unit_result_packet exec_output_even_stage_6_hazard_res;
+
+
+
 logic exec_output_odd_flush_all;
 logic exec_output_odd_flush_after;
 unit_result_packet exec_output_odd_stage_1_forwarded_res;
@@ -176,6 +185,12 @@ unit_result_packet exec_output_odd_stage_3_forwarded_res;
 unit_result_packet exec_output_odd_stage_4_forwarded_res;
 unit_result_packet exec_output_odd_stage_5_forwarded_res;
 unit_result_packet exec_output_odd_stage_6_forwarded_res;
+
+unit_result_packet exec_output_odd_stage_1_hazard_res;
+unit_result_packet exec_output_odd_stage_2_hazard_res; 
+unit_result_packet exec_output_odd_stage_3_hazard_res;
+unit_result_packet exec_output_odd_stage_4_hazard_res;
+unit_result_packet exec_output_odd_stage_5_hazard_res;
 
 
 
@@ -235,6 +250,7 @@ decoder dec(
     .instruction_2(if_id_out_instruction_2),
     .program_counter_1(if_id_out_pc_1),
     .program_counter_2(if_id_out_pc_2),
+    .reset(reset),
 
     .even_ra_addr(dec_out_even_ra_addr),
     .even_rb_addr(dec_out_even_rb_addr),
@@ -297,11 +313,22 @@ hazard_unit hazard_detection (
     .rf_ex_odd_rt_addr(rf_ex_out_odd_write_addr_q),
     .rf_ex_odd_reg_write(rf_ex_out_odd_reg_write_q),
 
-    .even_stage_results(),
-    .odd_stage_results(),
+    .even_stage_results('{exec_output_even_stage_1_hazard_res,
+                          exec_output_even_stage_2_hazard_res,
+                          exec_output_even_stage_3_hazard_res,
+                          exec_output_even_stage_4_hazard_res,
+                          exec_output_even_stage_5_hazard_res,
+                          exec_output_even_stage_6_hazard_res}),
+
+    .odd_stage_results('{exec_output_odd_stage_1_hazard_res,
+                         exec_output_odd_stage_2_hazard_res,
+                         exec_output_odd_stage_3_hazard_res,
+                         exec_output_odd_stage_4_hazard_res,
+                         exec_output_odd_stage_5_hazard_res}),
 
 
     .branch_signal(haz_out_branch_signal),
+    .data_hazard_signal(haz_out_data_hazard_signal),
     .flush_if_id(haz_out_flush_if_id),
     .flush_id_rf(haz_out_flush_id_rf),
     .flush_rf_ex(haz_out_flush_rf_ex),
@@ -550,6 +577,13 @@ execution_unit exec_unit(
     .even_stage_5_forwarded_res(exec_output_even_stage_5_forwarded_res),
     .even_stage_6_forwarded_res(exec_output_even_stage_6_forwarded_res),
 
+    .even_stage_1_hazard_res(exec_output_even_stage_1_hazard_res),
+    .even_stage_2_hazard_res(exec_output_even_stage_2_hazard_res),
+    .even_stage_3_hazard_res(exec_output_even_stage_3_hazard_res),
+    .even_stage_4_hazard_res(exec_output_even_stage_4_hazard_res),
+    .even_stage_5_hazard_res(exec_output_even_stage_5_hazard_res),
+    .even_stage_6_hazard_res(exec_output_even_stage_6_hazard_res),
+
     .flush_all(exec_output_odd_flush_all),
     .flush_after(exec_output_odd_flush_after),
     .odd_stage_1_forwarded_res(exec_output_odd_stage_1_forwarded_res),
@@ -557,7 +591,14 @@ execution_unit exec_unit(
     .odd_stage_3_forwarded_res(exec_output_odd_stage_3_forwarded_res),
     .odd_stage_4_forwarded_res(exec_output_odd_stage_4_forwarded_res),
     .odd_stage_5_forwarded_res(exec_output_odd_stage_5_forwarded_res),
-    .odd_stage_6_forwarded_res(exec_output_odd_stage_6_forwarded_res)
+    .odd_stage_6_forwarded_res(exec_output_odd_stage_6_forwarded_res),
+    
+    .odd_stage_1_hazard_res(exec_output_odd_stage_1_hazard_res),
+    .odd_stage_2_hazard_res(exec_output_odd_stage_2_hazard_res),
+    .odd_stage_3_hazard_res(exec_output_odd_stage_3_hazard_res),
+    .odd_stage_4_hazard_res(exec_output_odd_stage_4_hazard_res),
+    .odd_stage_5_hazard_res(exec_output_odd_stage_5_hazard_res)
+
 );
 
 wb_register write_back_even(

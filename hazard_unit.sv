@@ -35,8 +35,8 @@ module hazard_unit(
     input logic rf_ex_odd_reg_write,
 
     //Pipe outputs
-    input unit_result_packet even_stage_results[0:6],
-    input unit_result_packet odd_stage_results[0:6],
+    input unit_result_packet even_stage_results[0:5],
+    input unit_result_packet odd_stage_results[0:4],
 
 
     // Hazard control signals
@@ -89,6 +89,10 @@ module hazard_unit(
         check_even();
         check_odd();
 
+        if (data_hazard_signal) begin
+            flush_id_rf = 1;
+        end
+
         instruction_refetch_1 = instruction_1;
         instruction_refetch_2 = instruction_2;
         refetch_pc1 = pc_1;
@@ -110,6 +114,7 @@ function automatic void check_even();
                     if (even_opcode == OP_IMMEDIATE_OR_HALFWORD_LOWER) begin
                         if (even_read_addr_b == temp_write_addr) begin
                             data_hazard_signal = 1;
+                            return;
                         end
                     end
                 end
@@ -117,6 +122,7 @@ function automatic void check_even();
                 // All instruction types have at least reg_A as source
                 else if (even_read_addr_a == temp_write_addr) begin
                     data_hazard_signal = 1;
+                    return;
                 end
             
                 // Two source registers
@@ -126,6 +132,7 @@ function automatic void check_even();
 
                         if (even_read_addr_b == temp_write_addr) begin
                             data_hazard_signal = 1;
+                            return;
                         end
                     end
                 end
@@ -134,10 +141,12 @@ function automatic void check_even();
                 else if (even_instruction_type == RRR) begin
                     if (even_read_addr_b == temp_write_addr) begin
                         data_hazard_signal = 1;
+                        return;
                     end
 
                     if (even_read_addr_c == temp_write_addr) begin
                         data_hazard_signal = 1;
+                        return;
                     end
 
                 end
@@ -151,6 +160,7 @@ function automatic void check_even();
                     if (even_opcode == OP_IMMEDIATE_OR_HALFWORD_LOWER) begin
                         if (even_read_addr_b == temp_write_addr) begin
                             data_hazard_signal = 1;
+                            return;
                         end
                     end
                 end
@@ -158,6 +168,7 @@ function automatic void check_even();
                 // All instruction types have at least reg_A as source
                 else if (even_read_addr_a == temp_write_addr) begin
                     data_hazard_signal = 1;
+                    return;
                 end
             
                 // Two source registers
@@ -167,6 +178,7 @@ function automatic void check_even();
 
                         if (even_read_addr_b == temp_write_addr) begin
                             data_hazard_signal = 1;
+                            return;
                         end
 
                     end
@@ -177,10 +189,12 @@ function automatic void check_even();
                 else if (even_instruction_type == RRR) begin
                     if (even_read_addr_b == temp_write_addr) begin
                         data_hazard_signal = 1;
+                        return;
                     end
 
                     if (even_read_addr_c == temp_write_addr) begin
                         data_hazard_signal = 1;
+                        return;
                     end
 
                 end
@@ -194,23 +208,21 @@ function automatic void check_even();
                 temp_ready_stage_number = even_stage_results[i].ready_stage_number;
                 temp_current_stage_number = even_stage_results[i].current_stage_number;
 
-                if (temp_current_stage_number < temp_ready_stage_number) begin
-                    data_hazard_signal = 1;
-                    break;
-                end
-
                 if (temp_reg_write == 0 || temp_present_bit == 0) begin
                     continue;
                 end
 
+        
                 temp_write_addr = even_stage_results[i].reg_write_addr;
 
                 // Analyze current instruction thats about to be executed
                 if (even_instruction_type == RI18 || even_instruction_type == RI16) begin
                     if (even_opcode == OP_IMMEDIATE_OR_HALFWORD_LOWER) begin
                         if (even_read_addr_b == temp_write_addr) begin
-                            data_hazard_signal = 1;
-                            break;
+                            if (temp_current_stage_number < temp_ready_stage_number) begin
+                                data_hazard_signal = 1;
+                                return;
+                            end
                         end
                     end
                     continue;
@@ -219,7 +231,7 @@ function automatic void check_even();
                 // All instruction types have at least reg_A as source
                 if (even_read_addr_a == temp_write_addr) begin
                     data_hazard_signal = 1;
-                    break;
+                    return;
                 end
             
                 // Two source registers
@@ -228,8 +240,10 @@ function automatic void check_even();
                         even_opcode != OP_FORM_SELECT_MASK_FOR_HALFWORDS && even_opcode != OP_COUNT_ONES_IN_BYTES) begin
 
                         if (even_read_addr_b == temp_write_addr) begin
-                            data_hazard_signal = 1;
-                            break;
+                            if (temp_current_stage_number < temp_ready_stage_number) begin
+                                data_hazard_signal = 1;
+                                return;
+                            end
                         end
 
                     end
@@ -239,13 +253,17 @@ function automatic void check_even();
                 // Three source registers
                 else if (even_instruction_type == RRR) begin
                     if (even_read_addr_b == temp_write_addr) begin
-                        data_hazard_signal = 1;
-                        break;
+                        if (temp_current_stage_number < temp_ready_stage_number) begin
+                            data_hazard_signal = 1;
+                            return;
+                        end
                     end
 
                     if (even_read_addr_c == temp_write_addr) begin
-                        data_hazard_signal = 1;
-                        break;
+                        if (temp_current_stage_number < temp_ready_stage_number) begin
+                            data_hazard_signal = 1;
+                            return;
+                        end
                     end
 
                 end
@@ -338,17 +356,12 @@ function automatic void check_even();
             end
 
             // Check with instructions in odd execution pipe
-            for (int i = 0; i < 6; ++i) begin
+            for (int i = 0; i < 5; ++i) begin
                 // Extract informaiton about instruction at each execution stage
                 temp_reg_write = odd_stage_results[i].reg_write_flag;
                 temp_present_bit = odd_stage_results[i].present_bit;
                 temp_ready_stage_number = odd_stage_results[i].ready_stage_number;
                 temp_current_stage_number = odd_stage_results[i].current_stage_number;
-
-                if (temp_current_stage_number < temp_ready_stage_number) begin
-                    data_hazard_signal = 1;
-                    break;
-                end
 
                 if (temp_reg_write == 0 || temp_present_bit == 0) begin
                     continue;
@@ -360,8 +373,10 @@ function automatic void check_even();
                 if (even_instruction_type == RI18 || even_instruction_type == RI16) begin
                     if (even_opcode == OP_IMMEDIATE_OR_HALFWORD_LOWER) begin
                         if (even_read_addr_b == temp_write_addr) begin
-                            data_hazard_signal = 1;
-                            break;
+                            if (temp_current_stage_number < temp_ready_stage_number) begin
+                                data_hazard_signal = 1;
+                                return;
+                            end
                         end
                     end
                     continue;
@@ -369,8 +384,10 @@ function automatic void check_even();
 
                 // All instruction types have at least reg_A as source
                 if (even_read_addr_a == temp_write_addr) begin
-                    data_hazard_signal = 1;
-                    break;
+                    if (temp_current_stage_number < temp_ready_stage_number) begin
+                        data_hazard_signal = 1;
+                        return;
+                    end
                 end
             
                 // Two source registers
@@ -379,8 +396,10 @@ function automatic void check_even();
                         even_opcode != OP_FORM_SELECT_MASK_FOR_HALFWORDS && even_opcode != OP_COUNT_ONES_IN_BYTES) begin
 
                         if (even_read_addr_b == temp_write_addr) begin
-                            data_hazard_signal = 1;
-                            break;
+                            if (temp_current_stage_number < temp_ready_stage_number) begin
+                                data_hazard_signal = 1;
+                                return;
+                            end
                         end
 
                     end
@@ -390,13 +409,17 @@ function automatic void check_even();
                 // Three source registers
                 else if (even_instruction_type == RRR) begin
                     if (even_read_addr_b == temp_write_addr) begin
-                        data_hazard_signal = 1;
-                        break;
+                        if (temp_current_stage_number < temp_ready_stage_number) begin
+                            data_hazard_signal = 1;
+                            return;
+                        end
                     end
 
                     if (even_read_addr_c == temp_write_addr) begin
-                        data_hazard_signal = 1;
-                        break;
+                        if (temp_current_stage_number < temp_ready_stage_number) begin
+                            data_hazard_signal = 1;
+                            return;
+                        end
                     end
 
                 end
@@ -421,6 +444,7 @@ function automatic void check_odd();
                 // All instruction types have at least reg_A as source
                 else if (odd_read_addr_a == temp_write_addr) begin
                     data_hazard_signal = 1;
+                    return;
                 end
                 
                 // All other instruction types for odd pipe have at most a second source register
@@ -428,6 +452,7 @@ function automatic void check_odd();
                     if (odd_opcode != OP_BRANCH_INDIRECT && odd_opcode != OP_BRANCH_INDIRECT_AND_SET_LINK) begin
                         if (odd_read_addr_b == temp_write_addr) begin
                             data_hazard_signal = 1;
+                            return;
                         end
                     end
                 end
@@ -436,6 +461,7 @@ function automatic void check_odd();
                 if (odd_opcode == OP_STORE_QUADWORD_D || odd_opcode == OP_STORE_QUADWORD_A || odd_opcode == OP_STORE_QUADWORD_X) begin
                     if (odd_read_addr_c == temp_write_addr) begin
                         data_hazard_signal = 1;
+                        return;
                     end
                 end
 
@@ -444,12 +470,13 @@ function automatic void check_odd();
                 odd_opcode == OP_BRANCH_IF_NOT_ZERO_WORD || odd_opcode == OP_BRANCH_IF_NOT_ZERO_HALFWORD) begin
                     if (odd_read_addr_b == temp_write_addr) begin
                         data_hazard_signal = 1;
+                        return;
                     end
                 end
 
             end
 
-            // Check even instruction with even output of id_rf stage
+            // Check odd instruction with even output of id_rf stage
             if (id_rf_even_reg_write) begin
                 temp_write_addr = id_rf_even_rt_addr;
                 // Analyze current instruction thats about to be executed
@@ -459,6 +486,7 @@ function automatic void check_odd();
                 // All instruction types have at least reg_A as source
                 else if (odd_read_addr_a == temp_write_addr) begin
                     data_hazard_signal = 1;
+                    return;
                 end
                 
                 // All other instruction types for odd pipe have at most a second source register
@@ -466,6 +494,7 @@ function automatic void check_odd();
                     if (odd_opcode != OP_BRANCH_INDIRECT && odd_opcode != OP_BRANCH_INDIRECT_AND_SET_LINK) begin
                         if (odd_read_addr_b == temp_write_addr) begin
                             data_hazard_signal = 1;
+                            return;
                         end
                     end
                 end
@@ -474,6 +503,7 @@ function automatic void check_odd();
                 if (odd_opcode == OP_STORE_QUADWORD_D || odd_opcode == OP_STORE_QUADWORD_A || odd_opcode == OP_STORE_QUADWORD_X) begin
                     if (odd_read_addr_c == temp_write_addr) begin
                         data_hazard_signal = 1;
+                        return;
                     end
                 end
 
@@ -482,11 +512,12 @@ function automatic void check_odd();
                 odd_opcode == OP_BRANCH_IF_NOT_ZERO_WORD || odd_opcode == OP_BRANCH_IF_NOT_ZERO_HALFWORD) begin
                     if (odd_read_addr_b == temp_write_addr) begin
                         data_hazard_signal = 1;
+                        return;
                     end
                 end
             end
 
-            // Check with instructions in even execution pipe
+            // Check odd with instructions in even execution pipe
             for (int i = 0; i < 6; ++i) begin
                 // Extract informaiton about instruction at each execution stage
                 temp_reg_write = even_stage_results[i].reg_write_flag;
@@ -494,14 +525,10 @@ function automatic void check_odd();
                 temp_ready_stage_number = even_stage_results[i].ready_stage_number;
                 temp_current_stage_number = even_stage_results[i].current_stage_number;
 
-                if (temp_current_stage_number < temp_ready_stage_number) begin
-                    data_hazard_signal = 1;
-                    break;
-                end
-
                 if (temp_reg_write == 0 || temp_present_bit == 0) begin
                     continue;
                 end
+                
 
                 temp_write_addr = even_stage_results[i].reg_write_addr;
                 
@@ -511,14 +538,20 @@ function automatic void check_odd();
 
                 // All instruction types have at least reg_A as source
                 else if (odd_read_addr_a == temp_write_addr) begin
-                    data_hazard_signal = 1;
+                    if (temp_current_stage_number < temp_ready_stage_number) begin
+                        data_hazard_signal = 1;
+                        return;
+                    end
                 end
                 
                 // All other instruction types for odd pipe have at most a second source register
                 if (odd_instruction_type == RR) begin
                     if (odd_opcode != OP_BRANCH_INDIRECT && odd_opcode != OP_BRANCH_INDIRECT_AND_SET_LINK) begin
                         if (odd_read_addr_b == temp_write_addr) begin
-                            data_hazard_signal = 1;
+                            if (temp_current_stage_number < temp_ready_stage_number) begin
+                                data_hazard_signal = 1;
+                                return;
+                            end
                         end
                     end
                 end
@@ -526,7 +559,10 @@ function automatic void check_odd();
                 // Add checks for store operations, edgecase
                 if (odd_opcode == OP_STORE_QUADWORD_D || odd_opcode == OP_STORE_QUADWORD_A || odd_opcode == OP_STORE_QUADWORD_X) begin
                     if (odd_read_addr_c == temp_write_addr) begin
-                        data_hazard_signal = 1;
+                        if (temp_current_stage_number < temp_ready_stage_number) begin
+                            data_hazard_signal = 1;
+                            return;
+                        end
                     end
                 end
 
@@ -534,7 +570,10 @@ function automatic void check_odd();
                 if (odd_opcode == OP_BRANCH_IF_ZERO_WORD || odd_opcode == OP_BRANCH_IF_ZERO_HALFWORD ||
                 odd_opcode == OP_BRANCH_IF_NOT_ZERO_WORD || odd_opcode == OP_BRANCH_IF_NOT_ZERO_HALFWORD) begin
                     if (odd_read_addr_b == temp_write_addr) begin
-                        data_hazard_signal = 1;
+                        if (temp_current_stage_number < temp_ready_stage_number) begin
+                            data_hazard_signal = 1;
+                            return;
+                        end
                     end
                 end
             end
@@ -549,6 +588,7 @@ function automatic void check_odd();
                 // All instruction types have at least reg_A as source
                 else if (odd_read_addr_a == temp_write_addr) begin
                     data_hazard_signal = 1;
+                    return;
                 end
                 
                 // All other instruction types for odd pipe have at most a second source register
@@ -556,6 +596,7 @@ function automatic void check_odd();
                     if (odd_opcode != OP_BRANCH_INDIRECT && odd_opcode != OP_BRANCH_INDIRECT_AND_SET_LINK) begin
                         if (odd_read_addr_b == temp_write_addr) begin
                             data_hazard_signal = 1;
+                            return;
                         end
                     end
                 end
@@ -564,6 +605,7 @@ function automatic void check_odd();
                 if (odd_opcode == OP_STORE_QUADWORD_D || odd_opcode == OP_STORE_QUADWORD_A || odd_opcode == OP_STORE_QUADWORD_X) begin
                     if (odd_read_addr_c == temp_write_addr) begin
                         data_hazard_signal = 1;
+                        return;
                     end
                 end
 
@@ -572,12 +614,13 @@ function automatic void check_odd();
                 odd_opcode == OP_BRANCH_IF_NOT_ZERO_WORD || odd_opcode == OP_BRANCH_IF_NOT_ZERO_HALFWORD) begin
                     if (odd_read_addr_b == temp_write_addr) begin
                         data_hazard_signal = 1;
+                        return;
                     end
                 end
 
             end
 
-            // Check even instruction with odd output of id_rf stage
+            // Check odd instruction with odd output of id_rf stage
             if (id_rf_odd_reg_write) begin
                 temp_write_addr = id_rf_odd_rt_addr;
                 // Analyze current instruction thats about to be executed
@@ -587,6 +630,7 @@ function automatic void check_odd();
                 // All instruction types have at least reg_A as source
                 else if (odd_read_addr_a == temp_write_addr) begin
                     data_hazard_signal = 1;
+                    return;
                 end
                 
                 // All other instruction types for odd pipe have at most a second source register
@@ -594,6 +638,7 @@ function automatic void check_odd();
                     if (odd_opcode != OP_BRANCH_INDIRECT && odd_opcode != OP_BRANCH_INDIRECT_AND_SET_LINK) begin
                         if (odd_read_addr_b == temp_write_addr) begin
                             data_hazard_signal = 1;
+                            return;
                         end
                     end
                 end
@@ -602,6 +647,7 @@ function automatic void check_odd();
                 if (odd_opcode == OP_STORE_QUADWORD_D || odd_opcode == OP_STORE_QUADWORD_A || odd_opcode == OP_STORE_QUADWORD_X) begin
                     if (odd_read_addr_c == temp_write_addr) begin
                         data_hazard_signal = 1;
+                        return;
                     end
                 end
 
@@ -610,22 +656,18 @@ function automatic void check_odd();
                 odd_opcode == OP_BRANCH_IF_NOT_ZERO_WORD || odd_opcode == OP_BRANCH_IF_NOT_ZERO_HALFWORD) begin
                     if (odd_read_addr_b == temp_write_addr) begin
                         data_hazard_signal = 1;
+                        return;
                     end
                 end
             end
 
-            // Check with instructions in odd execution pipe
-            for (int i = 0; i < 6; ++i) begin
+            // Check odd with instructions in odd execution pipe
+            for (int i = 0; i < 5; ++i) begin
                 // Extract informaiton about instruction at each execution stage
                 temp_reg_write = odd_stage_results[i].reg_write_flag;
                 temp_present_bit = odd_stage_results[i].present_bit;
                 temp_ready_stage_number = odd_stage_results[i].ready_stage_number;
                 temp_current_stage_number = odd_stage_results[i].current_stage_number;
-
-                if (temp_current_stage_number < temp_ready_stage_number) begin
-                    data_hazard_signal = 1;
-                    break;
-                end
 
                 if (temp_reg_write == 0 || temp_present_bit == 0) begin
                     continue;
@@ -639,14 +681,20 @@ function automatic void check_odd();
 
                 // All instruction types have at least reg_A as source
                 else if (odd_read_addr_a == temp_write_addr) begin
-                    data_hazard_signal = 1;
+                    if (temp_current_stage_number < temp_ready_stage_number) begin
+                        data_hazard_signal = 1;
+                        return;
+                    end
                 end
                 
                 // All other instruction types for odd pipe have at most a second source register
                 if (odd_instruction_type == RR) begin
                     if (odd_opcode != OP_BRANCH_INDIRECT && odd_opcode != OP_BRANCH_INDIRECT_AND_SET_LINK) begin
                         if (odd_read_addr_b == temp_write_addr) begin
-                            data_hazard_signal = 1;
+                            if (temp_current_stage_number < temp_ready_stage_number) begin
+                                data_hazard_signal = 1;
+                                return;
+                            end
                         end
                     end
                 end
@@ -654,7 +702,10 @@ function automatic void check_odd();
                 // Add checks for store operations, edgecase
                 if (odd_opcode == OP_STORE_QUADWORD_D || odd_opcode == OP_STORE_QUADWORD_A || odd_opcode == OP_STORE_QUADWORD_X) begin
                     if (odd_read_addr_c == temp_write_addr) begin
-                        data_hazard_signal = 1;
+                        if (temp_current_stage_number < temp_ready_stage_number) begin
+                            data_hazard_signal = 1;
+                            return;
+                        end
                     end
                 end
 
@@ -662,7 +713,10 @@ function automatic void check_odd();
                 if (odd_opcode == OP_BRANCH_IF_ZERO_WORD || odd_opcode == OP_BRANCH_IF_ZERO_HALFWORD ||
                 odd_opcode == OP_BRANCH_IF_NOT_ZERO_WORD || odd_opcode == OP_BRANCH_IF_NOT_ZERO_HALFWORD) begin
                     if (odd_read_addr_b == temp_write_addr) begin
-                        data_hazard_signal = 1;
+                        if (temp_current_stage_number < temp_ready_stage_number) begin
+                            data_hazard_signal = 1;
+                            return;
+                        end
                     end
                 end
             end

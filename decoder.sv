@@ -6,6 +6,7 @@ module decoder(
     input logic[0:10] program_counter_1,
     input logic[0:31] instruction_2,
     input logic[0:10] program_counter_2,
+    input logic reset,
 
 
     output logic[0:6] even_ra_addr,
@@ -269,6 +270,11 @@ always_comb begin : decoder_body
 
 
    // Check for 
+   if (reset) begin
+        same_pipe_hazard = 0;
+        same_write_dest_hazard = 0;
+        concurrent_data_dependency_hazard = 0;
+   end
 
 
 end
@@ -1501,9 +1507,9 @@ function automatic void decode_instruction (input logic[0:31] instruction, input
     end
 
 // stop
-    else if (instruction[0:10] == 11'b0000_0000_000) begin
-        unit_id = -1;
-    end
+    // else if (instruction[0:10] == 11'b0000_0000_000) begin
+    //     unit_id = -1;
+    // end
 
 
 

@@ -1,4 +1,4 @@
-# SimVision Command Script (Sat May 02 06:31:03 PM EDT 2026)
+# SimVision Command Script (Sun May 03 06:13:52 AM EDT 2026)
 #
 # Version 24.09.s001
 #
@@ -57,10 +57,10 @@ if {[catch {window new WatchList -name "Design Browser 1" -geometry 2560x1377+8+
 }
 window target "Design Browser 1" on
 browser using {Design Browser 1}
-browser set -scope [subst  {simulator::[format {tbench.dut.hazard_detection}]} ]
+browser set -scope [subst  {simulator::[format {tbench.dut.dec}]} ]
 browser set \
     -signalsort name
-browser yview see [subst  {simulator::[format {tbench.dut.hazard_detection}]} ]
+browser yview see [subst  {simulator::[format {tbench.dut.dec}]} ]
 browser timecontrol set -lock 0
 
 #
@@ -99,6 +99,12 @@ set id [waveform add -signals [subst  {
 	{simulator::[format {tbench.dut.ibuffer.same_write_dest_hazard}]}
 	} ]]
 set id [waveform add -signals [subst  {
+	{simulator::[format {tbench.dut.ibuffer.concurrent_data_dependency_hazard_signal}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{simulator::[format {tbench.dut.ibuffer.data_hazard_signal}]}
+	} ]]
+set id [waveform add -signals [subst  {
 	{simulator::[format {tbench.dut.ibuffer.branch_addr[0:10]}]}
 	} ]]
 set id [waveform add -signals [subst  {
@@ -132,6 +138,9 @@ set id [waveform add -signals [subst  {
 	{simulator::[format {tbench.dut.dec.even_reg_write}]}
 	} ]]
 set id [waveform add -signals [subst  {
+	{simulator::[format {tbench.dut.dec.even_rt_addr[0:6]}]}
+	} ]]
+set id [waveform add -signals [subst  {
 	{simulator::[format {tbench.dut.dec.odd_opcode[0:6]}]}
 	} ]]
 set id [waveform add -signals [subst  {
@@ -139,6 +148,9 @@ set id [waveform add -signals [subst  {
 	} ]]
 set id [waveform add -signals [subst  {
 	{simulator::[format {tbench.dut.dec.odd_reg_write}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{simulator::[format {tbench.dut.dec.odd_rt_addr[0:6]}]}
 	} ]]
 set id [waveform add -signals [subst  {
 	{simulator::[format {tbench.dut.dec.odd_first}]}
@@ -211,7 +223,7 @@ set id [waveform add -signals [subst  {
 	} ]]
 waveform hierarchy collapse $id
 
-waveform xview limits 0 103752ps
+waveform xview limits 27862ps 93398ps
 
 #
 # Waveform Window Links

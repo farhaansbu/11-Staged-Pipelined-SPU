@@ -32,14 +32,28 @@ module execution_unit(
     output unit_result_packet even_stage_5_forwarded_res,
     output unit_result_packet even_stage_6_forwarded_res,
 
-    output logic flush_all,
-    output logic flush_after,
+    output unit_result_packet even_stage_1_hazard_res, 
+    output unit_result_packet even_stage_2_hazard_res, 
+    output unit_result_packet even_stage_3_hazard_res,
+    output unit_result_packet even_stage_4_hazard_res,
+    output unit_result_packet even_stage_5_hazard_res,
+    output unit_result_packet even_stage_6_hazard_res,
+
     output unit_result_packet odd_stage_1_forwarded_res, 
     output unit_result_packet odd_stage_2_forwarded_res,
     output unit_result_packet odd_stage_3_forwarded_res,
     output unit_result_packet odd_stage_4_forwarded_res,
     output unit_result_packet odd_stage_5_forwarded_res,
-    output unit_result_packet odd_stage_6_forwarded_res
+    output unit_result_packet odd_stage_6_forwarded_res,
+
+    output unit_result_packet odd_stage_1_hazard_res, 
+    output unit_result_packet odd_stage_2_hazard_res, 
+    output unit_result_packet odd_stage_3_hazard_res,
+    output unit_result_packet odd_stage_4_hazard_res,
+    output unit_result_packet odd_stage_5_hazard_res,
+
+    output logic flush_all,
+    output logic flush_after
 );
 
 even_pipe_unit even_pipe(
@@ -58,7 +72,13 @@ even_pipe_unit even_pipe(
     .even_stage_3_forwarded_res(even_stage_3_forwarded_res),
     .even_stage_4_forwarded_res(even_stage_4_forwarded_res),
     .even_stage_5_forwarded_res(even_stage_5_forwarded_res),
-    .even_stage_6_forwarded_res(even_stage_6_forwarded_res)
+    .even_stage_6_forwarded_res(even_stage_6_forwarded_res),
+    .even_stage_1_hazard_res(even_stage_1_hazard_res),
+    .even_stage_2_hazard_res(even_stage_2_hazard_res),
+    .even_stage_3_hazard_res(even_stage_3_hazard_res),
+    .even_stage_4_hazard_res(even_stage_4_hazard_res),
+    .even_stage_5_hazard_res(even_stage_5_hazard_res),
+    .even_stage_6_hazard_res(even_stage_6_hazard_res)
 );
 
 odd_pipe_unit odd_pipe(
@@ -80,7 +100,12 @@ odd_pipe_unit odd_pipe(
     .odd_stage_3_forwarded_res(odd_stage_3_forwarded_res),
     .odd_stage_4_forwarded_res(odd_stage_4_forwarded_res),
     .odd_stage_5_forwarded_res(odd_stage_5_forwarded_res),
-    .odd_stage_6_forwarded_res(odd_stage_6_forwarded_res)
+    .odd_stage_6_forwarded_res(odd_stage_6_forwarded_res),
+    .odd_stage_1_hazard_res(odd_stage_1_hazard_res),
+    .odd_stage_2_hazard_res(odd_stage_2_hazard_res),
+    .odd_stage_3_hazard_res(odd_stage_3_hazard_res),
+    .odd_stage_4_hazard_res(odd_stage_4_hazard_res),
+    .odd_stage_5_hazard_res(odd_stage_5_hazard_res)
 );
 
 

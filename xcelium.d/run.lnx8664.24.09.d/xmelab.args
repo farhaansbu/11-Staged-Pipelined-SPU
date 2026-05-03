@@ -2,8 +2,11 @@
 // File created by:  xrun
 // Do not modify this file
 //
+-ACCESS
++rwc
 -no_analogsolver
 -MESSAGES
+tbench
 -dms_perf
 -XLMODE
 ./xcelium.d/run.lnx8664.24.09.d
@@ -14,4 +17,5 @@
 ./xcelium.d/run.lnx8664.24.09.d/hdl.var
 -WORK
 worklib
+-IRUNHASTOP
 -HASXLMODE

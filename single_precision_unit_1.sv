@@ -120,8 +120,8 @@ always_ff @(posedge clk) begin
 end
 
 localparam WORD_BITS = 32;
-localparam shortreal S_max = 6.8e+38;
-localparam shortreal S_min = 1.2e-38;
+shortreal S_max = $bitstoshortreal(32'h7F7FFFFF);
+shortreal S_min = $bitstoshortreal(32'h00800000);
 
 
 // helper functions
@@ -224,8 +224,12 @@ function automatic logic[0:127] floating_add (input logic[0:127] ra, input logic
         int index = i * WORD_BITS;
         shortreal a_flt = $bitstoshortreal(ra[index +: WORD_BITS]);
         shortreal b_flt = $bitstoshortreal(rb[index +: WORD_BITS]);
-        shortreal result = a_flt + b_flt;
-        rt[index +: WORD_BITS] = $shortrealtobits((result));
+        real result = real'(a_flt) + real'(b_flt);  // use real to preserve overflow
+        rt[index +: WORD_BITS] = $shortrealtobits(saturate_real(result));
+        $display("a_flt = %e, b_flt = %e, result = %e, saturated = %e", 
+                  a_flt, b_flt, result, saturate_real(result));
+        // shortreal result = a_flt + b_flt;
+        // rt[index +: WORD_BITS] = $shortrealtobits((result));
     end
     return rt;
 endfunction : floating_add
@@ -239,6 +243,7 @@ function automatic logic[0:127] floating_subtract (input logic[0:127] ra, input 
         shortreal b_flt = $bitstoshortreal(rb[index +: WORD_BITS]);
         real result = a_flt - b_flt;
         rt[index +: WORD_BITS] = $shortrealtobits(saturate_real(result));
+       //rt[index +: WORD_BITS] = $shortrealtobits(result);
     end
     return rt;
 endfunction : floating_subtract
